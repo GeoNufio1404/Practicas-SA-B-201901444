@@ -34,11 +34,12 @@ export interface CrearSolicitudDTO {
  * interfaz, nunca de una implementacion concreta como PostgreSQL.
  *
  * Principio ISP: la interfaz solo declara los metodos que realmente
- * se usan en este momento del desarrollo. Se ira ampliando (findAll,
- * update, delete, updateEstado) a medida que se construya cada endpoint,
+ * se usan en este momento del desarrollo. Se ira ampliando (update,
+ * delete, updateEstado) a medida que se construya cada endpoint,
  * en vez de declarar de una vez metodos que todavia nadie implementa
  * ni consume.
  */
 export interface ISolicitudRepository {
   create(data: CrearSolicitudDTO): Promise<Solicitud>;
+  findAll(): Promise<Solicitud[]>;
 }

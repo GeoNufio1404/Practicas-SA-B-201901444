@@ -13,6 +13,7 @@ export function crearSolicitudRoutes(controller: SolicitudController): Router {
   const router = Router();
 
   router.post("/", validateRequest(crearSolicitudSchema), controller.crear);
+  router.get("/", controller.listar);
 
   return router;
 }

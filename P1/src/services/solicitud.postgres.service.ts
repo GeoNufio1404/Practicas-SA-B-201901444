@@ -34,4 +34,15 @@ export class SolicitudPostgresService implements ISolicitudRepository {
     const resultado = await this.pool.query(query, valores);
     return resultado.rows[0] as Solicitud;
   }
+
+  async findAll(): Promise<Solicitud[]> {
+    const query = `
+      SELECT id, titulo, area_solicitante, prioridad, costo_estimado, estado, creado_en
+      FROM solicitudes
+      ORDER BY creado_en DESC;
+    `;
+
+    const resultado = await this.pool.query(query);
+    return resultado.rows as Solicitud[];
+  }
 }

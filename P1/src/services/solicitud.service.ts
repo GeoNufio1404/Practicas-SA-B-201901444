@@ -18,4 +18,8 @@ export class SolicitudService {
   async crearSolicitud(data: CrearSolicitudDTO): Promise<Solicitud> {
     return this.repositorio.create(data);
   }
+
+  async obtenerTodas(): Promise<Solicitud[]> {
+    return this.repositorio.findAll();
+  }
 }

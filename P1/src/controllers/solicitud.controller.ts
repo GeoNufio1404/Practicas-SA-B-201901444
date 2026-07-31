@@ -17,4 +17,13 @@ export class SolicitudController {
       next(error);
     }
   };
+
+  listar = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const solicitudes = await this.service.obtenerTodas();
+      res.status(200).json(solicitudes);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
