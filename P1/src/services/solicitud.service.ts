@@ -1,4 +1,11 @@
-import { CrearSolicitudDTO, ISolicitudRepository, Solicitud } from "../models/Solicitud";
+import {
+  ActualizarSolicitudDTO,
+  CrearSolicitudDTO,
+  EstadoSolicitud,
+  ISolicitudRepository,
+  Solicitud,
+} from "../models/Solicitud";
+import { AppError } from "../middlewares/errorHandler";
 
 /**
  * Capa de logica de negocio.
@@ -21,5 +28,38 @@ export class SolicitudService {
 
   async obtenerTodas(): Promise<Solicitud[]> {
     return this.repositorio.findAll();
+  }
+
+  /**
+   * Actualizacion completa (PUT). Recibe el recurso entero y delega
+   * al repositorio. Si el repositorio no encuentra el id, esta capa
+   * decide que eso es un 404: es una regla de negocio, no un detalle
+   * de base de datos, por eso vive aqui y no en el repositorio.
+   */
+  async actualizarSolicitud(id: string, data: ActualizarSolicitudDTO): Promise<Solicitud> {
+    const solicitudActualizada = await this.repositorio.update(id, data);
+
+    if (!solicitudActualizada) {
+      throw new AppError("Solicitud no encontrada", 404);
+    }
+
+    return solicitudActualizada;
+  }
+
+  /**
+   * Actualizacion exclusiva del estado (PATCH). A proposito es un
+   * metodo distinto de "actualizarSolicitud": solo recibe "estado"
+   * como parametro, por lo que es imposible que, desde este metodo,
+   * se modifique accidentalmente titulo, area, prioridad o costo.
+   * Esto es SRP e ISP aplicados a nivel de metodo, no solo de clase.
+   */
+  async actualizarEstado(id: string, estado: EstadoSolicitud): Promise<Solicitud> {
+    const solicitudActualizada = await this.repositorio.updateEstado(id, estado);
+
+    if (!solicitudActualizada) {
+      throw new AppError("Solicitud no encontrada", 404);
+    }
+
+    return solicitudActualizada;
   }
 }

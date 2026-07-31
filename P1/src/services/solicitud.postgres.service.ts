@@ -1,5 +1,11 @@
 import { Pool } from "pg";
-import { CrearSolicitudDTO, ISolicitudRepository, Solicitud } from "../models/Solicitud";
+import {
+  ActualizarSolicitudDTO,
+  CrearSolicitudDTO,
+  EstadoSolicitud,
+  ISolicitudRepository,
+  Solicitud,
+} from "../models/Solicitud";
 
 /**
  * Implementacion concreta de ISolicitudRepository usando PostgreSQL.
@@ -44,5 +50,42 @@ export class SolicitudPostgresService implements ISolicitudRepository {
 
     const resultado = await this.pool.query(query);
     return resultado.rows as Solicitud[];
+  }
+
+  async update(id: string, data: ActualizarSolicitudDTO): Promise<Solicitud | null> {
+    const query = `
+      UPDATE solicitudes
+      SET titulo = $1,
+          area_solicitante = $2,
+          prioridad = $3,
+          costo_estimado = $4,
+          estado = $5
+      WHERE id = $6
+      RETURNING id, titulo, area_solicitante, prioridad, costo_estimado, estado, creado_en;
+    `;
+
+    const valores = [
+      data.titulo,
+      data.area_solicitante,
+      data.prioridad,
+      data.costo_estimado,
+      data.estado,
+      id,
+    ];
+
+    const resultado = await this.pool.query(query, valores);
+    return (resultado.rows[0] as Solicitud) ?? null;
+  }
+
+  async updateEstado(id: string, estado: EstadoSolicitud): Promise<Solicitud | null> {
+    const query = `
+      UPDATE solicitudes
+      SET estado = $1
+      WHERE id = $2
+      RETURNING id, titulo, area_solicitante, prioridad, costo_estimado, estado, creado_en;
+    `;
+
+    const resultado = await this.pool.query(query, [estado, id]);
+    return (resultado.rows[0] as Solicitud) ?? null;
   }
 }

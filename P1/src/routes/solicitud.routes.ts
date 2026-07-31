@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { SolicitudController } from "../controllers/solicitud.controller";
-import { validateRequest } from "../middlewares/validateRequest";
-import { crearSolicitudSchema } from "../validators/solicitud.validator";
+import { validateParams, validateRequest } from "../middlewares/validateRequest";
+import {
+  actualizarEstadoSchema,
+  actualizarSolicitudSchema,
+  crearSolicitudSchema,
+  idParamSchema,
+} from "../validators/solicitud.validator";
 
 /**
  * Las rutas reciben el controller ya construido (inyectado) en vez
@@ -14,6 +19,20 @@ export function crearSolicitudRoutes(controller: SolicitudController): Router {
 
   router.post("/", validateRequest(crearSolicitudSchema), controller.crear);
   router.get("/", controller.listar);
+
+  router.put(
+    "/:id",
+    validateParams(idParamSchema),
+    validateRequest(actualizarSolicitudSchema),
+    controller.actualizar
+  );
+
+  router.patch(
+    "/:id/estado",
+    validateParams(idParamSchema),
+    validateRequest(actualizarEstadoSchema),
+    controller.actualizarEstado
+  );
 
   return router;
 }
