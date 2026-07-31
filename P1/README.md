@@ -48,3 +48,52 @@ Este principio nos dice que no deberiamos encasillarnos en una sola tecnologia, 
 - D 
     - Se puede agregar nuevos repositorios sin modificar el servicio.
     - Se puede agregar nuevos controladores sin modificar el repositorio.
+
+
+# Prueba de cada endpoint
+
+## POST
+
+URL: /api/solicitudes
+
+```JSON
+{
+  "titulo": "Adquisicion de nuevo servidor",
+  "area_solicitante": "Infraestructura TI",
+  "prioridad": 3,
+  "costo_estimado": 2500.00
+}
+```
+
+## GET
+
+URL: /api/solicitudes
+
+## PUT
+
+URL: /api/solicitudes/{id}
+
+```JSON
+{
+  "titulo": "Adquisicion de servidor - actualizado",
+  "area_solicitante": "Infraestructura TI",
+  "prioridad": 5,
+  "costo_estimado": 3200.00,
+  "estado": "en_proceso"
+}
+```
+
+## PATCH
+
+URL: /api/solicitudes/{id}/estado
+
+```JSON
+{
+  "estado": "finalizada"
+}
+```
+
+## DELETE
+
+URL: /api/solicitudes/{id}
+

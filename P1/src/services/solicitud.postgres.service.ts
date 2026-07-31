@@ -88,4 +88,13 @@ export class SolicitudPostgresService implements ISolicitudRepository {
     const resultado = await this.pool.query(query, [estado, id]);
     return (resultado.rows[0] as Solicitud) ?? null;
   }
+
+  async delete(id: string): Promise<boolean> {
+    const query = `DELETE FROM solicitudes WHERE id = $1;`;
+    const resultado = await this.pool.query(query, [id]);
+
+    // rowCount indica cuantas filas afecto el DELETE.
+    // Si es 0, el id no existia; si es 1, se elimino correctamente.
+    return (resultado.rowCount ?? 0) > 0;
+  }
 }

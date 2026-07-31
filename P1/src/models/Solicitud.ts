@@ -46,14 +46,14 @@ export interface ActualizarSolicitudDTO {
  * Principio DIP: "SolicitudService" (capa de negocio) depende de esta
  * interfaz, nunca de una implementacion concreta como PostgreSQL.
  *
- * Principio ISP: la interfaz solo declara los metodos que realmente
- * se usan en este momento del desarrollo. Se ira ampliando (delete)
- * a medida que se construya cada endpoint, en vez de declarar de una
- * vez metodos que todavia nadie implementa ni consume.
+ * Principio ISP: la interfaz se construyo de forma incremental, un
+ * metodo a la vez, a medida que cada endpoint lo necesito realmente,
+ * en vez de declarar de entrada metodos que nadie iba a implementar
+ * ni consumir todavia.
  *
- * Los metodos que pueden no encontrar el registro (update, updateEstado)
- * devuelven "Solicitud | null" en vez de lanzar un error: decidir que
- * hacer ante un "no encontrado" es responsabilidad de la capa de
+ * Los metodos que pueden no encontrar el registro (update, updateEstado,
+ * delete) devuelven "null"/"false" en vez de lanzar un error: decidir
+ * que hacer ante un "no encontrado" es responsabilidad de la capa de
  * negocio (SolicitudService), no del repositorio.
  */
 export interface ISolicitudRepository {
@@ -61,4 +61,5 @@ export interface ISolicitudRepository {
   findAll(): Promise<Solicitud[]>;
   update(id: string, data: ActualizarSolicitudDTO): Promise<Solicitud | null>;
   updateEstado(id: string, estado: EstadoSolicitud): Promise<Solicitud | null>;
+  delete(id: string): Promise<boolean>;
 }

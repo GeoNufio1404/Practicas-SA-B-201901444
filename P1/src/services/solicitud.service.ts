@@ -62,4 +62,17 @@ export class SolicitudService {
 
     return solicitudActualizada;
   }
+
+  /**
+   * Elimina una solicitud. Igual que en update/updateEstado, decidir
+   * que un id inexistente es un 404 es responsabilidad de esta capa,
+   * no del repositorio (que solo sabe si borro una fila o ninguna).
+   */
+  async eliminarSolicitud(id: string): Promise<void> {
+    const fueEliminada = await this.repositorio.delete(id);
+
+    if (!fueEliminada) {
+      throw new AppError("Solicitud no encontrada", 404);
+    }
+  }
 }

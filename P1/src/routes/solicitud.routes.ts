@@ -34,5 +34,7 @@ export function crearSolicitudRoutes(controller: SolicitudController): Router {
     controller.actualizarEstado
   );
 
+  router.delete("/:id", validateParams(idParamSchema), controller.eliminar);
+
   return router;
 }

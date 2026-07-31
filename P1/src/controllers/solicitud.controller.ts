@@ -47,4 +47,14 @@ export class SolicitudController {
       next(error);
     }
   };
+
+  eliminar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.params;
+      await this.service.eliminarSolicitud(id);
+      res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  };
 }
