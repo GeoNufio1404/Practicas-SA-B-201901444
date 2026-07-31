@@ -4,7 +4,7 @@ IA utilizada: Claude
 
 # Instrucciones generales para todo el proyecto
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## Prompt Completo
 
