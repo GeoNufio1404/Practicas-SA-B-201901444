@@ -56,44 +56,57 @@ Este principio nos dice que no deberiamos encasillarnos en una sola tecnologia, 
 
 URL: /api/solicitudes
 
-```JSON
-{
-  "titulo": "Adquisicion de nuevo servidor",
-  "area_solicitante": "Infraestructura TI",
-  "prioridad": 3,
-  "costo_estimado": 2500.00
-}
+```bash
+curl -X POST http://localhost:3000/api/solicitudes \
+  -H "Content-Type: application/json" \
+  -d '{
+    "titulo": "Adquisicion de nuevo servidor",
+    "area_solicitante": "Infraestructura TI",
+    "prioridad": 3,
+    "costo_estimado": 2500.00
+  }'
 ```
 
 ## GET
 
 URL: /api/solicitudes
 
+```bash
+curl http://localhost:3000/api/solicitudes
+```
+
 ## PUT
 
 URL: /api/solicitudes/{id}
 
-```JSON
-{
-  "titulo": "Adquisicion de servidor - actualizado",
-  "area_solicitante": "Infraestructura TI",
-  "prioridad": 5,
-  "costo_estimado": 3200.00,
-  "estado": "en_proceso"
-}
+```bash
+curl -X PUT http://localhost:3000/api/solicitudes/cd442526-9410-445f-977e-b8aeb4f50559 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "titulo": "Adquisicion de servidor - actualizado",
+    "area_solicitante": "Infraestructura TI",
+    "prioridad": 5,
+    "costo_estimado": 3200.00,
+    "estado": "en_proceso"
+  }'
 ```
 
 ## PATCH
 
 URL: /api/solicitudes/{id}/estado
 
-```JSON
-{
-  "estado": "finalizada"
-}
+```bash
+curl -X PATCH http://localhost:3000/api/solicitudes/cd442526-9410-445f-977e-b8aeb4f50559/estado \
+  -H "Content-Type: application/json" \
+  -d '{
+    "estado": "finalizada"
+  }'
 ```
 
 ## DELETE
 
 URL: /api/solicitudes/{id}
 
+```bash
+curl -X DELETE http://localhost:3000/api/solicitudes/cd442526-9410-445f-977e-b8aeb4f50559
+```
