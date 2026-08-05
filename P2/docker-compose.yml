@@ -1,0 +1,71 @@
+# ============================================================
+# docker-compose.yml — Práctica 2 (Podman compatible)
+# Levantar con:  podman-compose up --build
+# Detener con:   podman-compose down
+# ============================================================
+
+version: "3.8"
+
+services:
+  # ---- MySQL ------------------------------------------------
+  mysql:
+    image: docker.io/library/mysql:8.0
+    container_name: p2-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: practica2_auth
+    ports:
+      - "3306:3306"
+    volumes:
+      # Volumen de datos persistente en la misma carpeta que schema
+      - ./backend/db/mysql-data:/var/lib/mysql:Z
+      # Script de inicialización: corre automáticamente la primera vez
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:Z,ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pchangeme"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ---- Backend principal ------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: p2-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    ports:
+      - "4000:4000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+  # ---- Microservicio de autorización ------------------------
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: p2-auth-service
+    restart: unless-stopped
+    env_file:
+      - ./auth-service/.env
+    ports:
+      - "5000:5000"
+
+  # ---- Frontend (React + Vite) ------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: p2-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

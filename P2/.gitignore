@@ -3,3 +3,6 @@ node_modules/
 *.log
 dist/
 build/
+
+# Volumen de datos MySQL (generado por docker-compose)
+backend/db/mysql-data/
