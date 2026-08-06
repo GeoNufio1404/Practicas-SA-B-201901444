@@ -179,7 +179,7 @@ Aún sin lógica de login conectada al backend — eso es la Fase 5.
 - [x] **Fase 2:** registro, login, logout, `/me` protegida, JWT en cookie HTTP-only,
       renovación automática del JWT dentro de la ventana de gracia
 - [x] Todo dockerizado con Podman Compose (mysql, backend, auth-service, frontend)
-- [ ] **Fase 3:** microservicio de autorización real (`/authorize`) + retry loop con
+- [x] **Fase 3:** microservicio de autorización real (`/authorize`) + retry loop con
       backoff desde el backend principal
 - [ ] **Fase 4:** rutas protegidas por rol (Ruta 1 solo Admin, Ruta 2 Admin+Cliente)
 - [ ] **Fase 5:** frontend conectado (registro, login, página de confirmación)

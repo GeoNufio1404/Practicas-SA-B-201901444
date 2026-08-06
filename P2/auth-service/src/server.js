@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const { authorize } = require('./controllers/authorize.controller');
 
 const app = express();
 app.use(express.json());
@@ -10,8 +11,10 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Aquí en la Fase 3 se implementará, por ejemplo:
-// POST /authorize  { rol, recurso }  ->  { permitido: true/false }
+// Recibe { rol, recurso } y responde { permitido: true/false }.
+// Desacoplado por completo de la autenticación: no valida el JWT, no sabe qué
+// es un usuario ni una contraseña. Solo conoce roles y recursos.
+app.post('/authorize', authorize);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

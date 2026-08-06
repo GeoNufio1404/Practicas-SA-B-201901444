@@ -27,10 +27,7 @@ app.get('/health', async (req, res) => {
 });
 
 app.use('/api/auth', require('./routes/auth.routes'));
-
-// Aquí se montarán en la Fase 4 las rutas protegidas por rol (Ruta 1 / Ruta 2)
-// que consultan al microservicio de autorización.
-// app.use('/api', require('./routes/protected.routes'));
+app.use('/api', require('./routes/protected.routes'));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
