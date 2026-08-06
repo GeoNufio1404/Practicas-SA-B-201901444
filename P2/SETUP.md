@@ -1,8 +1,8 @@
 # Guía de arranque — Práctica 2
 
-Esto NO es el README final de entrega (ese va con SOLID, diagramas, etc. — lo armamos
-al final). Esto es la guía operativa: cómo levantar todo, conectarte a MySQL y probar
-los endpoints que ya existen.
+Esta es la guía OPERATIVA (cómo levantar todo, conectarte a MySQL, probar
+endpoints). El documento de entrega con SOLID, diagrama de secuencia y
+explicación de tecnologías es `README.md`, en la raíz del repo.
 
 El proyecto corre dockerizado con `podman-compose` (4 servicios: `mysql`, `backend`,
 `auth-service`, `frontend`).
@@ -168,26 +168,8 @@ curl localhost:5000/health        # {"status":"ok"}
 
 ## 4. Frontend
 
-Levantado con Vite en `http://localhost:3000` (dentro del contenedor `p2-frontend`).
-Aún sin lógica de login conectada al backend — eso es la Fase 5.
+Levantado con Vite en `http://localhost:3000`. Registro, login y página de
+confirmación (`/panel`) ya conectados al backend, incluyendo demo en vivo de
+Ruta 1 / Ruta 2.
 
 ---
-
-## Estado actual del proyecto
-
-- [x] **Fase 0-1:** estructura, esquema de BD, variables de entorno, AES listo
-- [x] **Fase 2:** registro, login, logout, `/me` protegida, JWT en cookie HTTP-only,
-      renovación automática del JWT dentro de la ventana de gracia
-- [x] Todo dockerizado con Podman Compose (mysql, backend, auth-service, frontend)
-- [x] **Fase 3:** microservicio de autorización real (`/authorize`) + retry loop con
-      backoff desde el backend principal
-- [ ] **Fase 4:** rutas protegidas por rol (Ruta 1 solo Admin, Ruta 2 Admin+Cliente)
-- [ ] **Fase 5:** frontend conectado (registro, login, página de confirmación)
-- [ ] **Fase 6:** README final de entrega (SOLID, diagrama de secuencia, tecnologías)
-- [ ] **Fase 7:** checklist de entrega en UEDI
-
-## Siguiente paso (Fase 3)
-
-Implementar la lógica real de `POST /authorize` en `auth-service`, y en el backend
-principal el cliente HTTP que lo consulta con reintentos configurables y backoff
-antes de denegar acceso por error de comunicación.
