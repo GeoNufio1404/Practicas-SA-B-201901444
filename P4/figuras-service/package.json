@@ -1,0 +1,19 @@
+{
+  "name": "figuras-service",
+  "version": "1.0.0",
+  "description": "Microservicio de figuras/piezas de impresión 3D",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@as-integrations/express5": "^1.1.2",
+    "better-sqlite3": "^11.3.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^5.0.0"
+  }
+}

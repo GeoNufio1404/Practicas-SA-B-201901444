@@ -1,0 +1,139 @@
+services:
+  # ------------------------------------------------------------------
+  # Base de datos para auth-service (reconstrucción de la Práctica 2)
+  # ------------------------------------------------------------------
+  auth-db:
+    image: mysql:8.0
+    container_name: auth-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: authuser
+      MYSQL_PASSWORD: authpass
+    volumes:
+      - auth-db-data:/var/lib/mysql
+      - ./auth-service/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - printhub-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8004:8004"
+    environment:
+      DB_HOST: auth-db
+      DB_PORT: 3306
+      DB_USER: authuser
+      DB_PASSWORD: authpass
+      DB_NAME: auth_db
+      JWT_SECRET: ${JWT_SECRET:-cambia-esto-en-produccion}
+      AES_KEY: ${AES_KEY:?Debes definir AES_KEY en el archivo .env, 64 caracteres hex}
+      AUTH_COOKIE_NAME: token
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    networks:
+      - printhub-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:8004/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  materiales-service:
+    build: ./materiales-service
+    container_name: materiales-service
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: sqlite:////data/materiales.db
+    volumes:
+      - materiales-data:/data
+    networks:
+      - printhub-net
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  figuras-service:
+    build: ./figuras-service
+    container_name: figuras-service
+    ports:
+      - "8002:8002"
+    environment:
+      DATABASE_PATH: /data/figuras.db
+      MATERIALES_SERVICE_URL: http://materiales-service:8001/graphql
+    volumes:
+      - figuras-data:/data
+    depends_on:
+      materiales-service:
+        condition: service_healthy
+    networks:
+      - printhub-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:8002/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  ordenes-service:
+    build: ./ordenes-service
+    container_name: ordenes-service
+    ports:
+      - "8003:8003"
+    environment:
+      DATABASE_PATH: /data/ordenes.db
+      FIGURAS_SERVICE_URL: http://figuras-service:8002/graphql
+    volumes:
+      - ordenes-data:/data
+    depends_on:
+      figuras-service:
+        condition: service_healthy
+    networks:
+      - printhub-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:8003/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-cambia-esto-en-produccion}
+      AUTH_SERVICE_URL: http://auth-service:8004
+      MATERIALES_SERVICE_URL: http://materiales-service:8001
+      FIGURAS_SERVICE_URL: http://figuras-service:8002
+      ORDENES_SERVICE_URL: http://ordenes-service:8003
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      materiales-service:
+        condition: service_healthy
+      figuras-service:
+        condition: service_healthy
+      ordenes-service:
+        condition: service_healthy
+    networks:
+      - printhub-net
+
+networks:
+  printhub-net:
+    driver: bridge
+
+volumes:
+  auth-db-data:
+  materiales-data:
+  figuras-data:
+  ordenes-data:
