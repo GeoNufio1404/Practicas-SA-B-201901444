@@ -1,0 +1,15 @@
+# Copiar a values.secrets.yaml (NO versionar) y rellenar con valores reales:
+# helm install sa-platform . -n sa-p5 -f values.yaml -f values-dev.yaml -f values.secrets.yaml
+
+global:
+  jwtSecret: "REEMPLAZAR_CON_SECRETO_JWT_ALEATORIO"
+  aesKey: "REEMPLAZAR_HEX_64_CARACTERES_32_BYTES"
+
+mysql:
+  auth:
+    rootPassword: "REEMPLAZAR"
+    password: "REEMPLAZAR"
+
+rabbitmq:
+  auth:
+    password: "REEMPLAZAR"
