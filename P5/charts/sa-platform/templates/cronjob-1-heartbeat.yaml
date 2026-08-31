@@ -63,5 +63,4 @@ spec:
                 - secretRef:
                     name: {{ .Release.Name }}-db-credentials
               securityContext:
-                readOnlyRootFilesystem: true
-                allowPrivilegeEscalation: false
+                {{- include "sa.containerSecurityContext" (dict "root" $) | nindent 16 }}

@@ -2,8 +2,8 @@ global:
   namespace: sa-p5
   imageRegistry: ""
   logLevel: info
-  jwtSecret: "201901444"
-  aesKey: "00000000000000000000000000000000000000000000000000000000000000"
+  # jwtSecret y aesKey se definen en values.secrets.yaml (NO versionado).
+  # Ver values.example.yaml para el formato esperado.
 
 namespaceResource:
   create: true
@@ -34,10 +34,9 @@ cronjobs:
 mysql:
   enabled: true
   auth:
-    rootPassword: "201901444"
+    # rootPassword y password se definen en values.secrets.yaml (NO versionado)
     database: auth_db
     username: authuser
-    password: "201901444"
   primary:
     persistence:
       enabled: true
@@ -48,7 +47,7 @@ rabbitmq:
   enabled: true
   auth:
     username: sa_platform
-    password: "201901444"
+    # password se define en values.secrets.yaml (NO versionado)
   persistence:
     enabled: true
     size: 1Gi

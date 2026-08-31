@@ -52,8 +52,7 @@ spec:
             {{- include "sa.extraEnv" (dict "root" $ "list" .Values.extraEnv) | nindent 12 }}
           {{- end }}
           securityContext:
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
+            {{- include "sa.containerSecurityContext" (dict "root" $) | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:

@@ -1,3 +1,5 @@
 /.env
 
 /minikube-linux-amd64
+
+charts/sa-platform/values.secrets.yaml

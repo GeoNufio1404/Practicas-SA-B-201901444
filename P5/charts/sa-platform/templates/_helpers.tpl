@@ -32,9 +32,24 @@ Nombre del ServiceAccount dedicado del componente (nunca "default").
 {{- end -}}
 
 {{/*
-securityContext restrictivo estandar para todos los contenedores.
+securityContext a nivel POD (spec.securityContext / PodSecurityContext).
+Solo incluye campos que EXISTEN en ese objeto. readOnlyRootFilesystem,
+allowPrivilegeEscalation y capabilities NO son campos validos de
+PodSecurityContext (solo existen en container.securityContext); antes
+estaban aqui por error y el API server los ignora/rechaza.
 */}}
 {{- define "sa.securityContext" -}}
+runAsNonRoot: true
+runAsUser: 10001
+seccompProfile:
+  type: RuntimeDefault
+{{- end -}}
+
+{{/*
+securityContext a nivel CONTENEDOR (containers[].securityContext).
+Aqui SI existen readOnlyRootFilesystem, allowPrivilegeEscalation y capabilities.
+*/}}
+{{- define "sa.containerSecurityContext" -}}
 runAsNonRoot: true
 runAsUser: 10001
 readOnlyRootFilesystem: true
