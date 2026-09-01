@@ -53,6 +53,9 @@ spec:
           {{- end }}
           securityContext:
             {{- include "sa.containerSecurityContext" (dict "root" $) | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
@@ -67,4 +70,7 @@ spec:
             httpGet: { path: {{ .Values.probes.startup.path }}, port: {{ .Values.service.port }} }
             failureThreshold: {{ .Values.probes.startup.failureThreshold }}
             periodSeconds: {{ .Values.probes.startup.periodSeconds }}
+      volumes:
+        - name: data
+          emptyDir: {}
 {{- end }}

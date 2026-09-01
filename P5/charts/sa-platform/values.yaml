@@ -33,21 +33,28 @@ cronjobs:
 
 mysql:
   enabled: true
-  auth:
-    # rootPassword y password se definen en values.secrets.yaml (NO versionado)
-    database: auth_db
-    username: authuser
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/mysql
+    tag: "8.0.35-debian-11-r0"
   primary:
-    persistence:
-      enabled: true
-      size: 1Gi
-    resourcesPreset: "micro"
+    resourcesPreset: "none"     # desactiva el preset para poder definir resources manualmente
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 768Mi
 
 rabbitmq:
   enabled: true
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/rabbitmq
+    tag: "3.12.12-debian-11-r0"
   auth:
     username: sa_platform
-    # password se define en values.secrets.yaml (NO versionado)
   persistence:
     enabled: true
     size: 1Gi
@@ -95,6 +102,7 @@ materiales-service:
     targetCPUUtilizationPercentage: 70
   env:
     PORT: "8001"
+    DATABASE_URL: "sqlite:////data/materiales.db"
 
 figuras-service:
   enabled: true
@@ -114,6 +122,7 @@ figuras-service:
     targetCPUUtilizationPercentage: 70
   env:
     PORT: "8002"
+    DATABASE_PATH: "/data/figuras.db"
     MATERIALES_SERVICE_URL: "http://sa-platform-materiales-service:8001/graphql"
     RABBITMQ_HOST: "sa-platform-rabbitmq"
 
@@ -135,6 +144,7 @@ ordenes-service:
     targetCPUUtilizationPercentage: 70
   env:
     PORT: "8003"
+    DATABASE_PATH: "/data/ordenes.db"
     FIGURAS_SERVICE_URL: "http://sa-platform-figuras-service:8002/graphql"
     RABBITMQ_HOST: "sa-platform-rabbitmq"
 
