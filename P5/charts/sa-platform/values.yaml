@@ -33,12 +33,14 @@ cronjobs:
 
 mysql:
   enabled: true
+  auth:
+    database: "auth_db"
   image:
     registry: docker.io
     repository: bitnamilegacy/mysql
     tag: "8.0.35-debian-11-r0"
   primary:
-    resourcesPreset: "none"     # desactiva el preset para poder definir resources manualmente
+    resourcesPreset: "none"
     resources:
       requests:
         cpu: 250m
@@ -46,6 +48,19 @@ mysql:
       limits:
         cpu: 500m
         memory: 768Mi
+    initdb:
+      scripts:
+        init.sql: |
+          CREATE TABLE IF NOT EXISTS usuarios (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(50) NOT NULL UNIQUE,
+            email_cifrado TEXT NOT NULL,
+            email_iv VARCHAR(32) NOT NULL,
+            email_auth_tag VARCHAR(32) NOT NULL,
+            password_hash VARCHAR(60) NOT NULL,
+            rol ENUM('cliente', 'admin') NOT NULL DEFAULT 'cliente',
+            creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+          );
 
 rabbitmq:
   enabled: true
@@ -83,6 +98,7 @@ auth-service:
     DB_PORT: "3306"
     DB_NAME: "auth_db"
     AUTH_COOKIE_NAME: "token"
+    RABBITMQ_HOST: "sa-platform-rabbitmq"
 
 materiales-service:
   enabled: true

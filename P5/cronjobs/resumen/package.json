@@ -1,0 +1,11 @@
+{
+  "name": "cronjob-resumen",
+  "version": "1.0.0",
+  "description": "Cada 10 min agrega los heartbeats de la ultima hora y los publica en RabbitMQ",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "amqplib": "^0.10.4",
+    "mysql2": "^3.11.3"
+  }
+}

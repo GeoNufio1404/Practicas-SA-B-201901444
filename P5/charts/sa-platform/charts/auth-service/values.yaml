@@ -23,10 +23,10 @@ networkPolicy:
   allowFrom: ["api-gateway"]
   egressTo: []
   egressMysql: true
-  egressRabbitmq: false
+  egressRabbitmq: true
 needsDbSecret: true
 needsAppSecret: true
-needsBrokerSecret: false
+needsBrokerSecret: true
 env: {}
 extraEnv:
   - name: LOG_LEVEL

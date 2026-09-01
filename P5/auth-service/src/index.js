@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import jwt from "jsonwebtoken";
+import "./resumenConsumer.js";
 
 import { cifrarAES, descifrarAES, hashPassword, verificarPassword } from "./crypto.js";
 import { pool } from "./db.js";

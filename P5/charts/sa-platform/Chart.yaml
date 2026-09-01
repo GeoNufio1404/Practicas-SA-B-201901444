@@ -14,3 +14,18 @@ dependencies:
     version: "12.6.3"
     repository: "https://charts.bitnami.com/bitnami"
     condition: rabbitmq.enabled
+  - name: api-gateway
+    version: "1.0.0"
+    condition: api-gateway.enabled
+  - name: auth-service
+    version: "1.0.0"
+    condition: auth-service.enabled
+  - name: figuras-service
+    version: "1.0.0"
+    condition: figuras-service.enabled
+  - name: materiales-service
+    version: "1.0.0"
+    condition: materiales-service.enabled
+  - name: ordenes-service
+    version: "1.0.0"
+    condition: ordenes-service.enabled

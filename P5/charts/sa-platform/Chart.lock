@@ -5,5 +5,20 @@ dependencies:
 - name: rabbitmq
   repository: https://charts.bitnami.com/bitnami
   version: 12.6.3
-digest: sha256:9d1ccabb1b6bb400e56b0aaa1fc115c8ce2099d30b45219e7481fde40e0cb62f
-generated: "2026-08-31T16:51:14.686622738-06:00"
+- name: api-gateway
+  repository: ""
+  version: 1.0.0
+- name: auth-service
+  repository: ""
+  version: 1.0.0
+- name: figuras-service
+  repository: ""
+  version: 1.0.0
+- name: materiales-service
+  repository: ""
+  version: 1.0.0
+- name: ordenes-service
+  repository: ""
+  version: 1.0.0
+digest: sha256:08467f68c5c6436b70d7b815a25e61e005abc020e1a891970cf6475804713544
+generated: "2026-08-31T19:57:11.836544584-06:00"

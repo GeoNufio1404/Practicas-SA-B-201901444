@@ -1,0 +1,10 @@
+{
+  "name": "cronjob-heartbeat",
+  "version": "1.0.0",
+  "description": "Inserta cada 2 min la fecha GMT-6 y el carne del estudiante en MySQL",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "mysql2": "^3.11.3"
+  }
+}
