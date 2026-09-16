@@ -3,3 +3,8 @@
 /minikube-linux-amd64
 
 charts/sa-platform/values.secrets.yaml
+
+ordenes-service/node_modules
+figuras-service/node_modules
+api-gateway/node_modules
+auth-service/node_modules
