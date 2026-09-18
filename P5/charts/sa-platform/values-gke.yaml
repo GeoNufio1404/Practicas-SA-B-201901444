@@ -23,30 +23,45 @@ rabbitmq:
     storageClass: standard
 
 auth-service:
+  replicaCount: 1
+  autoscaling:
+    minReplicas: 1
   image:
     repository: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p6/auth-service
     tag: "1.0.0"
     pullPolicy: Always
 
 materiales-service:
+  replicaCount: 1
+  autoscaling:
+    minReplicas: 1
   image:
     repository: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p6/materiales-service
     tag: "1.0.0"
     pullPolicy: Always
 
 figuras-service:
+  replicaCount: 1
+  autoscaling:
+    minReplicas: 1
   image:
     repository: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p6/figuras-service
     tag: "1.0.0"
     pullPolicy: Always
 
 ordenes-service:
+  replicaCount: 1
+  autoscaling:
+    minReplicas: 1
   image:
     repository: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p6/ordenes-service
     tag: "1.0.0"
     pullPolicy: Always
 
 api-gateway:
+  replicaCount: 1
+  autoscaling:
+    minReplicas: 1
   image:
     repository: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p6/api-gateway
     tag: "1.0.0"
