@@ -1,0 +1,22 @@
+[2026-09-23T11:58:20-06:00] Secretos descifrables tras la reconstruccion (login + /me de un usuario restaurado)
+login dr_a_1 -> HTTP 200
+{"id":2,"username":"dr_a_1","email":"dr_a_1@dr.test","rol":"cliente","creadoEn":"2026-09-23T15:39:38.000Z"}
+
+[2026-09-23T11:58:21-06:00] Kyverno: una imagen :latest debe ser rechazada
+Error from server: admission webhook "validate.kyverno.svc-fail" denied the request: 
+
+resource Pod/sa-p9/prueba-latest was blocked due to the following policies 
+
+disallow-latest-tag:
+  require-explicit-tag: 'validation failure: Toda imagen debe declarar una etiqueta explicita y distinta de ''latest''.'
+require-run-as-non-root:
+  run-as-non-root: 'validation error: Los contenedores deben ejecutarse sin root (runAsNonRoot: true a nivel de pod o de cada contenedor). rule run-as-non-root[0] failed at path /spec/securityContext/runAsNonRoot/ rule run-as-non-root[1] failed at path /spec/containers/0/securityContext/'
+
+[2026-09-23T11:58:21-06:00] Argo Rollouts y Velero tras la reconstruccion
+ROLLOUT                   FASE      IMAGEN
+sa-platform-api-gateway   Healthy   us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.0.1
+NAME                                     STATUS    SCHEDULE    LASTBACKUP   AGE     PAUSED
+schedule.velero.io/velero-sa-p9-hourly   Enabled   0 * * * *                9m13s   
+
+NAME                                      PHASE       LAST VALIDATED   AGE     DEFAULT
+backupstoragelocation.velero.io/default   Available   24s              9m14s   true

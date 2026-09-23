@@ -1,0 +1,1647 @@
+[2026-09-23T11:24:56-06:00] ==> INICIO de la prueba de reconstruccion
+[2026-09-23T11:24:57-06:00] ==> Ultimo respaldo Completed: velero-sa-p9-hourly-20260923170032 (inicio 2026-09-23T17:00:32Z)
+[2026-09-23T11:24:57-06:00] ==> Datos escritos despues del respaldo (se perderan):
+2026-09-23T11:24:58-06:00 POST /api/auth/register dr_c_1 -> HTTP 201
+2026-09-23T11:24:58-06:00 POST /api/auth/register dr_c_2 -> HTTP 201
+[2026-09-23T11:24:58-06:00] ==> Estado de los datos antes de la destruccion:
+2026-09-23T11:24:58-06:00 usuarios con prefijo dr_a_:
+id	username	creado_en
+2	dr_a_1	2026-09-23 09:39:38
+3	dr_a_2	2026-09-23 09:39:39
+4	dr_a_3	2026-09-23 09:39:39
+total	huella
+3	8c1edc1a323cf18b89bb670100eb1ebea73da403608e8c03cc7f1a2774b920d7
+2026-09-23T11:25:01-06:00 usuarios con prefijo dr_c_:
+id	username	creado_en
+7	dr_c_1	2026-09-23 17:24:57
+8	dr_c_2	2026-09-23 17:24:58
+total	huella
+2	87d18951717603a373bea94a5f7d52929d788667cf5f5ba90c368989749553dc
+[2026-09-23T11:25:03-06:00] ==> DESTRUCCION del cluster: terraform destroy de 20-cluster
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 1s
+google_container_cluster.this: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9]
+google_service_account_iam_member.wi["velero"]: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]]
+google_service_account_iam_member.wi["eso"]: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]]
+google_container_node_pool.main: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9/nodePools/main]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # google_container_cluster.this will be destroyed
+  - resource "google_container_cluster" "this" {
+      - autopilot_privileged_admission           = [] -> null
+      - cluster_ipv4_cidr                        = "10.112.0.0/14" -> null
+      - default_max_pods_per_node                = 110 -> null
+      - deletion_policy                          = "DELETE" -> null
+      - deletion_protection                      = false -> null
+      - disable_l4_lb_firewall_reconciliation    = false -> null
+      - effective_labels                         = {
+          - "goog-terraform-provisioned" = "true"
+        } -> null
+      - enable_autopilot                         = false -> null
+      - enable_cilium_clusterwide_network_policy = false -> null
+      - enable_fqdn_network_policy               = false -> null
+      - enable_intranode_visibility              = false -> null
+      - enable_kubernetes_alpha                  = false -> null
+      - enable_l4_ilb_subsetting                 = false -> null
+      - enable_legacy_abac                       = false -> null
+      - enable_multi_networking                  = false -> null
+      - enable_shielded_nodes                    = true -> null
+      - enable_tpu                               = false -> null
+      - endpoint                                 = "34.71.159.120" -> null
+      - id                                       = "projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9" -> null
+      - initial_node_count                       = 1 -> null
+      - label_fingerprint                        = "78cdf2f6" -> null
+      - location                                 = "us-central1-a" -> null
+      - logging_service                          = "logging.googleapis.com/kubernetes" -> null
+      - master_version                           = "1.35.8-gke.1036000" -> null
+      - monitoring_service                       = "monitoring.googleapis.com/kubernetes" -> null
+      - name                                     = "sa-p9" -> null
+      - network                                  = "projects/project-2cbee419-ed7b-469e-89d/global/networks/default" -> null
+      - networking_mode                          = "VPC_NATIVE" -> null
+      - node_locations                           = [] -> null
+      - node_version                             = "1.35.8-gke.1036000" -> null
+      - project                                  = "project-2cbee419-ed7b-469e-89d" -> null
+      - remove_default_node_pool                 = true -> null
+      - resource_labels                          = {} -> null
+      - self_link                                = "https://container.googleapis.com/v1/projects/project-2cbee419-ed7b-469e-89d/zones/us-central1-a/clusters/sa-p9" -> null
+      - services_ipv4_cidr                       = "34.118.224.0/20" -> null
+      - subnetwork                               = "projects/project-2cbee419-ed7b-469e-89d/regions/us-central1/subnetworks/default" -> null
+      - terraform_labels                         = {
+          - "goog-terraform-provisioned" = "true"
+        } -> null
+        # (6 unchanged attributes hidden)
+
+      - addons_config {
+          - dns_cache_config {
+              - enabled = true -> null
+            }
+          - gce_persistent_disk_csi_driver_config {
+              - enabled = true -> null
+            }
+          - network_policy_config {
+              - disabled = true -> null
+            }
+          - node_readiness_config {
+              - enabled = false -> null
+            }
+        }
+
+      - anonymous_authentication_config {
+          - mode = "LIMITED" -> null
+        }
+
+      - binary_authorization {
+          - enabled         = false -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cluster_autoscaling {
+          - auto_provisioning_locations   = [] -> null
+          - autoscaling_profile           = "BALANCED" -> null
+          - default_compute_class_enabled = false -> null
+          - enabled                       = false -> null
+
+          - auto_provisioning_defaults {
+              - disk_size         = 0 -> null
+              - image_type        = "COS_CONTAINERD" -> null
+              - oauth_scopes      = [
+                  - "https://www.googleapis.com/auth/devstorage.read_only",
+                  - "https://www.googleapis.com/auth/logging.write",
+                  - "https://www.googleapis.com/auth/monitoring",
+                  - "https://www.googleapis.com/auth/service.management.readonly",
+                  - "https://www.googleapis.com/auth/servicecontrol",
+                  - "https://www.googleapis.com/auth/trace.append",
+                ] -> null
+              - service_account   = "default" -> null
+                # (3 unchanged attributes hidden)
+
+              - management {
+                  - auto_repair     = true -> null
+                  - auto_upgrade    = true -> null
+                  - upgrade_options = [] -> null
+                }
+            }
+        }
+
+      - control_plane_endpoints_config {
+          - dns_endpoint_config {
+              - allow_external_traffic    = false -> null
+              - enable_k8s_certs_via_dns  = false -> null
+              - enable_k8s_tokens_via_dns = false -> null
+              - endpoint                  = "gke-8ef81f7def3a4d539b0ebb429034c6cf6cda-109522310548.us-central1-a.gke.goog" -> null
+            }
+          - ip_endpoints_config {
+              - enabled = true -> null
+            }
+        }
+
+      - database_encryption {
+          - state    = "DECRYPTED" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - default_snat_status {
+          - disabled = false -> null
+        }
+
+      - enterprise_config {
+          - cluster_tier = "STANDARD" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - ip_allocation_policy {
+          - cluster_ipv4_cidr_block       = "10.112.0.0/14" -> null
+          - cluster_secondary_range_name  = "gke-sa-p9-pods-8ef81f7d" -> null
+          - services_ipv4_cidr_block      = "34.118.224.0/20" -> null
+          - stack_type                    = "IPV4" -> null
+            # (1 unchanged attribute hidden)
+
+          - network_tier_config {
+              - network_tier = "NETWORK_TIER_DEFAULT" -> null
+            }
+
+          - pod_cidr_overprovision_config {
+              - disabled = false -> null
+            }
+        }
+
+      - logging_config {
+          - enable_components = [
+              - "SYSTEM_COMPONENTS",
+            ] -> null
+        }
+
+      - master_auth {
+          - cluster_ca_certificate = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVMVENDQXBXZ0F3SUJBZ0lSQUprN1JEOTRFck9KUXUvVitkL292TE13RFFZSktvWklodmNOQVFFTEJRQXcKTHpFdE1Dc0dBMVVFQXhNa1lqUXpObUUzTURJdFlXVXdaQzAwTUdaaExXSmlNVE10TjJOak4yUTVZVGhsTVdJMgpNQ0FYRFRJMk1Ea3lNakl6TURVek1Gb1lEekl3TlRZd09URTFNREF3TlRNd1dqQXZNUzB3S3dZRFZRUURFeVJpCk5ETTJZVGN3TWkxaFpUQmtMVFF3Wm1FdFltSXhNeTAzWTJNM1pEbGhPR1V4WWpZd2dnR2lNQTBHQ1NxR1NJYjMKRFFFQkFRVUFBNElCandBd2dnR0tBb0lCZ1FDTHo3TEViUmF6T3B1dHYzSXIzbk5TTzdoQU5WOUJvUURHTFNBdgpmQkpWYjN1ZVNWbklPRUE1UUdCT21pb2s0MjhvaG1PTkNUNUwzZE1WTXZKWE1qNUtNTWZtYlhYVndKSFVwaFdmCjNrZS9pWmlIMjQ0R0RzN2xmYWNhWEpzcWlGNjNhU1BNQllrQ083NWcrTVdWeGZocko5RWpDa1dHaTB2elhVbjgKME01NDd3RFlMaTVrVXpMR01rcjA4N0EwUk5VR0ZkNUtBdGxwS2xOZE1TcUttdXFlbFZRMUcrZDdFL3JLVy9XMgpoZkI3OFFPSGE3dGFZSm5Ea3ZoSVFiWnE3Q2xwcDBCV3NoNFZjekNHNzc3MXFYRDQ0L1dPZlcvZTVaSXZPd3FxCjFkYlRHT2pqbEE4bnl4dCt4TS9wQU5aL1JGMHMydktUSUZscENkY0p5aVMzTzdTdVlnbFJFS2YwVFJUN1FHa2YKSldtSGJFK1Z5NnV3eUZCUEQrdGgrOTMzVWlKMHFBRHNFSWZlbExIZnMxaUZId2tJQ0l4OGxzZDRHaDRUTXl3SgpQZk1XZlQ1cVdHQmtLK2s2V2xHdXZ6VWNyckdkays0eGN1bXRZQ2wvZlE2YmNPZi9qSFd1TlBQUUwrR0VrNTUvCkJ1RVpvRFlrL1VYWXRpaDhDR0hrMGxZd1ZDTUNBd0VBQWFOQ01FQXdEZ1lEVlIwUEFRSC9CQVFEQWdJRU1BOEcKQTFVZEV3RUIvd1FGTUFNQkFmOHdIUVlEVlIwT0JCWUVGSm1HamZWdkdZaWpmQjZtWjd5UlNHM09pWmdFTUEwRwpDU3FHU0liM0RRRUJDd1VBQTRJQmdRQk1CTThjNTdEcDlPNUZrZC9BUlhUMExtSWtoY2oydGplV0dwZFRiZnlqCnUrZjAzSGk2cyt3YXR2R0lrT1VxSzdsSXRDUWtQNkhRQjYxWWdKOWVSQmRvR0Q1ZTFRNE5kNmI3MS9HalRUWmQKbU56R0xjTFZuSzRlelNtRkd4L1h5ZEh1YVg4WVg3c3ZTL2hNaHRvSlN3cTVlQ0xKNTFwWUI2bDBUNHFxWEZGQwpaWnZwVVUrdjR6eGpld1VsOGV5NVpxQjhmNEo1MDJuYUYzTGdYOVRUYUtOSlNpTnREaHpQWWF0cWdyMy9ZSks2CkFZWTlUTkFXSkkza2c0aUFES0w4T3I5VkRsVDR4VHdWYk81eFpWZzRyUWJ0RkJydUZjamlLYUdlckFVeER0SUgKaHBIRzQ4OGp3OVo4N2FuUTRQbVRnaXE4T0tGaU1JSDJQYkloamZnS3Fzc0dya1I5QzcxSkZwRFhUOXNEUkRVZQorWG1RalJnMlRQd3puS3lLT2lvRjNSRDNCZUtiQXdYaXd5QU9hRldhN0N5NHNBNEkycFNVZElPZkFNYm5ybXQ4CnpaSGtLaVFwTnB1cUY3dHo2WHhyckJEeDVBZ1hYcnpETHh0Z25HbC8zUjZqa3FPTzk0TXExbWxhQzRRR2t5aDIKbWxxeWk5R0MzY3g2aW5XOGV2bEE0V009Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K" -> null
+            # (2 unchanged attributes hidden)
+
+          - client_certificate_config {
+              - issue_client_certificate = false -> null
+            }
+        }
+
+      - monitoring_config {
+          - enable_components = [
+              - "SYSTEM_COMPONENTS",
+            ] -> null
+
+          - advanced_datapath_observability_config {
+              - enable_metrics = false -> null
+              - enable_relay   = false -> null
+            }
+
+          - managed_prometheus {
+              - enabled = true -> null
+            }
+        }
+
+      - network_policy {
+          - enabled  = false -> null
+          - provider = "PROVIDER_UNSPECIFIED" -> null
+        }
+
+      - node_config {
+          - disk_size_gb                = 50 -> null
+          - disk_type                   = "pd-standard" -> null
+          - effective_taints            = [] -> null
+          - enable_confidential_storage = false -> null
+          - flex_start                  = false -> null
+          - image_type                  = "COS_CONTAINERD" -> null
+          - labels                      = {
+              - "pool" = "main"
+            } -> null
+          - local_ssd_count             = 0 -> null
+          - logging_variant             = "DEFAULT" -> null
+          - machine_type                = "e2-standard-2" -> null
+          - metadata                    = {
+              - "disable-legacy-endpoints" = "true"
+            } -> null
+          - oauth_scopes                = [
+              - "https://www.googleapis.com/auth/cloud-platform",
+            ] -> null
+          - preemptible                 = false -> null
+          - resource_labels             = {
+              - "goog-gke-node-pool-provisioning-model" = "on-demand"
+            } -> null
+          - resource_manager_tags       = {} -> null
+          - service_account             = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com" -> null
+          - spot                        = false -> null
+          - storage_pools               = [] -> null
+          - tags                        = [] -> null
+            # (6 unchanged attributes hidden)
+
+          - boot_disk {
+              - disk_type              = "pd-standard" -> null
+              - provisioned_iops       = 0 -> null
+              - provisioned_throughput = 0 -> null
+              - size_gb                = 50 -> null
+            }
+
+          - kubelet_config {
+              - allowed_unsafe_sysctls                      = [] -> null
+              - container_log_max_files                     = 0 -> null
+              - cpu_cfs_quota                               = false -> null
+              - eviction_max_pod_grace_period_seconds       = 0 -> null
+              - image_gc_high_threshold_percent             = 0 -> null
+              - image_gc_low_threshold_percent              = 0 -> null
+              - insecure_kubelet_readonly_port_enabled      = "FALSE" -> null
+              - max_parallel_image_pulls                    = 2 -> null
+              - pod_pids_limit                              = 0 -> null
+              - shutdown_grace_period_critical_pods_seconds = 0 -> null
+              - shutdown_grace_period_seconds               = 0 -> null
+              - single_process_oom_kill                     = false -> null
+                # (5 unchanged attributes hidden)
+            }
+
+          - node_image_config {
+              - image         = "gke-1358-gke1036000-cos-125-19216-532-123-c-pre" -> null
+              - image_project = "gke-node-images" -> null
+            }
+
+          - shielded_instance_config {
+              - enable_integrity_monitoring = true -> null
+              - enable_secure_boot          = false -> null
+            }
+
+          - windows_node_config {
+                # (1 unchanged attribute hidden)
+            }
+
+          - workload_metadata_config {
+              - mode = "GKE_METADATA" -> null
+            }
+        }
+
+      - node_creation_config {
+          - node_creation_mode = "VIA_KUBELET" -> null
+        }
+
+      - node_pool {
+          - ignore_node_count_changes   = false -> null
+          - initial_node_count          = 3 -> null
+          - instance_group_urls         = [
+              - "https://www.googleapis.com/compute/v1/projects/project-2cbee419-ed7b-469e-89d/zones/us-central1-a/instanceGroupManagers/gke-sa-p9-main-87a23e6f-grp",
+            ] -> null
+          - managed_instance_group_urls = [
+              - "https://www.googleapis.com/compute/v1/projects/project-2cbee419-ed7b-469e-89d/zones/us-central1-a/instanceGroups/gke-sa-p9-main-87a23e6f-grp",
+            ] -> null
+          - max_pods_per_node           = 110 -> null
+          - name                        = "main" -> null
+          - node_count                  = 3 -> null
+          - node_locations              = [
+              - "us-central1-a",
+            ] -> null
+          - version                     = "1.35.8-gke.1036000" -> null
+            # (1 unchanged attribute hidden)
+
+          - management {
+              - auto_repair  = true -> null
+              - auto_upgrade = true -> null
+            }
+
+          - network_config {
+              - create_pod_range            = false -> null
+              - enable_private_nodes        = false -> null
+              - pod_ipv4_cidr_block         = "10.112.0.0/14" -> null
+              - pod_range                   = "gke-sa-p9-pods-8ef81f7d" -> null
+              - subnetwork                  = "projects/project-2cbee419-ed7b-469e-89d/regions/us-central1/subnetworks/default" -> null
+                # (1 unchanged attribute hidden)
+            }
+
+          - node_config {
+              - disk_size_gb                = 50 -> null
+              - disk_type                   = "pd-standard" -> null
+              - effective_taints            = [] -> null
+              - enable_confidential_storage = false -> null
+              - flex_start                  = false -> null
+              - image_type                  = "COS_CONTAINERD" -> null
+              - labels                      = {
+                  - "pool" = "main"
+                } -> null
+              - local_ssd_count             = 0 -> null
+              - logging_variant             = "DEFAULT" -> null
+              - machine_type                = "e2-standard-2" -> null
+              - metadata                    = {
+                  - "disable-legacy-endpoints" = "true"
+                } -> null
+              - oauth_scopes                = [
+                  - "https://www.googleapis.com/auth/cloud-platform",
+                ] -> null
+              - preemptible                 = false -> null
+              - resource_labels             = {
+                  - "goog-gke-node-pool-provisioning-model" = "on-demand"
+                } -> null
+              - resource_manager_tags       = {} -> null
+              - service_account             = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com" -> null
+              - spot                        = false -> null
+              - storage_pools               = [] -> null
+              - tags                        = [] -> null
+                # (6 unchanged attributes hidden)
+
+              - boot_disk {
+                  - disk_type              = "pd-standard" -> null
+                  - provisioned_iops       = 0 -> null
+                  - provisioned_throughput = 0 -> null
+                  - size_gb                = 50 -> null
+                }
+
+              - kubelet_config {
+                  - allowed_unsafe_sysctls                      = [] -> null
+                  - container_log_max_files                     = 0 -> null
+                  - cpu_cfs_quota                               = false -> null
+                  - eviction_max_pod_grace_period_seconds       = 0 -> null
+                  - image_gc_high_threshold_percent             = 0 -> null
+                  - image_gc_low_threshold_percent              = 0 -> null
+                  - insecure_kubelet_readonly_port_enabled      = "FALSE" -> null
+                  - max_parallel_image_pulls                    = 2 -> null
+                  - pod_pids_limit                              = 0 -> null
+                  - shutdown_grace_period_critical_pods_seconds = 0 -> null
+                  - shutdown_grace_period_seconds               = 0 -> null
+                  - single_process_oom_kill                     = false -> null
+                    # (5 unchanged attributes hidden)
+                }
+
+              - node_image_config {
+                  - image         = "gke-1358-gke1036000-cos-125-19216-532-123-c-pre" -> null
+                  - image_project = "gke-node-images" -> null
+                }
+
+              - shielded_instance_config {
+                  - enable_integrity_monitoring = true -> null
+                  - enable_secure_boot          = false -> null
+                }
+
+              - windows_node_config {
+                    # (1 unchanged attribute hidden)
+                }
+
+              - workload_metadata_config {
+                  - mode = "GKE_METADATA" -> null
+                }
+            }
+
+          - upgrade_settings {
+              - max_surge       = 1 -> null
+              - max_unavailable = 0 -> null
+              - strategy        = "SURGE" -> null
+            }
+        }
+
+      - node_pool_auto_config {
+          - resource_manager_tags = {} -> null
+
+          - node_kubelet_config {
+              - insecure_kubelet_readonly_port_enabled = "FALSE" -> null
+            }
+        }
+
+      - node_pool_defaults {
+          - node_config_defaults {
+              - insecure_kubelet_readonly_port_enabled = "FALSE" -> null
+              - logging_variant                        = "DEFAULT" -> null
+            }
+        }
+
+      - notification_config {
+          - pubsub {
+              - enabled = false -> null
+                # (1 unchanged attribute hidden)
+            }
+        }
+
+      - pod_autoscaling {
+          - hpa_profile = "PERFORMANCE" -> null
+        }
+
+      - private_cluster_config {
+          - enable_private_endpoint     = false -> null
+          - enable_private_nodes        = false -> null
+          - private_endpoint            = "10.128.0.10" -> null
+          - public_endpoint             = "34.71.159.120" -> null
+            # (3 unchanged attributes hidden)
+
+          - master_global_access_config {
+              - enabled = false -> null
+            }
+        }
+
+      - rbac_binding_config {
+          - enable_insecure_binding_system_authenticated   = true -> null
+          - enable_insecure_binding_system_unauthenticated = true -> null
+        }
+
+      - release_channel {
+          - channel = "REGULAR" -> null
+        }
+
+      - secret_manager_config {
+          - enabled = false -> null
+        }
+
+      - secret_sync_config {
+          - enabled = false -> null
+        }
+
+      - security_posture_config {
+          - mode               = "BASIC" -> null
+          - vulnerability_mode = "VULNERABILITY_MODE_UNSPECIFIED" -> null
+        }
+
+      - service_external_ips_config {
+          - enabled = false -> null
+        }
+
+      - workload_identity_config {
+          - workload_pool = "project-2cbee419-ed7b-469e-89d.svc.id.goog" -> null
+        }
+    }
+
+  # google_container_node_pool.main will be destroyed
+  - resource "google_container_node_pool" "main" {
+      - cluster                     = "projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9" -> null
+      - deletion_policy             = "DELETE" -> null
+      - id                          = "projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9/nodePools/main" -> null
+      - ignore_node_count_changes   = false -> null
+      - initial_node_count          = 3 -> null
+      - instance_group_urls         = [
+          - "https://www.googleapis.com/compute/v1/projects/project-2cbee419-ed7b-469e-89d/zones/us-central1-a/instanceGroupManagers/gke-sa-p9-main-87a23e6f-grp",
+        ] -> null
+      - location                    = "us-central1-a" -> null
+      - managed_instance_group_urls = [
+          - "https://www.googleapis.com/compute/v1/projects/project-2cbee419-ed7b-469e-89d/zones/us-central1-a/instanceGroups/gke-sa-p9-main-87a23e6f-grp",
+        ] -> null
+      - max_pods_per_node           = 110 -> null
+      - name                        = "main" -> null
+      - node_count                  = 3 -> null
+      - node_locations              = [
+          - "us-central1-a",
+        ] -> null
+      - project                     = "project-2cbee419-ed7b-469e-89d" -> null
+      - version                     = "1.35.8-gke.1036000" -> null
+        # (1 unchanged attribute hidden)
+
+      - management {
+          - auto_repair  = true -> null
+          - auto_upgrade = true -> null
+        }
+
+      - network_config {
+          - create_pod_range            = false -> null
+          - enable_private_nodes        = false -> null
+          - pod_ipv4_cidr_block         = "10.112.0.0/14" -> null
+          - pod_range                   = "gke-sa-p9-pods-8ef81f7d" -> null
+          - subnetwork                  = "projects/project-2cbee419-ed7b-469e-89d/regions/us-central1/subnetworks/default" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - node_config {
+          - disk_size_gb                = 50 -> null
+          - disk_type                   = "pd-standard" -> null
+          - effective_taints            = [] -> null
+          - enable_confidential_storage = false -> null
+          - flex_start                  = false -> null
+          - image_type                  = "COS_CONTAINERD" -> null
+          - labels                      = {
+              - "pool" = "main"
+            } -> null
+          - local_ssd_count             = 0 -> null
+          - logging_variant             = "DEFAULT" -> null
+          - machine_type                = "e2-standard-2" -> null
+          - metadata                    = {
+              - "disable-legacy-endpoints" = "true"
+            } -> null
+          - oauth_scopes                = [
+              - "https://www.googleapis.com/auth/cloud-platform",
+            ] -> null
+          - preemptible                 = false -> null
+          - resource_labels             = {
+              - "goog-gke-node-pool-provisioning-model" = "on-demand"
+            } -> null
+          - resource_manager_tags       = {} -> null
+          - service_account             = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com" -> null
+          - spot                        = false -> null
+          - storage_pools               = [] -> null
+          - tags                        = [] -> null
+            # (6 unchanged attributes hidden)
+
+          - boot_disk {
+              - disk_type              = "pd-standard" -> null
+              - provisioned_iops       = 0 -> null
+              - provisioned_throughput = 0 -> null
+              - size_gb                = 50 -> null
+            }
+
+          - kubelet_config {
+              - allowed_unsafe_sysctls                      = [] -> null
+              - container_log_max_files                     = 0 -> null
+              - cpu_cfs_quota                               = false -> null
+              - eviction_max_pod_grace_period_seconds       = 0 -> null
+              - image_gc_high_threshold_percent             = 0 -> null
+              - image_gc_low_threshold_percent              = 0 -> null
+              - insecure_kubelet_readonly_port_enabled      = "FALSE" -> null
+              - max_parallel_image_pulls                    = 2 -> null
+              - pod_pids_limit                              = 0 -> null
+              - shutdown_grace_period_critical_pods_seconds = 0 -> null
+              - shutdown_grace_period_seconds               = 0 -> null
+              - single_process_oom_kill                     = false -> null
+                # (5 unchanged attributes hidden)
+            }
+
+          - node_image_config {
+              - image         = "gke-1358-gke1036000-cos-125-19216-532-123-c-pre" -> null
+              - image_project = "gke-node-images" -> null
+            }
+
+          - shielded_instance_config {
+              - enable_integrity_monitoring = true -> null
+              - enable_secure_boot          = false -> null
+            }
+
+          - windows_node_config {
+                # (1 unchanged attribute hidden)
+            }
+
+          - workload_metadata_config {
+              - mode = "GKE_METADATA" -> null
+            }
+        }
+
+      - upgrade_settings {
+          - max_surge       = 1 -> null
+          - max_unavailable = 0 -> null
+          - strategy        = "SURGE" -> null
+        }
+    }
+
+  # google_service_account_iam_member.wi["eso"] will be destroyed
+  - resource "google_service_account_iam_member" "wi" {
+      - etag               = "BwZcG2CXB4I=" -> null
+      - id                 = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]" -> null
+      - member             = "serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]" -> null
+      - role               = "roles/iam.workloadIdentityUser" -> null
+      - service_account_id = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com" -> null
+    }
+
+  # google_service_account_iam_member.wi["velero"] will be destroyed
+  - resource "google_service_account_iam_member" "wi" {
+      - etag               = "BwZcG2CaNco=" -> null
+      - id                 = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]" -> null
+      - member             = "serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]" -> null
+      - role               = "roles/iam.workloadIdentityUser" -> null
+      - service_account_id = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com" -> null
+    }
+
+Plan: 0 to add, 0 to change, 4 to destroy.
+
+Changes to Outputs:
+  - cluster_ca_certificate = (sensitive value) -> null
+  - cluster_endpoint       = (sensitive value) -> null
+  - cluster_location       = "us-central1-a" -> null
+  - cluster_name           = "sa-p9" -> null
+  - get_credentials        = "gcloud container clusters get-credentials sa-p9 --zone us-central1-a --project project-2cbee419-ed7b-469e-89d" -> null
+google_service_account_iam_member.wi["velero"]: Destroying... [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]]
+google_service_account_iam_member.wi["eso"]: Destroying... [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]]
+google_container_node_pool.main: Destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9/nodePools/main]
+google_service_account_iam_member.wi["eso"]: Destruction complete after 6s
+google_service_account_iam_member.wi["velero"]: Destruction complete after 6s
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 00m10s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 00m20s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 00m30s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 00m40s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 00m50s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 01m00s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 01m10s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 01m20s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 01m30s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 01m40s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 01m50s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 02m00s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 02m10s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 02m20s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 02m30s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 02m40s elapsed]
+google_container_node_pool.main: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d...ntral1-a/clusters/sa-p9/nodePools/main, 02m50s elapsed]
+google_container_node_pool.main: Destruction complete after 2m54s
+google_container_cluster.this: Destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 00m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 00m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 00m30s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 00m40s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 00m50s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 01m00s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 01m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 01m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 01m30s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 01m40s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 01m50s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 02m00s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 02m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 02m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 02m30s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 02m40s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 02m50s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 03m00s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 03m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 03m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 03m30s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 03m40s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 03m50s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 04m00s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 04m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 04m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 04m30s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 04m40s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 04m50s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 05m00s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 05m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 05m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 05m30s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 05m40s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 05m50s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 06m00s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 06m10s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 06m20s elapsed]
+google_container_cluster.this: Still destroying... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9, 06m30s elapsed]
+google_container_cluster.this: Destruction complete after 6m37s
+
+Destroy complete! Resources: 4 destroyed.
+[2026-09-23T11:34:44-06:00] ==> Cluster destruido (9 min 41 s). Empieza a correr el RTO
+[2026-09-23T11:34:45-06:00] ==> RECONSTRUCCION: bootstrap.sh
+[2026-09-23T11:34:45-06:00] [+0s] ==> INICIO del bootstrap (log: evidencias/bootstrap-20260923-113445.log)
+[2026-09-23T11:34:47-06:00] [+2s] ==> Terraform 20-cluster: cluster GKE sa-p9
+Initializing the backend...
+
+Initializing provider plugins...
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/google from the dependency lock file
+- Using previously-installed hashicorp/google v8.4.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 1s
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_container_cluster.this will be created
+  + resource "google_container_cluster" "this" {
+      + autopilot_privileged_admission           = (known after apply)
+      + cluster_ipv4_cidr                        = (known after apply)
+      + datapath_provider                        = (known after apply)
+      + default_max_pods_per_node                = (known after apply)
+      + deletion_policy                          = "DELETE"
+      + deletion_protection                      = false
+      + disable_l4_lb_firewall_reconciliation    = false
+      + effective_labels                         = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + emulated_version                         = (known after apply)
+      + enable_cilium_clusterwide_network_policy = false
+      + enable_fqdn_network_policy               = false
+      + enable_intranode_visibility              = (known after apply)
+      + enable_kubernetes_alpha                  = false
+      + enable_l4_ilb_subsetting                 = (known after apply)
+      + enable_legacy_abac                       = false
+      + enable_multi_networking                  = false
+      + enable_shielded_nodes                    = true
+      + endpoint                                 = (known after apply)
+      + id                                       = (known after apply)
+      + initial_node_count                       = 1
+      + label_fingerprint                        = (known after apply)
+      + location                                 = "us-central1-a"
+      + logging_service                          = (known after apply)
+      + master_version                           = (known after apply)
+      + monitoring_service                       = (known after apply)
+      + name                                     = "sa-p9"
+      + network                                  = "default"
+      + networking_mode                          = "VPC_NATIVE"
+      + node_locations                           = (known after apply)
+      + node_version                             = (known after apply)
+      + operation                                = (known after apply)
+      + private_ipv6_google_access               = (known after apply)
+      + project                                  = (known after apply)
+      + remove_default_node_pool                 = true
+      + self_link                                = (known after apply)
+      + services_ipv4_cidr                       = (known after apply)
+      + subnetwork                               = (known after apply)
+      + terraform_labels                         = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + tpu_ipv4_cidr_block                      = (known after apply)
+
+      + addons_config (known after apply)
+
+      + anonymous_authentication_config (known after apply)
+
+      + authenticator_groups_config (known after apply)
+
+      + autopilot_cluster_policy_config (known after apply)
+
+      + cluster_autoscaling (known after apply)
+
+      + confidential_nodes (known after apply)
+
+      + control_plane_endpoints_config (known after apply)
+
+      + cost_management_config (known after apply)
+
+      + database_encryption (known after apply)
+
+      + default_snat_status (known after apply)
+
+      + enterprise_config (known after apply)
+
+      + gateway_api_config (known after apply)
+
+      + gke_auto_upgrade_config (known after apply)
+
+      + identity_service_config (known after apply)
+
+      + ip_allocation_policy {
+          + cluster_ipv4_cidr_block       = (known after apply)
+          + cluster_secondary_range_name  = (known after apply)
+          + services_ipv4_cidr_block      = (known after apply)
+          + services_secondary_range_name = (known after apply)
+          + stack_type                    = "IPV4"
+
+          + auto_ipam_config (known after apply)
+
+          + network_tier_config (known after apply)
+
+          + pod_cidr_overprovision_config (known after apply)
+        }
+
+      + logging_config {
+          + enable_components = [
+              + "SYSTEM_COMPONENTS",
+            ]
+        }
+
+      + master_auth (known after apply)
+
+      + master_authorized_networks_config (known after apply)
+
+      + mesh_certificates (known after apply)
+
+      + monitoring_config {
+          + enable_components = [
+              + "SYSTEM_COMPONENTS",
+            ]
+
+          + advanced_datapath_observability_config (known after apply)
+
+          + managed_prometheus (known after apply)
+        }
+
+      + node_config {
+          + disk_size_gb       = 20
+          + disk_type          = "pd-standard"
+          + effective_taints   = (known after apply)
+          + gpudirect_strategy = (known after apply)
+          + image_type         = (known after apply)
+          + labels             = (known after apply)
+          + local_ssd_count    = (known after apply)
+          + logging_variant    = (known after apply)
+          + machine_type       = (known after apply)
+          + metadata           = (known after apply)
+          + min_cpu_platform   = (known after apply)
+          + oauth_scopes       = (known after apply)
+          + preemptible        = false
+          + service_account    = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+          + spot               = false
+
+          + boot_disk (known after apply)
+
+          + confidential_nodes (known after apply)
+
+          + containerd_config (known after apply)
+
+          + gcfs_config (known after apply)
+
+          + guest_accelerator (known after apply)
+
+          + kubelet_config (known after apply)
+
+          + linux_node_config (known after apply)
+
+          + node_image_config (known after apply)
+
+          + shielded_instance_config (known after apply)
+
+          + windows_node_config (known after apply)
+
+          + workload_metadata_config (known after apply)
+        }
+
+      + node_creation_config (known after apply)
+
+      + node_pool (known after apply)
+
+      + node_pool_auto_config (known after apply)
+
+      + node_pool_defaults (known after apply)
+
+      + notification_config (known after apply)
+
+      + pod_autoscaling (known after apply)
+
+      + rbac_binding_config (known after apply)
+
+      + release_channel {
+          + channel = "REGULAR"
+        }
+
+      + security_posture_config (known after apply)
+
+      + service_external_ips_config (known after apply)
+
+      + vertical_pod_autoscaling (known after apply)
+
+      + workload_identity_config {
+          + workload_pool = "project-2cbee419-ed7b-469e-89d.svc.id.goog"
+        }
+    }
+
+  # google_container_node_pool.main will be created
+  + resource "google_container_node_pool" "main" {
+      + cluster                     = (known after apply)
+      + deletion_policy             = "DELETE"
+      + id                          = (known after apply)
+      + initial_node_count          = (known after apply)
+      + instance_group_urls         = (known after apply)
+      + location                    = "us-central1-a"
+      + managed_instance_group_urls = (known after apply)
+      + max_pods_per_node           = (known after apply)
+      + name                        = "main"
+      + name_prefix                 = (known after apply)
+      + node_count                  = 3
+      + node_locations              = (known after apply)
+      + operation                   = (known after apply)
+      + project                     = "project-2cbee419-ed7b-469e-89d"
+      + version                     = (known after apply)
+
+      + management {
+          + auto_repair  = true
+          + auto_upgrade = true
+        }
+
+      + network_config (known after apply)
+
+      + node_config {
+          + disk_size_gb       = 50
+          + disk_type          = "pd-standard"
+          + effective_taints   = (known after apply)
+          + gpudirect_strategy = (known after apply)
+          + image_type         = (known after apply)
+          + labels             = {
+              + "pool" = "main"
+            }
+          + local_ssd_count    = (known after apply)
+          + logging_variant    = (known after apply)
+          + machine_type       = "e2-standard-2"
+          + metadata           = (known after apply)
+          + min_cpu_platform   = (known after apply)
+          + oauth_scopes       = [
+              + "https://www.googleapis.com/auth/cloud-platform",
+            ]
+          + preemptible        = false
+          + service_account    = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+          + spot               = false
+
+          + boot_disk (known after apply)
+
+          + confidential_nodes (known after apply)
+
+          + containerd_config (known after apply)
+
+          + gcfs_config (known after apply)
+
+          + guest_accelerator (known after apply)
+
+          + kubelet_config (known after apply)
+
+          + linux_node_config (known after apply)
+
+          + node_image_config (known after apply)
+
+          + shielded_instance_config (known after apply)
+
+          + windows_node_config (known after apply)
+
+          + workload_metadata_config {
+              + mode = "GKE_METADATA"
+            }
+        }
+
+      + node_drain_config (known after apply)
+
+      + upgrade_settings (known after apply)
+    }
+
+  # google_service_account_iam_member.wi["eso"] will be created
+  + resource "google_service_account_iam_member" "wi" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]"
+      + role               = "roles/iam.workloadIdentityUser"
+      + service_account_id = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+    }
+
+  # google_service_account_iam_member.wi["velero"] will be created
+  + resource "google_service_account_iam_member" "wi" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]"
+      + role               = "roles/iam.workloadIdentityUser"
+      + service_account_id = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + cluster_ca_certificate = (sensitive value)
+  + cluster_endpoint       = (sensitive value)
+  + cluster_location       = "us-central1-a"
+  + cluster_name           = "sa-p9"
+  + get_credentials        = "gcloud container clusters get-credentials sa-p9 --zone us-central1-a --project project-2cbee419-ed7b-469e-89d"
+google_container_cluster.this: Creating...
+google_container_cluster.this: Still creating... [00m10s elapsed]
+google_container_cluster.this: Still creating... [00m20s elapsed]
+google_container_cluster.this: Still creating... [00m30s elapsed]
+google_container_cluster.this: Still creating... [00m40s elapsed]
+google_container_cluster.this: Still creating... [00m50s elapsed]
+google_container_cluster.this: Still creating... [01m00s elapsed]
+google_container_cluster.this: Still creating... [01m10s elapsed]
+google_container_cluster.this: Still creating... [01m20s elapsed]
+google_container_cluster.this: Still creating... [01m30s elapsed]
+google_container_cluster.this: Still creating... [01m40s elapsed]
+google_container_cluster.this: Still creating... [01m50s elapsed]
+google_container_cluster.this: Still creating... [02m00s elapsed]
+google_container_cluster.this: Still creating... [02m10s elapsed]
+google_container_cluster.this: Still creating... [02m20s elapsed]
+google_container_cluster.this: Still creating... [02m30s elapsed]
+google_container_cluster.this: Still creating... [02m40s elapsed]
+google_container_cluster.this: Still creating... [02m50s elapsed]
+google_container_cluster.this: Still creating... [03m00s elapsed]
+google_container_cluster.this: Still creating... [03m10s elapsed]
+google_container_cluster.this: Still creating... [03m20s elapsed]
+google_container_cluster.this: Still creating... [03m30s elapsed]
+google_container_cluster.this: Still creating... [03m40s elapsed]
+google_container_cluster.this: Still creating... [03m50s elapsed]
+google_container_cluster.this: Still creating... [04m00s elapsed]
+google_container_cluster.this: Still creating... [04m10s elapsed]
+google_container_cluster.this: Still creating... [04m20s elapsed]
+google_container_cluster.this: Still creating... [04m30s elapsed]
+google_container_cluster.this: Still creating... [04m40s elapsed]
+google_container_cluster.this: Still creating... [04m50s elapsed]
+google_container_cluster.this: Still creating... [05m00s elapsed]
+google_container_cluster.this: Still creating... [05m10s elapsed]
+google_container_cluster.this: Still creating... [05m20s elapsed]
+google_container_cluster.this: Still creating... [05m30s elapsed]
+google_container_cluster.this: Still creating... [05m40s elapsed]
+google_container_cluster.this: Still creating... [05m50s elapsed]
+google_container_cluster.this: Still creating... [06m00s elapsed]
+google_container_cluster.this: Still creating... [06m10s elapsed]
+google_container_cluster.this: Still creating... [06m20s elapsed]
+google_container_cluster.this: Still creating... [06m30s elapsed]
+google_container_cluster.this: Still creating... [06m40s elapsed]
+google_container_cluster.this: Still creating... [06m50s elapsed]
+google_container_cluster.this: Still creating... [07m00s elapsed]
+google_container_cluster.this: Still creating... [07m10s elapsed]
+google_container_cluster.this: Still creating... [07m20s elapsed]
+google_container_cluster.this: Still creating... [07m30s elapsed]
+google_container_cluster.this: Still creating... [07m40s elapsed]
+google_container_cluster.this: Still creating... [07m50s elapsed]
+google_container_cluster.this: Still creating... [08m00s elapsed]
+google_container_cluster.this: Still creating... [08m10s elapsed]
+google_container_cluster.this: Still creating... [08m20s elapsed]
+google_container_cluster.this: Still creating... [08m30s elapsed]
+google_container_cluster.this: Still creating... [08m40s elapsed]
+google_container_cluster.this: Still creating... [08m50s elapsed]
+google_container_cluster.this: Still creating... [09m00s elapsed]
+google_container_cluster.this: Still creating... [09m10s elapsed]
+google_container_cluster.this: Still creating... [09m20s elapsed]
+google_container_cluster.this: Still creating... [09m30s elapsed]
+google_container_cluster.this: Creation complete after 9m33s [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9]
+google_service_account_iam_member.wi["velero"]: Creating...
+google_service_account_iam_member.wi["eso"]: Creating...
+google_container_node_pool.main: Creating...
+google_service_account_iam_member.wi["velero"]: Creation complete after 5s [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]]
+google_service_account_iam_member.wi["eso"]: Creation complete after 5s [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]]
+google_container_node_pool.main: Still creating... [00m10s elapsed]
+google_container_node_pool.main: Still creating... [00m20s elapsed]
+google_container_node_pool.main: Still creating... [00m30s elapsed]
+google_container_node_pool.main: Still creating... [00m40s elapsed]
+google_container_node_pool.main: Still creating... [00m50s elapsed]
+google_container_node_pool.main: Still creating... [01m00s elapsed]
+google_container_node_pool.main: Still creating... [01m10s elapsed]
+google_container_node_pool.main: Still creating... [01m20s elapsed]
+google_container_node_pool.main: Creation complete after 1m23s [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9/nodePools/main]
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+cluster_ca_certificate = <sensitive>
+cluster_endpoint = <sensitive>
+cluster_location = "us-central1-a"
+cluster_name = "sa-p9"
+get_credentials = "gcloud container clusters get-credentials sa-p9 --zone us-central1-a --project project-2cbee419-ed7b-469e-89d"
+[2026-09-23T11:45:49-06:00] [+664s] ==> Cluster listo
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for sa-p9.
+Initializing the backend...
+
+Initializing provider plugins...
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/helm from the dependency lock file
+- Reusing previous version of hashicorp/google from the dependency lock file
+- Reusing previous version of hashicorp/kubernetes from the dependency lock file
+- Using previously-installed hashicorp/helm v3.3.0
+- Using previously-installed hashicorp/google v8.4.0
+- Using previously-installed hashicorp/kubernetes v3.2.1
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+Error: Failed to parse command-line flags
+
+flag provided but not defined: -input
+
+[2026-09-23T11:45:55-06:00] [+670s] ==> Terraform 30-platform: namespace sa-p9, cuota, limites, RBAC, ArgoCD y root-sa-p9
+data.terraform_remote_state.cluster: Reading...
+data.google_client_config.current: Reading...
+data.google_client_config.current: Read complete after 0s [id=projects//regions//zones/]
+data.terraform_remote_state.cluster: Read complete after 1s
+helm_release.argocd: Refreshing state... [id=argocd]
+kubernetes_namespace_v1.app: Refreshing state... [id=sa-p9]
+kubernetes_service_account_v1.auditor: Refreshing state... [id=sa-p9/sa-p9-auditor]
+kubernetes_limit_range_v1.app: Refreshing state... [id=sa-p9/sa-p9-limits]
+kubernetes_resource_quota_v1.app: Refreshing state... [id=sa-p9/sa-p9-quota]
+kubernetes_role_v1.readonly: Refreshing state... [id=sa-p9/sa-p9-readonly]
+kubernetes_role_binding_v1.auditor_readonly: Refreshing state... [id=sa-p9/sa-p9-auditor-readonly]
+helm_release.root_app: Refreshing state... [id=root-app]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # kubernetes_namespace_v1.app has been deleted
+  - resource "kubernetes_namespace_v1" "app" {
+        id                               = "sa-p9"
+        # (1 unchanged attribute hidden)
+
+      - metadata {
+          - name             = "sa-p9" -> null
+            # (6 unchanged attributes hidden)
+        }
+    }
+
+  # kubernetes_role_v1.readonly has been deleted
+  - resource "kubernetes_role_v1" "readonly" {
+        id = "sa-p9/sa-p9-readonly"
+
+      - metadata {
+          - name             = "sa-p9-readonly" -> null
+            # (7 unchanged attributes hidden)
+        }
+
+        # (2 unchanged blocks hidden)
+    }
+
+  # kubernetes_service_account_v1.auditor has been deleted
+  - resource "kubernetes_service_account_v1" "auditor" {
+        id                              = "sa-p9/sa-p9-auditor"
+        # (2 unchanged attributes hidden)
+
+      - metadata {
+          - name             = "sa-p9-auditor" -> null
+            # (7 unchanged attributes hidden)
+        }
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # helm_release.argocd will be created
+  + resource "helm_release" "argocd" {
+      + atomic                     = false
+      + chart                      = "argo-cd"
+      + cleanup_on_fail            = false
+      + create_namespace           = true
+      + dependency_update          = false
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "argocd"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + repository                 = "https://argoproj.github.io/argo-helm"
+      + reset_values               = false
+      + reuse_values               = false
+      + set_wo                     = (write-only attribute)
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + take_ownership             = false
+      + timeout                    = 900
+      + upgrade_install            = false
+      + values                     = [
+          + <<-EOT
+                "configs":
+                  "cm":
+                    "resource.customizations.health.argoproj.io_Application": |
+                      hs = {}
+                      hs.status = "Progressing"
+                      hs.message = ""
+                      if obj.status ~= nil then
+                        if obj.status.health ~= nil then
+                          hs.status = obj.status.health.status
+                          if obj.status.health.message ~= nil then
+                            hs.message = obj.status.health.message
+                          end
+                        end
+                      end
+                      return hs
+                  "params":
+                    "server.insecure": true
+                "dex":
+                  "enabled": false
+                "notifications":
+                  "enabled": false
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "10.9.2"
+      + wait                       = true
+      + wait_for_jobs              = false
+    }
+
+  # helm_release.root_app will be created
+  + resource "helm_release" "root_app" {
+      + atomic                     = false
+      + chart                      = "argocd-apps"
+      + cleanup_on_fail            = false
+      + create_namespace           = false
+      + dependency_update          = false
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "root-app"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + repository                 = "https://argoproj.github.io/argo-helm"
+      + reset_values               = false
+      + reuse_values               = false
+      + set_wo                     = (write-only attribute)
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + take_ownership             = false
+      + timeout                    = 300
+      + upgrade_install            = false
+      + values                     = [
+          + <<-EOT
+                "applications":
+                  "root-sa-p9":
+                    "destination":
+                      "namespace": "argocd"
+                      "server": "https://kubernetes.default.svc"
+                    "finalizers":
+                    - "resources-finalizer.argocd.argoproj.io"
+                    "namespace": "argocd"
+                    "project": "default"
+                    "source":
+                      "path": "apps"
+                      "repoURL": "https://github.com/GeoNufio1404/software-avanzado-gitops.git"
+                      "targetRevision": "main"
+                    "syncPolicy":
+                      "automated":
+                        "prune": true
+                        "selfHeal": true
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "2.0.5"
+      + wait                       = true
+      + wait_for_jobs              = false
+    }
+
+  # kubernetes_limit_range_v1.app will be created
+  + resource "kubernetes_limit_range_v1" "app" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-limits"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + spec {
+          + limit {
+              + default         = {
+                  + "cpu"    = "200m"
+                  + "memory" = "256Mi"
+                }
+              + default_request = {
+                  + "cpu"    = "100m"
+                  + "memory" = "128Mi"
+                }
+              + max             = {
+                  + "cpu"    = "1"
+                  + "memory" = "1Gi"
+                }
+              + type            = "Container"
+            }
+        }
+    }
+
+  # kubernetes_namespace_v1.app will be created
+  + resource "kubernetes_namespace_v1" "app" {
+      + id                               = (known after apply)
+      + wait_for_default_service_account = false
+
+      + metadata {
+          + generation       = (known after apply)
+          + labels           = {
+              + "app.kubernetes.io/part-of" = "sa-platform"
+              + "practica"                  = "p9"
+            }
+          + name             = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # kubernetes_resource_quota_v1.app will be created
+  + resource "kubernetes_resource_quota_v1" "app" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-quota"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + spec {
+          + hard = {
+              + "limits.cpu"             = "6"
+              + "limits.memory"          = "8Gi"
+              + "persistentvolumeclaims" = "5"
+              + "pods"                   = "40"
+              + "requests.cpu"           = "3"
+              + "requests.memory"        = "4Gi"
+            }
+        }
+    }
+
+  # kubernetes_role_binding_v1.auditor_readonly will be created
+  + resource "kubernetes_role_binding_v1" "auditor_readonly" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-auditor-readonly"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + role_ref {
+          + api_group = "rbac.authorization.k8s.io"
+          + kind      = "Role"
+          + name      = "sa-p9-readonly"
+        }
+
+      + subject {
+          + api_group = (known after apply)
+          + kind      = "ServiceAccount"
+          + name      = "sa-p9-auditor"
+          + namespace = "sa-p9"
+        }
+    }
+
+  # kubernetes_role_v1.readonly will be created
+  + resource "kubernetes_role_v1" "readonly" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-readonly"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + rule {
+          + api_groups = [
+              + null,
+              + "apps",
+              + "autoscaling",
+              + "batch",
+              + "networking.k8s.io",
+              + "policy",
+            ]
+          + resources  = [
+              + "configmaps",
+              + "cronjobs",
+              + "deployments",
+              + "endpoints",
+              + "events",
+              + "horizontalpodautoscalers",
+              + "ingresses",
+              + "jobs",
+              + "networkpolicies",
+              + "persistentvolumeclaims",
+              + "poddisruptionbudgets",
+              + "pods",
+              + "pods/log",
+              + "replicasets",
+              + "services",
+              + "statefulsets",
+            ]
+          + verbs      = [
+              + "get",
+              + "list",
+              + "watch",
+            ]
+        }
+      + rule {
+          + api_groups = [
+              + "argoproj.io",
+            ]
+          + resources  = [
+              + "analysisruns",
+              + "analysistemplates",
+              + "experiments",
+              + "rollouts",
+            ]
+          + verbs      = [
+              + "get",
+              + "list",
+              + "watch",
+            ]
+        }
+    }
+
+  # kubernetes_service_account_v1.auditor will be created
+  + resource "kubernetes_service_account_v1" "auditor" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-auditor"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+Plan: 8 to add, 0 to change, 0 to destroy.
+kubernetes_namespace_v1.app: Creating...
+kubernetes_namespace_v1.app: Creation complete after 0s [id=sa-p9]
+kubernetes_service_account_v1.auditor: Creating...
+kubernetes_resource_quota_v1.app: Creating...
+kubernetes_limit_range_v1.app: Creating...
+kubernetes_role_v1.readonly: Creating...
+kubernetes_limit_range_v1.app: Creation complete after 1s [id=sa-p9/sa-p9-limits]
+kubernetes_role_v1.readonly: Creation complete after 1s [id=sa-p9/sa-p9-readonly]
+kubernetes_service_account_v1.auditor: Creation complete after 1s [id=sa-p9/sa-p9-auditor]
+kubernetes_role_binding_v1.auditor_readonly: Creating...
+kubernetes_resource_quota_v1.app: Creation complete after 1s [id=sa-p9/sa-p9-quota]
+kubernetes_role_binding_v1.auditor_readonly: Creation complete after 0s [id=sa-p9/sa-p9-auditor-readonly]
+helm_release.argocd: Creating...
+helm_release.argocd: Still creating... [00m10s elapsed]
+helm_release.argocd: Still creating... [00m20s elapsed]
+helm_release.argocd: Still creating... [00m31s elapsed]
+helm_release.argocd: Still creating... [00m41s elapsed]
+helm_release.argocd: Still creating... [00m51s elapsed]
+helm_release.argocd: Still creating... [01m01s elapsed]
+helm_release.argocd: Still creating... [01m11s elapsed]
+helm_release.argocd: Still creating... [01m21s elapsed]
+helm_release.argocd: Creation complete after 1m28s [id=argocd]
+helm_release.root_app: Creating...
+helm_release.root_app: Creation complete after 5s [id=root-app]
+
+Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
+[2026-09-23T11:47:48-06:00] [+783s] ==> ArgoCD instalado; la app raiz root-sa-p9 toma el control
+[2026-09-23T11:47:48-06:00] [+783s] ==> Estado de las Applications:
+    root-sa-p9   <none>   <none>
+[2026-09-23T11:48:04-06:00] [+799s] ==> Estado de las Applications:
+    argo-rollouts      OutOfSync   Healthy
+    external-secrets   OutOfSync   Missing
+    kyverno            OutOfSync   Missing
+    root-sa-p9         OutOfSync   Progressing
+    velero             OutOfSync   Missing
+[2026-09-23T11:48:20-06:00] [+815s] ==> Estado de las Applications:
+    argo-rollouts      OutOfSync   Healthy
+    external-secrets   OutOfSync   Missing
+    kyverno            OutOfSync   Missing
+    root-sa-p9         OutOfSync   Healthy
+    velero             OutOfSync   Missing
+[2026-09-23T11:48:36-06:00] [+831s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   OutOfSync   Progressing
+    kyverno            OutOfSync   Missing
+    root-sa-p9         OutOfSync   Healthy
+    velero             OutOfSync   Missing
+[2026-09-23T11:48:52-06:00] [+847s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   OutOfSync   Progressing
+    kyverno            OutOfSync   Missing
+    root-sa-p9         OutOfSync   Progressing
+    velero             OutOfSync   Missing
+[2026-09-23T11:49:23-06:00] [+878s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   OutOfSync   Progressing
+    kyverno            OutOfSync   Progressing
+    root-sa-p9         OutOfSync   Progressing
+    velero             OutOfSync   Progressing
+[2026-09-23T11:49:39-06:00] [+894s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   OutOfSync   Progressing
+    kyverno            OutOfSync   Healthy
+    root-sa-p9         OutOfSync   Progressing
+    velero             OutOfSync   Progressing
+[2026-09-23T11:49:54-06:00] [+909s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   OutOfSync   Progressing
+    kyverno            OutOfSync   Healthy
+    root-sa-p9         OutOfSync   Progressing
+    velero             OutOfSync   Healthy
+[2026-09-23T11:50:41-06:00] [+956s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   OutOfSync   Progressing
+    kyverno            OutOfSync   Healthy
+    root-sa-p9         OutOfSync   Progressing
+    velero             OutOfSync   Progressing
+[2026-09-23T11:50:57-06:00] [+972s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   Synced      Healthy
+    kyverno            OutOfSync   Healthy
+    platform-config    OutOfSync   Healthy
+    root-sa-p9         OutOfSync   Progressing
+    velero             Synced      Progressing
+    velero-restore     Synced      Progressing
+[2026-09-23T11:51:13-06:00] [+988s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   Synced      Healthy
+    kyverno            OutOfSync   Healthy
+    platform-config    Synced      Healthy
+    root-sa-p9         Synced      Progressing
+    sa-platform        OutOfSync   Healthy
+    velero             Synced      Progressing
+    velero-restore     Synced      Progressing
+[2026-09-23T11:51:28-06:00] [+1003s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Progressing
+    external-secrets   Synced      Healthy
+    kyverno            OutOfSync   Healthy
+    platform-config    Synced      Healthy
+    root-sa-p9         Synced      Progressing
+    sa-platform        Synced      Degraded
+    velero             Synced      Progressing
+    velero-restore     Synced      Progressing
+[2026-09-23T11:51:44-06:00] [+1019s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Healthy
+    external-secrets   Synced      Healthy
+    kyverno            OutOfSync   Healthy
+    platform-config    Synced      Healthy
+    root-sa-p9         Synced      Degraded
+    sa-platform        Synced      Degraded
+    velero             Synced      Progressing
+    velero-restore     Synced      Progressing
+[2026-09-23T11:51:59-06:00] [+1034s] ==> Estado de las Applications:
+    argo-rollouts      Synced      Healthy
+    external-secrets   Synced      Healthy
+    kyverno            OutOfSync   Healthy
+    platform-config    Synced      Healthy
+    root-sa-p9         Synced      Progressing
+    sa-platform        Synced      Progressing
+    velero             Synced      Progressing
+    velero-restore     Synced      Progressing
+[2026-09-23T11:52:30-06:00] [+1065s] ==> Estado de las Applications:
+    argo-rollouts      Synced   Healthy
+    external-secrets   Synced   Healthy
+    kyverno            Synced   Healthy
+    platform-config    Synced   Healthy
+    root-sa-p9         Synced   Progressing
+    sa-platform        Synced   Progressing
+    velero             Synced   Progressing
+    velero-restore     Synced   Healthy
+[2026-09-23T11:52:30-06:00] [+1065s] ==> Restauracion de datos terminada. Log del Job restore-mysql:
+    2026-09-23T17:51:04+00:00 Esperando que el BackupStorageLocation este Available...
+    2026-09-23T17:51:05+00:00 Buscando el ultimo respaldo Completed del schedule velero-sa-p9-hourly...
+    2026-09-23T17:51:06+00:00 Restaurando MySQL desde velero-sa-p9-hourly-20260923170032 (Restore restore-mysql-velero-sa-p9-hourly-20260923170032)
+    restore.velero.io/restore-mysql-velero-sa-p9-hourly-20260923170032 created
+    2026-09-23T17:51:09+00:00 Restore en fase InProgress...
+    2026-09-23T17:51:19+00:00 Restore en fase InProgress...
+    2026-09-23T17:51:30+00:00 Restore en fase InProgress...
+    2026-09-23T17:51:41+00:00 Restore en fase InProgress...
+    2026-09-23T17:51:51+00:00 Restore en fase InProgress...
+    2026-09-23T17:52:02+00:00 Restore en fase InProgress...
+    2026-09-23T17:52:13+00:00 Restauracion completada: {"itemsRestored":7,"totalItems":7}
+[2026-09-23T11:53:33-06:00] [+1128s] ==> Estado de las Applications:
+    argo-rollouts      Synced   Healthy
+    external-secrets   Synced   Healthy
+    kyverno            Synced   Healthy
+    platform-config    Synced   Healthy
+    root-sa-p9         Synced   Progressing
+    sa-platform        Synced   Progressing
+    velero             Synced   Healthy
+    velero-restore     Synced   Healthy
+[2026-09-23T11:55:37-06:00] [+1252s] ==> Estado de las Applications:
+    argo-rollouts      Synced   Healthy
+    external-secrets   Synced   Healthy
+    kyverno            Synced   Healthy
+    platform-config    Synced   Healthy
+    root-sa-p9         Synced   Healthy
+    sa-platform        Synced   Healthy
+    velero             Synced   Healthy
+    velero-restore     Synced   Healthy
+[2026-09-23T11:55:37-06:00] [+1252s] ==> Todas las Applications Synced/Healthy
+[2026-09-23T11:55:37-06:00] [+1252s] ==> Verificacion final
+  Rollout api-gateway: Healthy
+  Politicas de Kyverno:
+Warning: kyverno.io/v1 ClusterPolicy is deprecated and will be removed in a future release; migrate to ValidatingPolicy, MutatingPolicy, GeneratingPolicy or ImageValidatingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
+    disallow-latest-tag       True
+    require-resource-limits   True
+    require-run-as-non-root   True
+  ExternalSecrets en sa-p9:
+    sa-platform-app-secrets          SecretSynced
+    sa-platform-broker-credentials   SecretSynced
+    sa-platform-db-credentials       SecretSynced
+    sa-platform-mysql-auth           SecretSynced
+    sa-platform-rabbitmq-auth        SecretSynced
+  Restauraciones de Velero:
+    restore-mysql-velero-sa-p9-hourly-20260923170032   Completed   7
+  Usuarios en auth_db.usuarios: 4
+  Ingress: http://136.81.160.87/api/auth/health -> HTTP 200
+[2026-09-23T11:57:57-06:00] [+1392s] ==> FIN del bootstrap. Duracion total: 23 min 12 s
+[2026-09-23T11:57:57-06:00] ==> Verificacion de datos tras la reconstruccion:
+2026-09-23T11:57:57-06:00 usuarios con prefijo dr_a_:
+id	username	creado_en
+2	dr_a_1	2026-09-23 09:39:38
+3	dr_a_2	2026-09-23 09:39:39
+4	dr_a_3	2026-09-23 09:39:39
+total	huella
+3	8c1edc1a323cf18b89bb670100eb1ebea73da403608e8c03cc7f1a2774b920d7
+2026-09-23T11:58:00-06:00 usuarios con prefijo dr_c_:
+total	huella
+0	NULL
+[2026-09-23T11:58:02-06:00] ==> RTO medido: 23 min 18 s (cluster destruido -> plataforma verificada)
+[2026-09-23T11:58:02-06:00] ==> RPO medido: 24 min 31 s (inicio del respaldo velero-sa-p9-hourly-20260923170032 -> perdida)
+[2026-09-23T11:58:02-06:00] ==> FIN de la prueba de reconstruccion

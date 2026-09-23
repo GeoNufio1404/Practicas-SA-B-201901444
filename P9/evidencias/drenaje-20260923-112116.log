@@ -1,0 +1,238 @@
+[2026-09-23T11:21:17-06:00] ==> Pods de sa-p9 en gke-sa-p9-main-87a23e6f-1f4b antes del drenaje:
+    sa-platform-auth-service-c9bcf7756-5lrx2
+    sa-platform-figuras-service-5dcf46ccc6-mzwkk
+    sa-platform-materiales-service-556b6f75c-sc4mk
+[2026-09-23T11:21:18-06:00] ==> PodDisruptionBudgets:
+    sa-platform-api-gateway-pdb minAvailable=1 allowed=1
+    sa-platform-auth-service-pdb minAvailable=1 allowed=1
+    sa-platform-figuras-service-pdb minAvailable=1 allowed=1
+    sa-platform-materiales-service-pdb minAvailable=1 allowed=1
+    sa-platform-ordenes-service-pdb minAvailable=1 allowed=1
+11:21:19.709 health=200 login=200
+11:21:21.069 health=200 login=200
+11:21:22.246 health=200 login=200
+11:21:23.503 health=200 login=200
+11:21:24.842 health=200 login=200
+11:21:26.189 health=200 login=200
+11:21:27.499 health=200 login=200
+11:21:28.672 health=200 login=200
+[2026-09-23T11:21:29-06:00] ==> kubectl drain gke-sa-p9-main-87a23e6f-1f4b
+node/gke-sa-p9-main-87a23e6f-1f4b cordoned
+11:21:29.897 health=200 login=200
+11:21:31.181 health=200 login=200
+Warning: ignoring DaemonSet-managed Pods: gmp-system/collector-s2gh5, kube-system/fluentbit-gke-pwdzf, kube-system/gke-metadata-server-q4mmr, kube-system/gke-metrics-agent-lp5lk, kube-system/netd-5kvlf, kube-system/node-local-dns-gls8w, kube-system/pdcsi-node-4v2xb, velero/node-agent-gvvtk
+evicting pod kube-system/l7-default-backend-7d8d77ff56-8qzrw
+evicting pod sa-p9/sa-platform-cronjob-heartbeat-29836396-4xlxf
+evicting pod sa-p9/sa-platform-cronjob-heartbeat-29836398-s9d4w
+evicting pod velero/sa-p9-default-kopia-maintain-job-1790183551246-bbk5b
+evicting pod sa-p9/sa-platform-auth-service-c9bcf7756-5lrx2
+evicting pod sa-p9/sa-platform-cronjob-resumen-29836400-78t89
+evicting pod kube-system/event-exporter-gke-857456bf69-p7qmr
+evicting pod kube-system/konnectivity-agent-autoscaler-7f44b76cdc-vr4ff
+evicting pod sa-p9/sa-platform-materiales-service-556b6f75c-sc4mk
+evicting pod kube-system/metrics-server-v1.35.1-7cdd96f59b-6p5pl
+evicting pod argo-rollouts/argo-rollouts-84ccfbb868-t69sv
+evicting pod kube-system/konnectivity-agent-d6f67b9f-twqsb
+evicting pod sa-p9/sa-platform-cronjob-heartbeat-29835596-qwrlm
+evicting pod sa-p9/sa-platform-figuras-service-5dcf46ccc6-mzwkk
+evicting pod gmp-system/gmp-operator-59c78dfbd6-8968f
+evicting pod external-secrets/external-secrets-webhook-6f57c4c649-sqhmt
+evicting pod kube-system/kube-dns-autoscaler-859854db85-hs4qr
+evicting pod kyverno/kyverno-admission-controller-86cbbb5545-vd4kl
+evicting pod sa-p9/sa-platform-cronjob-heartbeat-29835596-fpkh7
+evicting pod sa-p9/sa-platform-cronjob-heartbeat-29835596-s2wls
+evicting pod velero/sa-p9-default-kopia-maintain-job-1790175751218-z8pnt
+evicting pod velero/restore-mysql-qjnbm
+evicting pod kyverno/kyverno-migrate-resources-q6n8g
+evicting pod kube-system/kube-dns-867475b5b-lc4kj
+evicting pod velero/sa-p9-default-kopia-maintain-job-1790179651231-x5cwk
+11:21:32.374 health=200 login=200
+pod/sa-platform-cronjob-heartbeat-29836396-4xlxf evicted
+pod/sa-platform-cronjob-resumen-29836400-78t89 evicted
+I0923 11:21:32.823649  410131 request.go:752] "Waited before sending request" delay="1.199587276s" reason="client-side throttling, not priority and fairness" verb="POST" URL="https://34.71.159.120/api/v1/namespaces/sa-p9/pods/sa-platform-cronjob-heartbeat-29835596-fpkh7/eviction"
+pod/sa-platform-cronjob-heartbeat-29836398-s9d4w evicted
+11:21:33.810 health=200 login=200
+11:21:35.432 health=200 login=200
+pod/sa-p9-default-kopia-maintain-job-1790183551246-bbk5b evicted
+pod/sa-platform-cronjob-heartbeat-29835596-qwrlm evicted
+pod/sa-p9-default-kopia-maintain-job-1790175751218-z8pnt evicted
+11:21:37.084 health=200 login=200
+pod/sa-platform-cronjob-heartbeat-29835596-s2wls evicted
+11:21:38.514 health=200 login=200
+pod/sa-platform-cronjob-heartbeat-29835596-fpkh7 evicted
+pod/restore-mysql-qjnbm evicted
+11:21:40.000 health=200 login=200
+pod/kyverno-migrate-resources-q6n8g evicted
+pod/sa-p9-default-kopia-maintain-job-1790179651231-x5cwk evicted
+11:21:41.481 health=200 login=200
+11:21:42.888 health=200 login=200
+I0923 11:21:42.969195  410131 request.go:752] "Waited before sending request" delay="2.59708229s" reason="client-side throttling, not priority and fairness" verb="GET" URL="https://34.71.159.120/api/v1/namespaces/kube-system/pods/konnectivity-agent-d6f67b9f-twqsb"
+11:21:44.465 health=200 login=200
+pod/kyverno-admission-controller-86cbbb5545-vd4kl evicted
+11:21:45.907 health=200 login=200
+pod/metrics-server-v1.35.1-7cdd96f59b-6p5pl evicted
+pod/konnectivity-agent-autoscaler-7f44b76cdc-vr4ff evicted
+11:21:47.325 health=200 login=200
+pod/kube-dns-autoscaler-859854db85-hs4qr evicted
+11:21:48.686 health=200 login=200
+pod/l7-default-backend-7d8d77ff56-8qzrw evicted
+11:21:49.995 health=200 login=200
+11:21:51.318 health=200 login=200
+11:21:52.628 health=200 login=200
+I0923 11:21:53.169013  410131 request.go:752] "Waited before sending request" delay="1.57922275s" reason="client-side throttling, not priority and fairness" verb="GET" URL="https://34.71.159.120/api/v1/namespaces/gmp-system/pods/gmp-operator-59c78dfbd6-8968f"
+11:21:54.005 health=200 login=200
+11:21:55.409 health=200 login=200
+11:21:57.164 health=200 login=200
+11:21:58.510 health=200 login=200
+11:21:59.909 health=200 login=200
+11:22:01.301 health=200 login=200
+11:22:02.547 health=200 login=200
+I0923 11:22:03.369274  410131 request.go:752] "Waited before sending request" delay="1.684953282s" reason="client-side throttling, not priority and fairness" verb="GET" URL="https://34.71.159.120/api/v1/namespaces/argo-rollouts/pods/argo-rollouts-84ccfbb868-t69sv"
+11:22:03.709 health=200 login=200
+pod/konnectivity-agent-d6f67b9f-twqsb evicted
+11:22:05.008 health=200 login=200
+11:22:06.294 health=200 login=200
+pod/kube-dns-867475b5b-lc4kj evicted
+11:22:07.601 health=200 login=200
+11:22:08.792 health=200 login=200
+11:22:10.076 health=200 login=200
+11:22:11.519 health=200 login=200
+11:22:12.798 health=200 login=200
+I0923 11:22:13.569076  410131 request.go:752] "Waited before sending request" delay="1.287476706s" reason="client-side throttling, not priority and fairness" verb="GET" URL="https://34.71.159.120/api/v1/namespaces/sa-p9/pods/sa-platform-figuras-service-5dcf46ccc6-mzwkk"
+11:22:14.160 health=200 login=200
+11:22:15.502 health=200 login=200
+11:22:16.796 health=200 login=200
+11:22:18.012 health=200 login=200
+11:22:19.300 health=200 login=200
+11:22:20.710 health=200 login=200
+11:22:21.895 health=200 login=200
+11:22:23.099 health=200 login=200
+I0923 11:22:23.769038  410131 request.go:752] "Waited before sending request" delay="1.284387896s" reason="client-side throttling, not priority and fairness" verb="GET" URL="https://34.71.159.120/api/v1/namespaces/argo-rollouts/pods/argo-rollouts-84ccfbb868-t69sv"
+11:22:24.418 health=200 login=200
+11:22:25.696 health=200 login=200
+11:22:26.995 health=200 login=200
+11:22:28.149 health=200 login=200
+11:22:29.361 health=200 login=200
+11:22:30.637 health=200 login=200
+11:22:31.904 health=200 login=200
+11:22:33.175 health=200 login=200
+I0923 11:22:33.968867  410131 request.go:752] "Waited before sending request" delay="1.277498962s" reason="client-side throttling, not priority and fairness" verb="GET" URL="https://34.71.159.120/api/v1/namespaces/gmp-system/pods/gmp-operator-59c78dfbd6-8968f"
+11:22:34.395 health=200 login=200
+11:22:35.925 health=200 login=200
+pod/external-secrets-webhook-6f57c4c649-sqhmt evicted
+pod/argo-rollouts-84ccfbb868-t69sv evicted
+pod/gmp-operator-59c78dfbd6-8968f evicted
+pod/sa-platform-figuras-service-5dcf46ccc6-mzwkk evicted
+11:22:37.727 health=200 login=200
+pod/sa-platform-materiales-service-556b6f75c-sc4mk evicted
+pod/sa-platform-auth-service-c9bcf7756-5lrx2 evicted
+11:22:39.213 health=200 login=200
+11:22:40.657 health=200 login=200
+11:22:42.276 health=200 login=200
+11:22:43.520 health=200 login=200
+11:22:44.705 health=200 login=200
+11:22:45.903 health=200 login=200
+11:22:47.377 health=200 login=200
+11:22:48.696 health=200 login=200
+11:22:50.057 health=200 login=200
+11:22:51.449 health=200 login=200
+11:22:52.794 health=200 login=200
+11:22:54.153 health=200 login=200
+11:22:55.467 health=200 login=200
+11:22:56.794 health=200 login=200
+11:22:58.243 health=200 login=200
+11:22:59.586 health=200 login=200
+11:23:00.896 health=200 login=200
+11:23:02.303 health=200 login=200
+11:23:03.496 health=200 login=200
+11:23:04.816 health=200 login=200
+11:23:06.235 health=200 login=200
+11:23:07.435 health=200 login=200
+11:23:08.687 health=200 login=200
+11:23:10.024 health=200 login=200
+11:23:11.212 health=200 login=200
+11:23:12.482 health=200 login=200
+11:23:13.666 health=200 login=200
+11:23:14.868 health=200 login=200
+11:23:16.168 health=200 login=200
+11:23:17.498 health=200 login=200
+11:23:18.791 health=200 login=200
+11:23:20.050 health=200 login=200
+11:23:21.285 health=200 login=200
+11:23:22.497 health=200 login=200
+11:23:23.721 health=200 login=200
+11:23:25.074 health=200 login=200
+11:23:26.300 health=200 login=200
+11:23:27.587 health=200 login=200
+11:23:28.763 health=200 login=200
+11:23:30.093 health=200 login=200
+11:23:31.425 health=200 login=200
+11:23:32.691 health=200 login=200
+pod/event-exporter-gke-857456bf69-p7qmr evicted
+node/gke-sa-p9-main-87a23e6f-1f4b drained
+[2026-09-23T11:23:33-06:00] ==> Drenaje completo. Distribucion de pods de sa-p9:
+11:23:33.899 health=200 login=200
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-api-gateway-5d4d7b5fb5-h54s6
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-auth-service-c9bcf7756-25654
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-auth-service-c9bcf7756-df29b
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-figuras-service-5dcf46ccc6-ncl6j
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-materiales-service-556b6f75c-9lpjz
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-mysql-0
+    gke-sa-p9-main-87a23e6f-5dns sa-platform-ordenes-service-b746d74fd-pz6g7
+    gke-sa-p9-main-87a23e6f-k2hp sa-platform-api-gateway-5d4d7b5fb5-bz2tl
+    gke-sa-p9-main-87a23e6f-k2hp sa-platform-auth-service-c9bcf7756-jwrsw
+    gke-sa-p9-main-87a23e6f-k2hp sa-platform-figuras-service-5dcf46ccc6-48ftk
+    gke-sa-p9-main-87a23e6f-k2hp sa-platform-materiales-service-556b6f75c-blsvk
+    gke-sa-p9-main-87a23e6f-k2hp sa-platform-ordenes-service-b746d74fd-trft2
+    gke-sa-p9-main-87a23e6f-k2hp sa-platform-rabbitmq-0
+11:23:35.191 health=200 login=200
+11:23:36.648 health=200 login=200
+11:23:37.960 health=200 login=200
+11:23:39.409 health=200 login=200
+11:23:40.618 health=200 login=200
+11:23:41.870 health=200 login=200
+11:23:43.011 health=200 login=200
+11:23:44.327 health=200 login=200
+11:23:45.611 health=200 login=200
+11:23:46.887 health=200 login=200
+11:23:48.086 health=200 login=200
+11:23:49.268 health=200 login=200
+11:23:50.574 health=200 login=200
+11:23:51.711 health=200 login=200
+11:23:53.034 health=200 login=200
+11:23:54.270 health=200 login=200
+11:23:55.560 health=200 login=200
+11:23:56.820 health=200 login=200
+11:23:58.047 health=200 login=200
+11:23:59.376 health=200 login=200
+11:24:00.791 health=200 login=200
+11:24:01.973 health=200 login=200
+11:24:03.213 health=200 login=200
+11:24:04.603 health=200 login=200
+11:24:05.764 health=200 login=200
+11:24:07.063 health=200 login=200
+11:24:08.285 health=200 login=200
+11:24:09.398 health=200 login=200
+11:24:10.645 health=200 login=200
+11:24:11.876 health=200 login=200
+11:24:13.039 health=200 login=200
+11:24:14.203 health=200 login=200
+11:24:15.437 health=200 login=200
+11:24:16.791 health=200 login=200
+11:24:17.979 health=200 login=200
+11:24:19.246 health=200 login=200
+11:24:20.579 health=200 login=200
+11:24:21.807 health=200 login=200
+11:24:23.032 health=200 login=200
+11:24:24.342 health=200 login=200
+11:24:25.615 health=200 login=200
+11:24:26.708 health=200 login=200
+11:24:27.953 health=200 login=200
+11:24:29.182 health=200 login=200
+11:24:30.408 health=200 login=200
+11:24:31.637 health=200 login=200
+11:24:32.901 health=200 login=200
+11:24:34.019 health=200 login=200
+[2026-09-23T11:24:34-06:00] ==> kubectl uncordon gke-sa-p9-main-87a23e6f-1f4b
+node/gke-sa-p9-main-87a23e6f-1f4b uncordoned
+[2026-09-23T11:24:35-06:00] ==> Resumen: 150 sondeos; health distinto de 200: 0; login distinto de 200: 0
