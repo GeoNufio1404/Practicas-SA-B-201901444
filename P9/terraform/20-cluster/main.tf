@@ -74,6 +74,12 @@ resource "google_container_cluster" "this" {
 
   # Necesario para poder destruirlo en la prueba de DR.
   deletion_protection = false
+
+  # Tras crear el cluster, GKE reporta aqui el node_config del pool "main"
+  # (50 GB) y cada apply intentaria cambiarlo a 20 GB.
+  lifecycle {
+    ignore_changes = [node_config]
+  }
 }
 
 resource "google_container_node_pool" "main" {
