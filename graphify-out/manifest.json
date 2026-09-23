@@ -1344,10 +1344,10 @@
     "semantic_hash": "31e3506454602a9897ccec0bc0b5ec38"
   },
   "P9/terraform/20-cluster/main.tf": {
-    "mtime": 1790122049.4901478,
-    "seen": 1790154684.1949487,
-    "ast_hash": "05f3319e86fd12864817fd1249df2b65",
-    "semantic_hash": "05f3319e86fd12864817fd1249df2b65"
+    "mtime": 1790156066.5143206,
+    "seen": 1790199984.7663612,
+    "ast_hash": "e1ec2e108b7b4f961912ca2878a76fa5",
+    "semantic_hash": "e1ec2e108b7b4f961912ca2878a76fa5"
   },
   "P9/terraform/20-cluster/outputs.tf": {
     "mtime": 1790121868.380909,
@@ -1386,10 +1386,10 @@
     "semantic_hash": "1bb1bb0432a4eb9a98379c9a3f24655c"
   },
   "P9/HOJA_DE_RUTA.md": {
-    "mtime": 1790137308.2741783,
-    "seen": 1790154684.1952436,
-    "ast_hash": "57749bc70bb3ba4182f0687f28b75ad2",
-    "semantic_hash": "57749bc70bb3ba4182f0687f28b75ad2"
+    "mtime": 1790198447.5606773,
+    "seen": 1790199984.7663689,
+    "ast_hash": "66238bcf3c32d89914584ac040e53032",
+    "semantic_hash": "66238bcf3c32d89914584ac040e53032"
   },
   "P9/evidencias/terraform/10-base-apply.txt": {
     "mtime": 1790121842.0870395,
@@ -1426,5 +1426,65 @@
     "seen": 1790154684.1952689,
     "ast_hash": "3d5254c0e22b9b002f8b582532e25d3d",
     "semantic_hash": "3d5254c0e22b9b002f8b582532e25d3d"
+  },
+  "P9/bootstrap.sh": {
+    "mtime": 1790156051.3401816,
+    "seen": 1790199984.7663429,
+    "ast_hash": "791aad19c04a3bce418b064363eb3d55",
+    "semantic_hash": "791aad19c04a3bce418b064363eb3d55"
+  },
+  "P9/pruebas/apagar.sh": {
+    "mtime": 1790198430.3873415,
+    "seen": 1790199984.766345,
+    "ast_hash": "17803f8659c533866dce878313d41383",
+    "semantic_hash": "17803f8659c533866dce878313d41383"
+  },
+  "P9/pruebas/datos.sh": {
+    "mtime": 1790156372.6786084,
+    "seen": 1790199984.7663462,
+    "ast_hash": "e9c86f333cd2c541050211cfa8746f10",
+    "semantic_hash": "e9c86f333cd2c541050211cfa8746f10"
+  },
+  "P9/pruebas/drenaje-nodo.sh": {
+    "mtime": 1790156372.7086654,
+    "seen": 1790199984.7663474,
+    "ast_hash": "251149aeaf05bfdfecfcee6d09875b86",
+    "semantic_hash": "251149aeaf05bfdfecfcee6d09875b86"
+  },
+  "P9/pruebas/reconstruccion.sh": {
+    "mtime": 1790179599.9315372,
+    "seen": 1790199984.7663488,
+    "ast_hash": "35cc97134eabb0b2a63cdd9a114656f3",
+    "semantic_hash": "35cc97134eabb0b2a63cdd9a114656f3"
+  },
+  "P9/pruebas/restaurar-datos.sh": {
+    "mtime": 1790156437.8156033,
+    "seen": 1790199984.7663498,
+    "ast_hash": "7488d3921911323c3ba1217f87980c77",
+    "semantic_hash": "7488d3921911323c3ba1217f87980c77"
+  },
+  "P9/README.md": {
+    "mtime": 1790198447.56121,
+    "seen": 1790199984.7663698,
+    "ast_hash": "455bc2ac0bfb4f161e20c78200a33cf5",
+    "semantic_hash": "455bc2ac0bfb4f161e20c78200a33cf5"
+  },
+  "P9/docs/diagrama-bootstrap.md": {
+    "mtime": 1790185182.3743238,
+    "seen": 1790199984.7663708,
+    "ast_hash": "83eedb20923b132e8cc206e1abca1a43",
+    "semantic_hash": "83eedb20923b132e8cc206e1abca1a43"
+  },
+  "P9/docs/informe-dr.md": {
+    "mtime": 1790198377.650844,
+    "seen": 1790199984.7663717,
+    "ast_hash": "f1b0b7c962a4c76d5cb8c77a2e51e1df",
+    "semantic_hash": "f1b0b7c962a4c76d5cb8c77a2e51e1df"
+  },
+  "P9/docs/runbook.md": {
+    "mtime": 1790198447.561452,
+    "seen": 1790199984.7663727,
+    "ast_hash": "e37b09b67960284de3168b2914f39287",
+    "semantic_hash": "e37b09b67960284de3168b2914f39287"
   }
 }
