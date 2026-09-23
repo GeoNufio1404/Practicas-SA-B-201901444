@@ -42,7 +42,8 @@ P9/
 │   ├── datos.sh              usuarios verificables con huella SHA-256
 │   ├── restaurar-datos.sh    recuperación de filas borradas desde un respaldo
 │   ├── drenaje-nodo.sh       pérdida de nodo con sondeo continuo de la API
-│   └── reconstruccion.sh     destrucción y reconstrucción cronometrada
+│   ├── reconstruccion.sh     destrucción y reconstrucción cronometrada
+│   └── apagar.sh             respaldo final (30 días), destruir el clúster y limpiar recursos sueltos
 ├── evidencias/               registros con marcas de tiempo
 └── docs/                     runbook, diagrama e informe DR
 ```

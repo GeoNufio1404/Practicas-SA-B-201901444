@@ -222,3 +222,15 @@ con el prefijo (`INSERT IGNORE`, no pisa filas existentes) y borra la copia.
    ```
    Borrarlos solo después de confirmar que la restauración fue correcta (paso 4.3).
 2. Registrar los tiempos del log en `P9/docs/informe-dr.md`.
+
+## 9. Apagar el entorno sin perder datos
+
+Para no pagar el clúster cuando no se usa:
+
+```bash
+./P9/pruebas/apagar.sh
+```
+
+Crea un respaldo `antes-de-apagar-<fecha>` con retención de 30 días (los respaldos por hora vencen a las
+72 h), destruye `20-cluster` y borra los discos y el balanceador que GKE deja sueltos. Para encenderlo
+de nuevo, sección 3.

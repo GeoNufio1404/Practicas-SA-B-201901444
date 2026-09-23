@@ -217,7 +217,6 @@ software-avanzado-gitops/          (público, clonado en ../software-avanzado-gi
 - [x] Runbook ejecutable por un tercero (`docs/runbook.md`)
 - [x] Informe DR (máx. 2 pág.): objetivos declarados, escenario ejecutado, tiempos medidos, pérdida medida, SPOF detectados, brecha y plan (`docs/informe-dr.md`; revisar extensión)
 - [x] Diagrama del bootstrap (`docs/diagrama-bootstrap.md`, Mermaid)
-- [ ] Preguntas teóricas (el enunciado no las lista; confirmar con el auxiliar)
 - [ ] Video 5–8 min con minutaje
 - [ ] README `/P9` con la tabla de enlaces:
 
@@ -280,7 +279,7 @@ software-avanzado-gitops/          (público, clonado en ../software-avanzado-gi
 | 2026-09-22 | Commit `044c37c` + tag `v1.0.0`: pipeline construyó las 7 imágenes. Corregidos en GitOps: Ingress GCE (anotación en vez de `ingressClassName`) e init de MySQL (`initdbScripts`). Todo `Synced/Healthy`, app pública funcionando | Tag `v1.0.1` para probar PR + canary; luego Fase 9 (`bootstrap.sh`) |
 | 2026-09-22 | Historial GitOps reescrito sin coautoría. `v1.0.1`: PR #1 del pipeline, merge, canary 20/50/80 promovido (tras ajustar umbral de checks) | Fase 9: `bootstrap.sh` |
 | 2026-09-23 | Fase 9: `bootstrap.sh` + app `velero-restore` (Trampa 1). Bug detectado: el schedule real es `velero-sa-p9-hourly` (el chart antepone `velero-`); corregido en el Job, que ahora falla si no hay respaldo. Fase 10: RTO 45 min / RPO 1 h. Fase 11: restauración de datos verificada | Ejecutar a mano `pruebas/drenaje-nodo.sh` y `pruebas/reconstruccion.sh`; luego completar `docs/informe-dr.md` |
-| 2026-09-23 | Drenaje de nodo OK. Reconstrucción cronometrada: RTO 23 min 18 s, RPO 24 min 31 s, datos y secretos verificados. Runbook, diagrama, informe DR y README con tabla de enlaces | Video; preguntas teóricas; borrar discos huérfanos del clúster anterior |
+| 2026-09-23 | Drenaje de nodo OK. Reconstrucción cronometrada: RTO 23 min 18 s, RPO 24 min 31 s, datos y secretos verificados. Runbook, diagrama, informe DR y README con tabla de enlaces | Video |
 
 ---
 
@@ -291,7 +290,14 @@ software-avanzado-gitops/          (público, clonado en ../software-avanzado-gi
 Todos los comandos se ejecutan en una **terminal ubicada en la raíz del repositorio**
 (`~/Documentos/Github/Practicas-SA-B-201901444`). Abrir además un navegador.
 
+El clúster queda **apagado** entre sesiones (se destruye con `apagar.sh` para no pagar).
+Encenderlo **~30 min antes** de grabar:
+
 ```bash
+# 0. Levantar todo desde cero (~25 min). Restaura los datos del último respaldo.
+./P9/bootstrap.sh
+#    Debe terminar con "FIN del bootstrap" y "HTTP 200". Si se detiene con ERROR: docs/runbook.md, sección 5.
+
 # 1. Verificar que todo está sano (8 Applications Synced/Healthy)
 kubectl get applications -n argocd
 
@@ -387,12 +393,19 @@ kubectl argo rollouts get rollout sa-platform-api-gateway -n sa-p9          # en
   en la tabla de `P9/README.md`.
 - La reconstrucción del video genera logs nuevos en `P9/evidencias/`; se pueden commitear junto a los
   existentes.
-- Borrar los discos que deja el clúster destruido (`gcloud compute disks list --filter='-users:*'`)
-  y, si ya no se usará, destruir el clúster: `terraform -chdir=P9/terraform/20-cluster destroy`.
+- **Apagar el entorno** (no dejar el clúster encendido: ~USD 5–6 por día):
+  ```bash
+  ./P9/pruebas/apagar.sh
+  ```
+  Crea un respaldo final con retención de 30 días, destruye el clúster y borra los discos y el
+  balanceador que GKE deja sueltos. Para volver a encenderlo: `./P9/bootstrap.sh`.
+- **Si se repite la grabación**, el orden completo es: `bootstrap.sh` → preparación 9.1 → bloques A a E →
+  `apagar.sh`. Si el video se graba más de 30 días después del último `apagar.sh`, los respaldos
+  ya habrán vencido y MySQL arrancará vacía (el Job `restore-mysql` fallará y avisará).
 
 ---
 
-## 10. Herramientas utilizadas (resumen teórico)
+## 10. Herramientas utilizadas (resumen)
 
 | Herramienta | Qué es | Para qué se usó en P9 |
 |---|---|---|
