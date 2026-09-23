@@ -414,10 +414,10 @@
     "semantic_hash": "26ba6384b56b81b21577392471645cb3"
   },
   "P5/api-gateway/package.json": {
-    "mtime": 1788010598.1845827,
-    "seen": 1790118379.069073,
-    "ast_hash": "410d8e48402774eec4e130656f274269",
-    "semantic_hash": "410d8e48402774eec4e130656f274269"
+    "mtime": 1790136127.9885929,
+    "seen": 1790154684.1947784,
+    "ast_hash": "08332399ea075e287e570bcc561affca",
+    "semantic_hash": "08332399ea075e287e570bcc561affca"
   },
   "P5/api-gateway/src/authMiddleware.js": {
     "mtime": 1788010598.1874464,
@@ -1294,5 +1294,137 @@
     "seen": 1790118379.0692139,
     "ast_hash": "e53845fbbdcc38a1c8a5b35c84219d7c",
     "semantic_hash": "e53845fbbdcc38a1c8a5b35c84219d7c"
+  },
+  "P9/terraform/00-state/.terraform.lock.hcl": {
+    "mtime": 1790121722.509518,
+    "seen": 1790154684.1949189,
+    "ast_hash": "31e3506454602a9897ccec0bc0b5ec38",
+    "semantic_hash": "31e3506454602a9897ccec0bc0b5ec38"
+  },
+  "P9/terraform/00-state/main.tf": {
+    "mtime": 1790121713.6732576,
+    "seen": 1790154684.1949265,
+    "ast_hash": "e02bc6d93ccc6431319ce45fa08af3bf",
+    "semantic_hash": "e02bc6d93ccc6431319ce45fa08af3bf"
+  },
+  "P9/terraform/00-state/variables.tf": {
+    "mtime": 1790121713.7032585,
+    "seen": 1790154684.19493,
+    "ast_hash": "815f52b1d3273a6fca32d11c6c2c795f",
+    "semantic_hash": "815f52b1d3273a6fca32d11c6c2c795f"
+  },
+  "P9/terraform/10-base/.terraform.lock.hcl": {
+    "mtime": 1790121792.0775666,
+    "seen": 1790154684.1949337,
+    "ast_hash": "31e3506454602a9897ccec0bc0b5ec38",
+    "semantic_hash": "31e3506454602a9897ccec0bc0b5ec38"
+  },
+  "P9/terraform/10-base/main.tf": {
+    "mtime": 1790122767.6203413,
+    "seen": 1790154684.1949368,
+    "ast_hash": "6238ca527209e5c455a3a59c30b48ec7",
+    "semantic_hash": "6238ca527209e5c455a3a59c30b48ec7"
+  },
+  "P9/terraform/10-base/outputs.tf": {
+    "mtime": 1790121776.062353,
+    "seen": 1790154684.1949399,
+    "ast_hash": "d07d9bb91d877e3cc3f670aa78a4f6f1",
+    "semantic_hash": "d07d9bb91d877e3cc3f670aa78a4f6f1"
+  },
+  "P9/terraform/10-base/variables.tf": {
+    "mtime": 1790122948.086684,
+    "seen": 1790154684.194943,
+    "ast_hash": "58eaa283e74d74741923cf5ffbbc9897",
+    "semantic_hash": "58eaa283e74d74741923cf5ffbbc9897"
+  },
+  "P9/terraform/20-cluster/.terraform.lock.hcl": {
+    "mtime": 1790121884.4382868,
+    "seen": 1790154684.1949458,
+    "ast_hash": "31e3506454602a9897ccec0bc0b5ec38",
+    "semantic_hash": "31e3506454602a9897ccec0bc0b5ec38"
+  },
+  "P9/terraform/20-cluster/main.tf": {
+    "mtime": 1790122049.4901478,
+    "seen": 1790154684.1949487,
+    "ast_hash": "05f3319e86fd12864817fd1249df2b65",
+    "semantic_hash": "05f3319e86fd12864817fd1249df2b65"
+  },
+  "P9/terraform/20-cluster/outputs.tf": {
+    "mtime": 1790121868.380909,
+    "seen": 1790154684.1949518,
+    "ast_hash": "a535a337c861d4f100056a68153438fa",
+    "semantic_hash": "a535a337c861d4f100056a68153438fa"
+  },
+  "P9/terraform/20-cluster/variables.tf": {
+    "mtime": 1790121901.6997952,
+    "seen": 1790154684.1949546,
+    "ast_hash": "43c7d70624ef18bed44245059bc9267e",
+    "semantic_hash": "43c7d70624ef18bed44245059bc9267e"
+  },
+  "P9/terraform/30-platform/.terraform.lock.hcl": {
+    "mtime": 1790123953.2534611,
+    "seen": 1790154684.1949584,
+    "ast_hash": "774cf751625648a6b32a0d6467028911",
+    "semantic_hash": "774cf751625648a6b32a0d6467028911"
+  },
+  "P9/terraform/30-platform/main.tf": {
+    "mtime": 1790122767.6509929,
+    "seen": 1790154684.194961,
+    "ast_hash": "7f1399847781498cae6a4a4ccdfa17f5",
+    "semantic_hash": "7f1399847781498cae6a4a4ccdfa17f5"
+  },
+  "P9/terraform/30-platform/variables.tf": {
+    "mtime": 1790122759.765172,
+    "seen": 1790154684.1949642,
+    "ast_hash": "d1f534c7bc88e967b441e40f0929b89b",
+    "semantic_hash": "d1f534c7bc88e967b441e40f0929b89b"
+  },
+  ".github/workflows/ci.yaml": {
+    "mtime": 1790124500.8167195,
+    "seen": 1790154684.1949675,
+    "ast_hash": "1bb1bb0432a4eb9a98379c9a3f24655c",
+    "semantic_hash": "1bb1bb0432a4eb9a98379c9a3f24655c"
+  },
+  "P9/HOJA_DE_RUTA.md": {
+    "mtime": 1790137308.2741783,
+    "seen": 1790154684.1952436,
+    "ast_hash": "57749bc70bb3ba4182f0687f28b75ad2",
+    "semantic_hash": "57749bc70bb3ba4182f0687f28b75ad2"
+  },
+  "P9/evidencias/terraform/10-base-apply.txt": {
+    "mtime": 1790121842.0870395,
+    "seen": 1790154684.1952536,
+    "ast_hash": "f9c09416725b869ef83a64c386f5c0b4",
+    "semantic_hash": "f9c09416725b869ef83a64c386f5c0b4"
+  },
+  "P9/evidencias/terraform/10-base-plan.txt": {
+    "mtime": 1790121801.9858584,
+    "seen": 1790154684.195257,
+    "ast_hash": "fb96c7332104440417f457d86c334e18",
+    "semantic_hash": "fb96c7332104440417f457d86c334e18"
+  },
+  "P9/evidencias/terraform/20-cluster-apply.txt": {
+    "mtime": 1790122618.376934,
+    "seen": 1790154684.1952598,
+    "ast_hash": "b2be27d28699a76697ac6dca3df576b6",
+    "semantic_hash": "b2be27d28699a76697ac6dca3df576b6"
+  },
+  "P9/evidencias/terraform/20-cluster-plan.txt": {
+    "mtime": 1790121926.3025198,
+    "seen": 1790154684.1952631,
+    "ast_hash": "7b11d57dade557b7cc66636124bf5af6",
+    "semantic_hash": "7b11d57dade557b7cc66636124bf5af6"
+  },
+  "P9/evidencias/terraform/30-platform-apply.txt": {
+    "mtime": 1790124076.7821276,
+    "seen": 1790154684.195266,
+    "ast_hash": "e38fda4a019f675221b4373d0f00031d",
+    "semantic_hash": "e38fda4a019f675221b4373d0f00031d"
+  },
+  "P9/evidencias/terraform/30-platform-plan.txt": {
+    "mtime": 1790123966.5218549,
+    "seen": 1790154684.1952689,
+    "ast_hash": "3d5254c0e22b9b002f8b582532e25d3d",
+    "semantic_hash": "3d5254c0e22b9b002f8b582532e25d3d"
   }
 }
