@@ -1,0 +1,73 @@
+=== 1. Datos antes del respaldo (conjunto A)
+2026-09-23T03:39:38-06:00 POST /api/auth/register dr_a_1 -> HTTP 201
+2026-09-23T03:39:39-06:00 POST /api/auth/register dr_a_2 -> HTTP 201
+2026-09-23T03:39:40-06:00 POST /api/auth/register dr_a_3 -> HTTP 201
+2026-09-23T03:39:40-06:00 usuarios con prefijo dr_a_:
+id	username	creado_en
+2	dr_a_1	2026-09-23 09:39:38
+3	dr_a_2	2026-09-23 09:39:39
+4	dr_a_3	2026-09-23 09:39:39
+total	huella
+3	8c1edc1a323cf18b89bb670100eb1ebea73da403608e8c03cc7f1a2774b920d7
+
+=== 2. Ultimo respaldo Completed
+N                                    FASE        INICIO                 FIN                    ITEMS
+velero-sa-p9-hourly-20260923160032   Completed   2026-09-23T16:00:32Z   2026-09-23T16:03:04Z   461
+
+=== 3. Datos escritos despues del respaldo (conjunto B, no respaldado)
+2026-09-23T10:07:51-06:00 POST /api/auth/register dr_b_1 -> HTTP 201
+2026-09-23T10:07:55-06:00 POST /api/auth/register dr_b_2 -> HTTP 201
+2026-09-23T10:07:55-06:00 usuarios con prefijo dr_a_:
+id	username	creado_en
+2	dr_a_1	2026-09-23 09:39:38
+3	dr_a_2	2026-09-23 09:39:39
+4	dr_a_3	2026-09-23 09:39:39
+total	huella
+3	8c1edc1a323cf18b89bb670100eb1ebea73da403608e8c03cc7f1a2774b920d7
+2026-09-23T10:07:59-06:00 usuarios con prefijo dr_b_:
+id	username	creado_en
+5	dr_b_1	2026-09-23 16:07:50
+6	dr_b_2	2026-09-23 16:07:53
+total	huella
+2	1740e856cadf38d49d500ee4062ca35d2efa23c8f2105da1820dd327b3b984a1
+
+=== 4. Perdida de datos: borrado de A y B
+2026-09-23T10:08:01-06:00 DELETE usuarios con prefijo dr_a_
+borrados
+3
+2026-09-23T10:08:02-06:00 DELETE usuarios con prefijo dr_b_
+borrados
+2
+2026-09-23T10:08:03-06:00 usuarios con prefijo dr_a_:
+total	huella
+0	NULL
+2026-09-23T10:08:06-06:00 usuarios con prefijo dr_b_:
+total	huella
+0	NULL
+
+=== 5. Recuperacion desde el respaldo velero-sa-p9-hourly-20260923160032
+[2026-09-23T10:08:38-06:00] ==> Restore recuperacion-20260923100838 del respaldo velero-sa-p9-hourly-20260923160032 en el namespace sa-p9-recuperacion
+restore.velero.io/recuperacion-20260923100838 created
+[2026-09-23T10:09:32-06:00] ==> Restore Completed: {"itemsRestored":8,"totalItems":8}
+pod/sa-platform-mysql-0 condition met
+[2026-09-23T10:10:26-06:00] ==> Filas con prefijo dr_ en la copia restaurada:
+id	username	creado_en
+2	dr_a_1	2026-09-23 09:39:38
+3	dr_a_2	2026-09-23 09:39:39
+4	dr_a_3	2026-09-23 09:39:39
+[2026-09-23T10:10:28-06:00] ==> Reinsertando en la MySQL en operacion (sa-p9)
+[2026-09-23T10:10:29-06:00] ==> Eliminando el namespace temporal sa-p9-recuperacion
+[2026-09-23T10:11:13-06:00] ==> Recuperacion terminada
+
+=== 6. Verificacion
+2026-09-23T10:11:13-06:00 usuarios con prefijo dr_a_:
+id	username	creado_en
+2	dr_a_1	2026-09-23 09:39:38
+3	dr_a_2	2026-09-23 09:39:39
+4	dr_a_3	2026-09-23 09:39:39
+total	huella
+3	8c1edc1a323cf18b89bb670100eb1ebea73da403608e8c03cc7f1a2774b920d7
+2026-09-23T10:11:16-06:00 usuarios con prefijo dr_b_:
+total	huella
+0	NULL
+login dr_a_1 -> 200

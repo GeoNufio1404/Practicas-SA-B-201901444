@@ -2,7 +2,7 @@
 
 ## 1. Objetivos declarados
 
-Declarados el **2026-09-23 03:45 (UTC-6)**, antes de ejecutar las pruebas.
+Declarados el **2026-09-23 03:38 (UTC-6)**, commit `3456d7e`, antes de ejecutar las pruebas.
 
 | Objetivo | Valor | Cómo se mide |
 |---|---|---|
@@ -25,7 +25,7 @@ automáticas, estimada con tiempos ya observados en este proyecto:
 Se declaran 45 min: el tiempo estimado más un margen de ~40 % por la variabilidad de GKE al crear
 nodos y balanceadores. No incluye el tiempo de detección del incidente (la prueba es planificada).
 
-**Justificación del RPO.** El `Schedule` de Velero `sa-p9-hourly` respalda el namespace `sa-p9` con sus
+**Justificación del RPO.** El `Schedule` de Velero `velero-sa-p9-hourly` respalda el namespace `sa-p9` con sus
 volúmenes cada hora (`0 * * * *`, retención 72 h) en un bucket GCS fuera del clúster. En el peor caso
 la pérdida ocurre justo antes del siguiente respaldo: se pierde hasta 1 h de escrituras. Para un sistema
 académico sin transacciones críticas es aceptable y mantiene bajo el costo de almacenamiento.
