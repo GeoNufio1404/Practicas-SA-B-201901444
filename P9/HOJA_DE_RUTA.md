@@ -162,7 +162,8 @@ software-avanzado-gitops/          (público, clonado en ../software-avanzado-gi
 - [x] Repo público `software-avanzado-gitops` creado (vacío)
 - [x] Estructura subida al repo (commit `99f823e`); repo público
 - [x] Applications con sync-waves: operadores (0) → configuración (1) → app (2)
-- [x] Root app `root-sa-p9` y las 6 apps hijas `Synced` (sa-platform `Degraded` hasta que existan las imágenes)
+- [x] Root app `root-sa-p9` y las 6 apps hijas `Synced` / `Healthy`
+- [x] App pública en `http://136.81.83.80/api/...` (Ingress GCE): registro, login y `/me` con email descifrado OK
 
 ### Fase 3 — Ajustes al chart (una sola vez) · 1.5 h
 - [x] Quitar `namespace`, `resourcequota`, `limitrange` del chart (ahora son de Terraform)
@@ -187,9 +188,9 @@ software-avanzado-gitops/          (público, clonado en ../software-avanzado-gi
 - [ ] Probar rechazo con un `Deployment` que use `:latest`
 
 ### Fase 7 — Pipeline mínimo · 1.5 h
-- [x] Disparo por tag `v*.*.*`; tag de imagen = versión sin `v` (`.github/workflows/ci.yaml`, sin probar aún)
+- [x] Disparo por tag `v*.*.*`; tag de imagen = versión sin `v` (`.github/workflows/ci.yaml`; `v1.0.0` construyó y subió las 7 imágenes)
 - [x] `helm lint` → build → push a Artifact Registry (Workload Identity Federation)
-- [ ] PR automático a `software-avanzado-gitops` cambiando `image.tag` (falta secreto `GITOPS_TOKEN`)
+- [ ] PR automático a `software-avanzado-gitops` cambiando `image.tag` (`GITOPS_TOKEN` creado; se prueba con `v1.0.1`, en `v1.0.0` no hubo cambios que proponer)
 - [x] Sin kubeconfig, `kubectl` ni `helm upgrade` en el workflow
 
 ### Fase 8 — Velero · 2 h
@@ -275,4 +276,5 @@ software-avanzado-gitops/          (público, clonado en ../software-avanzado-gi
 | 2026-09-22 | Hoja de ruta reorientada a P9 (P8 solo como base) | — |
 | 2026-09-22 | `sa-p6` eliminado. Terraform 00-state, 10-base y 20-cluster aplicados (clúster creado en 11.5 min). 30-platform escrito, sin aplicar | — |
 | 2026-09-22 | Repo GitOps definido (`software-avanzado-gitops`). Recortados extras: rol de operador RBAC, permisos de snapshots de Velero, ingress-nginx, Trivy/Cosign | — |
-| 2026-09-22 | Repo GitOps subido y público; 30-platform aplicado (ArgoCD + root app). Operadores, políticas, secretos y chart sincronizados. Pipeline escrito | Secreto `GITOPS_TOKEN`, commit + tag `v1.0.0` para construir imágenes |
+| 2026-09-22 | Repo GitOps subido y público; 30-platform aplicado (ArgoCD + root app). Operadores, políticas, secretos y chart sincronizados. Pipeline escrito | — |
+| 2026-09-22 | Commit `044c37c` + tag `v1.0.0`: pipeline construyó las 7 imágenes. Corregidos en GitOps: Ingress GCE (anotación en vez de `ingressClassName`) e init de MySQL (`initdbScripts`). Todo `Synced/Healthy`, app pública funcionando | Tag `v1.0.1` para probar PR + canary; luego Fase 9 (`bootstrap.sh`) |

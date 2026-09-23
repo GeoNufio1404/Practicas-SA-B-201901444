@@ -1,6 +1,6 @@
 {
   "name": "api-gateway",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "API Gateway que enruta a los microservicios de materiales, figuras, ordenes y auth",
   "main": "src/index.js",
   "type": "module",
