@@ -1,0 +1,81 @@
+# Rollout api-gateway 1.0.0 -> 1.0.1 (canary 20/50/80 + analisis k6)
+2026-09-22T22:11:17-06:00 merge detectado: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.0.1
+2026-09-22T22:11:18-06:00 Progressing step=1 weight= msg=more replicas need to be updated
+--- AnalysisRuns
+NAME                                     STATUS   START
+sa-platform-api-gateway-5d4d7b5fb5-2-1   Failed   2026-09-23T04:11:18Z
+--- estado final
+Name:            sa-platform-api-gateway
+Namespace:       sa-p9
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Step-based analysis phase error/failed: Metric "k6-smoke" assessed Failed due to failed (1) > failureLimit (0)
+Strategy:        Canary
+  Step:          0/6
+  SetWeight:     0
+  ActualWeight:  0
+Images:          us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.0.0 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         4
+  Available:     4
+
+NAME                                                        KIND         STATUS               AGE    INFO
+⟳ sa-platform-api-gateway                                   Rollout      ✖ Degraded           3h23m  
+├──# revision:2                                                                                      
+│  ├──⧉ sa-platform-api-gateway-5d4d7b5fb5                  ReplicaSet   • ScaledDown         57s    canary
+│  │  └──□ sa-platform-api-gateway-5d4d7b5fb5-r725n         Pod          ◌ Terminating        56s    ready:1/1
+│  └──α sa-platform-api-gateway-5d4d7b5fb5-2-1              AnalysisRun  ✖ Failed             47s    ✖ 1
+│     └──⊞ 770f8a16-e931-4d10-a03a-32eb42317a3d.k6-smoke.1  Job          ✖ Failed             47s    
+└──# revision:1                                                                                      
+   └──⧉ sa-platform-api-gateway-96d8746                     ReplicaSet   ◌ Progressing        3h23m  stable
+      ├──□ sa-platform-api-gateway-96d8746-rrh2d            Pod          ✔ Running            3h23m  ready:1/1
+      ├──□ sa-platform-api-gateway-96d8746-8qv2j            Pod          ✔ Running            3h23m  ready:1/1
+      ├──□ sa-platform-api-gateway-96d8746-qn7wp            Pod          ✔ Running            16s    ready:1/1
+      ├──□ sa-platform-api-gateway-96d8746-rjjsj            Pod          ✔ Running            16s    ready:1/1
+      └──□ sa-platform-api-gateway-96d8746-q4vwd            Pod          ◌ ContainerCreating  2s     ready:0/1
+
+--- salida del Job k6 del analisis
+  █ THRESHOLDS 
+
+    checks
+    ✗ 'rate==1.0' rate=99.95%
+
+    http_req_duration
+    ✓ 'p(95)<500' p(95)=203.82ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 2160   71.867712/s
+    checks_succeeded...: 99.95% 2159 out of 2160
+    checks_failed......: 0.04%  1 out of 2160
+
+    ✓ health 200
+    ✗ servicios ok
+      ↳  99% — ✓ 719 / ✗ 1
+    ✓ login invalido 401
+
+    HTTP
+    http_req_duration..............: avg=103.61ms min=6.8ms   med=95.09ms  max=676.19ms p(90)=186.08ms p(95)=203.82ms
+      { expected_response:true }...: avg=103.61ms min=6.8ms   med=95.09ms  max=676.19ms p(90)=186.08ms p(95)=203.82ms
+    http_req_failed................: 0.00%  0 out of 1440
+    http_reqs......................: 1440   47.911808/s
+
+    EXECUTION
+    iteration_duration.............: avg=208.6ms  min=55.17ms med=195.12ms max=777.24ms p(90)=332.9ms  p(95)=393.3ms 
+    iterations.....................: 720    23.955904/s
+    vus............................: 5      min=5         max=5
+    vus_max........................: 5      min=5         max=5
+
+    NETWORK
+    data_received..................: 493 kB 16 kB/s
+    data_sent......................: 216 kB 7.2 kB/s
+
+
+
+time="2026-09-23T04:11:53Z" level=error msg="thresholds on metrics 'checks' have been crossed"

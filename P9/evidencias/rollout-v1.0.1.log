@@ -1,0 +1,53 @@
+# Rollout api-gateway 1.0.0 -> 1.0.1 (canary 20/50/80 + analisis k6), reintento tras ajustar umbral
+2026-09-22T22:18:45-06:00 kubectl argo rollouts retry rollout sa-platform-api-gateway
+rollout 'sa-platform-api-gateway' retried
+2026-09-22T22:18:46-06:00 Progressing step=0/6 more replicas need to be updated
+2026-09-22T22:19:02-06:00 Progressing step=1/6 more replicas need to be updated
+2026-09-22T22:19:45-06:00 Progressing step=2/6 more replicas need to be updated
+2026-09-22T22:19:56-06:00 Progressing step=3/6 more replicas need to be updated
+2026-09-22T22:20:35-06:00 Progressing step=4/6 more replicas need to be updated
+2026-09-22T22:20:46-06:00 Progressing step=5/6 more replicas need to be updated
+2026-09-22T22:21:23-06:00 Progressing step=6/6 updated replicas are still becoming available
+2026-09-22T22:21:29-06:00 Healthy step=6/6 
+--- AnalysisRuns
+NAME                                       STATUS       START
+sa-platform-api-gateway-5d4d7b5fb5-2-1     Failed       2026-09-23T04:11:18Z
+sa-platform-api-gateway-5d4d7b5fb5-2-1.1   Successful   2026-09-23T04:18:59Z
+sa-platform-api-gateway-5d4d7b5fb5-2-3     Successful   2026-09-23T04:19:55Z
+sa-platform-api-gateway-5d4d7b5fb5-2-5     Successful   2026-09-23T04:20:44Z
+--- estado final
+Name:            sa-platform-api-gateway
+Namespace:       sa-p9
+Status:          ✔ Healthy
+Strategy:        Canary
+  Step:          6/6
+  SetWeight:     100
+  ActualWeight:  100
+Images:          us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.0.1 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       5
+  Ready:         5
+  Available:     5
+
+NAME                                                        KIND         STATUS         AGE    INFO
+⟳ sa-platform-api-gateway                                   Rollout      ✔ Healthy      3h32m  
+├──# revision:2                                                                                
+│  ├──⧉ sa-platform-api-gateway-5d4d7b5fb5                  ReplicaSet   ✔ Healthy      10m    stable
+│  │  ├──□ sa-platform-api-gateway-5d4d7b5fb5-m7mx6         Pod          ✔ Running      2m45s  ready:1/1
+│  │  ├──□ sa-platform-api-gateway-5d4d7b5fb5-h54s6         Pod          ✔ Running      107s   ready:1/1
+│  │  ├──□ sa-platform-api-gateway-5d4d7b5fb5-bz2tl         Pod          ✔ Running      60s    ready:1/1
+│  │  ├──□ sa-platform-api-gateway-5d4d7b5fb5-28vh5         Pod          ✔ Running      59s    ready:1/1
+│  │  └──□ sa-platform-api-gateway-5d4d7b5fb5-tdkkw         Pod          ✔ Running      10s    ready:1/1
+│  ├──α sa-platform-api-gateway-5d4d7b5fb5-2-1              AnalysisRun  ✖ Failed       10m    ✖ 1
+│  │  └──⊞ 770f8a16-e931-4d10-a03a-32eb42317a3d.k6-smoke.1  Job          ✖ Failed       10m    
+│  ├──α sa-platform-api-gateway-5d4d7b5fb5-2-1.1            AnalysisRun  ✔ Successful   2m32s  ✔ 1
+│  │  └──⊞ dcaedcf6-0ca8-475f-aaf0-4e4de8b59382.k6-smoke.1  Job          ✔ Successful   2m32s  
+│  ├──α sa-platform-api-gateway-5d4d7b5fb5-2-3              AnalysisRun  ✔ Successful   96s    ✔ 1
+│  │  └──⊞ c17371a2-d744-4940-b70c-4056478d0328.k6-smoke.1  Job          ✔ Successful   96s    
+│  └──α sa-platform-api-gateway-5d4d7b5fb5-2-5              AnalysisRun  ✔ Successful   47s    ✔ 1
+│     └──⊞ 1d237bee-1831-4589-aead-1b5169601288.k6-smoke.1  Job          ✔ Successful   47s    
+└──# revision:1                                                                                
+   └──⧉ sa-platform-api-gateway-96d8746                     ReplicaSet   • ScaledDown   3h32m  
+      └──□ sa-platform-api-gateway-96d8746-rrh2d            Pod          ◌ Terminating  3h32m  ready:1/1
