@@ -1,0 +1,288 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_container_cluster.this will be created
+  + resource "google_container_cluster" "this" {
+      + autopilot_privileged_admission           = (known after apply)
+      + cluster_ipv4_cidr                        = (known after apply)
+      + datapath_provider                        = (known after apply)
+      + default_max_pods_per_node                = (known after apply)
+      + deletion_policy                          = "DELETE"
+      + deletion_protection                      = false
+      + disable_l4_lb_firewall_reconciliation    = false
+      + effective_labels                         = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + emulated_version                         = (known after apply)
+      + enable_cilium_clusterwide_network_policy = false
+      + enable_fqdn_network_policy               = false
+      + enable_intranode_visibility              = (known after apply)
+      + enable_kubernetes_alpha                  = false
+      + enable_l4_ilb_subsetting                 = (known after apply)
+      + enable_legacy_abac                       = false
+      + enable_multi_networking                  = false
+      + enable_shielded_nodes                    = true
+      + endpoint                                 = (known after apply)
+      + id                                       = (known after apply)
+      + initial_node_count                       = 1
+      + label_fingerprint                        = (known after apply)
+      + location                                 = "us-central1-a"
+      + logging_service                          = (known after apply)
+      + master_version                           = (known after apply)
+      + monitoring_service                       = (known after apply)
+      + name                                     = "sa-p9"
+      + network                                  = "default"
+      + networking_mode                          = "VPC_NATIVE"
+      + node_locations                           = (known after apply)
+      + node_version                             = (known after apply)
+      + operation                                = (known after apply)
+      + private_ipv6_google_access               = (known after apply)
+      + project                                  = (known after apply)
+      + remove_default_node_pool                 = true
+      + self_link                                = (known after apply)
+      + services_ipv4_cidr                       = (known after apply)
+      + subnetwork                               = (known after apply)
+      + terraform_labels                         = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + tpu_ipv4_cidr_block                      = (known after apply)
+
+      + addons_config (known after apply)
+
+      + anonymous_authentication_config (known after apply)
+
+      + authenticator_groups_config (known after apply)
+
+      + autopilot_cluster_policy_config (known after apply)
+
+      + cluster_autoscaling (known after apply)
+
+      + confidential_nodes (known after apply)
+
+      + control_plane_endpoints_config (known after apply)
+
+      + cost_management_config (known after apply)
+
+      + database_encryption (known after apply)
+
+      + default_snat_status (known after apply)
+
+      + enterprise_config (known after apply)
+
+      + gateway_api_config (known after apply)
+
+      + gke_auto_upgrade_config (known after apply)
+
+      + identity_service_config (known after apply)
+
+      + ip_allocation_policy {
+          + cluster_ipv4_cidr_block       = (known after apply)
+          + cluster_secondary_range_name  = (known after apply)
+          + services_ipv4_cidr_block      = (known after apply)
+          + services_secondary_range_name = (known after apply)
+          + stack_type                    = "IPV4"
+
+          + auto_ipam_config (known after apply)
+
+          + network_tier_config (known after apply)
+
+          + pod_cidr_overprovision_config (known after apply)
+        }
+
+      + logging_config {
+          + enable_components = [
+              + "SYSTEM_COMPONENTS",
+            ]
+        }
+
+      + master_auth (known after apply)
+
+      + master_authorized_networks_config (known after apply)
+
+      + mesh_certificates (known after apply)
+
+      + monitoring_config {
+          + enable_components = [
+              + "SYSTEM_COMPONENTS",
+            ]
+
+          + advanced_datapath_observability_config (known after apply)
+
+          + managed_prometheus (known after apply)
+        }
+
+      + node_config {
+          + disk_size_gb       = 20
+          + disk_type          = "pd-standard"
+          + effective_taints   = (known after apply)
+          + gpudirect_strategy = (known after apply)
+          + image_type         = (known after apply)
+          + labels             = (known after apply)
+          + local_ssd_count    = (known after apply)
+          + logging_variant    = (known after apply)
+          + machine_type       = (known after apply)
+          + metadata           = (known after apply)
+          + min_cpu_platform   = (known after apply)
+          + oauth_scopes       = (known after apply)
+          + preemptible        = false
+          + service_account    = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+          + spot               = false
+
+          + boot_disk (known after apply)
+
+          + confidential_nodes (known after apply)
+
+          + containerd_config (known after apply)
+
+          + gcfs_config (known after apply)
+
+          + guest_accelerator (known after apply)
+
+          + kubelet_config (known after apply)
+
+          + linux_node_config (known after apply)
+
+          + node_image_config (known after apply)
+
+          + shielded_instance_config (known after apply)
+
+          + windows_node_config (known after apply)
+
+          + workload_metadata_config (known after apply)
+        }
+
+      + node_creation_config (known after apply)
+
+      + node_pool (known after apply)
+
+      + node_pool_auto_config (known after apply)
+
+      + node_pool_defaults (known after apply)
+
+      + notification_config (known after apply)
+
+      + pod_autoscaling (known after apply)
+
+      + rbac_binding_config (known after apply)
+
+      + release_channel {
+          + channel = "REGULAR"
+        }
+
+      + security_posture_config (known after apply)
+
+      + service_external_ips_config (known after apply)
+
+      + vertical_pod_autoscaling (known after apply)
+
+      + workload_identity_config {
+          + workload_pool = "project-2cbee419-ed7b-469e-89d.svc.id.goog"
+        }
+    }
+
+  # google_container_node_pool.main will be created
+  + resource "google_container_node_pool" "main" {
+      + cluster                     = (known after apply)
+      + deletion_policy             = "DELETE"
+      + id                          = (known after apply)
+      + initial_node_count          = (known after apply)
+      + instance_group_urls         = (known after apply)
+      + location                    = "us-central1-a"
+      + managed_instance_group_urls = (known after apply)
+      + max_pods_per_node           = (known after apply)
+      + name                        = "main"
+      + name_prefix                 = (known after apply)
+      + node_count                  = 3
+      + node_locations              = (known after apply)
+      + operation                   = (known after apply)
+      + project                     = "project-2cbee419-ed7b-469e-89d"
+      + version                     = (known after apply)
+
+      + management {
+          + auto_repair  = true
+          + auto_upgrade = true
+        }
+
+      + network_config (known after apply)
+
+      + node_config {
+          + disk_size_gb       = 50
+          + disk_type          = "pd-standard"
+          + effective_taints   = (known after apply)
+          + gpudirect_strategy = (known after apply)
+          + image_type         = (known after apply)
+          + labels             = {
+              + "pool" = "main"
+            }
+          + local_ssd_count    = (known after apply)
+          + logging_variant    = (known after apply)
+          + machine_type       = "e2-standard-2"
+          + metadata           = (known after apply)
+          + min_cpu_platform   = (known after apply)
+          + oauth_scopes       = [
+              + "https://www.googleapis.com/auth/cloud-platform",
+            ]
+          + preemptible        = false
+          + service_account    = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+          + spot               = false
+
+          + boot_disk (known after apply)
+
+          + confidential_nodes (known after apply)
+
+          + containerd_config (known after apply)
+
+          + gcfs_config (known after apply)
+
+          + guest_accelerator (known after apply)
+
+          + kubelet_config (known after apply)
+
+          + linux_node_config (known after apply)
+
+          + node_image_config (known after apply)
+
+          + shielded_instance_config (known after apply)
+
+          + windows_node_config (known after apply)
+
+          + workload_metadata_config {
+              + mode = "GKE_METADATA"
+            }
+        }
+
+      + node_drain_config (known after apply)
+
+      + upgrade_settings (known after apply)
+    }
+
+  # google_service_account_iam_member.wi["eso"] will be created
+  + resource "google_service_account_iam_member" "wi" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]"
+      + role               = "roles/iam.workloadIdentityUser"
+      + service_account_id = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+    }
+
+  # google_service_account_iam_member.wi["velero"] will be created
+  + resource "google_service_account_iam_member" "wi" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]"
+      + role               = "roles/iam.workloadIdentityUser"
+      + service_account_id = "projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + cluster_ca_certificate = (sensitive value)
+  + cluster_endpoint       = (sensitive value)
+  + cluster_location       = "us-central1-a"
+  + cluster_name           = "sa-p9"
+  + get_credentials        = "gcloud container clusters get-credentials sa-p9 --zone us-central1-a --project project-2cbee419-ed7b-469e-89d"

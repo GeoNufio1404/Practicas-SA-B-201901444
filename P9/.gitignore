@@ -1,0 +1,10 @@
+# Terraform: el estado vive en GCS, nunca en el repo
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+# Excepcion: el estado local de 00-state solo describe el bucket de estado (sin secretos),
+# pero igual no se versiona: se reconstruye con `terraform import` (ver runbook).
+*.auto.tfvars
+secrets/

@@ -1,0 +1,102 @@
+# Pipeline CI de la plataforma PrintHub (P9).
+#
+# Flujo GitOps: este workflow NUNCA toca el cluster (no hay kubeconfig, ni
+# kubectl, ni helm upgrade). Solo:
+#   1. valida el chart (helm lint),
+#   2. construye y sube las imagenes a Artifact Registry con la version del tag,
+#   3. abre un Pull Request en el repo GitOps cambiando las etiquetas.
+# ArgoCD aplica el cambio cuando el PR se fusiona.
+#
+# Disparo: tag de version semantica, p. ej.  git tag v1.0.0 && git push origin v1.0.0
+name: ci
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+env:
+  REGISTRY: us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9
+  GITOPS_REPO: GeoNufio1404/software-avanzado-gitops
+  VALUES_FILE: charts/sa-platform/values-gke.yaml
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo GitOps
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+      - uses: azure/setup-helm@v5
+      - name: helm lint
+        run: helm lint charts/sa-platform -f charts/sa-platform/values.yaml -f ${{ env.VALUES_FILE }}
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC para Workload Identity Federation (sin llaves JSON)
+    strategy:
+      matrix:
+        include:
+          - { image: api-gateway, context: P5/api-gateway }
+          - { image: auth-service, context: P5/auth-service }
+          - { image: figuras-service, context: P5/figuras-service }
+          - { image: materiales-service, context: P5/materiales-service }
+          - { image: ordenes-service, context: P5/ordenes-service }
+          - { image: cronjob-heartbeat, context: P5/cronjobs/heartbeat }
+          - { image: cronjob-resumen, context: P5/cronjobs/resumen }
+    steps:
+      - uses: actions/checkout@v7
+      - name: Version desde el tag (v1.2.3 -> 1.2.3)
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: Autenticacion GCP (solo permiso de subir imagenes)
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/109522310548/locations/global/workloadIdentityPools/sa-p9-github/providers/github-oidc
+          service_account: sa-p9-github-ci@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com
+      - name: Login a Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+      - uses: docker/setup-buildx-action@v4
+      - name: Build y push ${{ matrix.image }}:${{ env.VERSION }}
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ matrix.image }}:${{ env.VERSION }}
+
+  gitops-pr:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Version desde el tag
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: Checkout repo GitOps
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_TOKEN }}
+      - name: Actualizar etiquetas de imagen
+        run: |
+          sed -i -E \
+            -e 's/^(    tag: )"[^"]*"/\1"'"$VERSION"'"/' \
+            -e 's#(/sa-p9/cronjob-[a-z]+:)[^"]*#\1'"$VERSION"'#' \
+            "$VALUES_FILE"
+          git diff
+      - uses: azure/setup-helm@v5
+      - name: helm lint con la nueva version
+        run: helm lint charts/sa-platform -f charts/sa-platform/values.yaml -f ${{ env.VALUES_FILE }}
+      - name: Pull Request de version
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITOPS_TOKEN }}
+          branch: release/v${{ env.VERSION }}
+          title: "release: v${{ env.VERSION }}"
+          commit-message: "release: v${{ env.VERSION }}"
+          body: |
+            Actualiza las imagenes de la plataforma a `${{ env.VERSION }}`.
+
+            Generado por ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            (commit ${{ github.sha }}). Al fusionarlo, ArgoCD despliega la version con
+            Argo Rollouts (canary 20/50/80 % con analisis k6 en cada paso).

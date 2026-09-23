@@ -1,0 +1,484 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_artifact_registry_repository.images will be created
+  + resource "google_artifact_registry_repository" "images" {
+      + create_time      = (known after apply)
+      + deletion_policy  = "DELETE"
+      + description      = "Imagenes de la plataforma PrintHub (P9)"
+      + effective_labels = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + format           = "DOCKER"
+      + id               = (known after apply)
+      + location         = "us-central1"
+      + mode             = "STANDARD_REPOSITORY"
+      + name             = (known after apply)
+      + project          = "project-2cbee419-ed7b-469e-89d"
+      + registry_uri     = (known after apply)
+      + repository_id    = "sa-p9"
+      + terraform_labels = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + update_time      = (known after apply)
+
+      + vulnerability_scanning_config (known after apply)
+    }
+
+  # google_artifact_registry_repository_iam_member.github_ci will be created
+  + resource "google_artifact_registry_repository_iam_member" "github_ci" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + location   = "us-central1"
+      + member     = "serviceAccount:sa-p9-github-ci@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project    = (known after apply)
+      + repository = (known after apply)
+      + role       = "roles/artifactregistry.writer"
+    }
+
+  # google_iam_workload_identity_pool.github will be created
+  + resource "google_iam_workload_identity_pool" "github" {
+      + deletion_policy           = "DELETE"
+      + display_name              = "GitHub Actions sa-p9"
+      + id                        = (known after apply)
+      + mode                      = (known after apply)
+      + name                      = (known after apply)
+      + project                   = "project-2cbee419-ed7b-469e-89d"
+      + state                     = (known after apply)
+      + workload_identity_pool_id = "sa-p9-github"
+    }
+
+  # google_iam_workload_identity_pool_provider.github will be created
+  + resource "google_iam_workload_identity_pool_provider" "github" {
+      + attribute_condition                = "assertion.repository == \"GeoNufio1404/Practicas-SA-B-201901444\""
+      + attribute_mapping                  = {
+          + "attribute.ref"        = "assertion.ref"
+          + "attribute.repository" = "assertion.repository"
+          + "google.subject"       = "assertion.sub"
+        }
+      + deletion_policy                    = "DELETE"
+      + display_name                       = "GitHub OIDC"
+      + id                                 = (known after apply)
+      + name                               = (known after apply)
+      + project                            = "project-2cbee419-ed7b-469e-89d"
+      + state                              = (known after apply)
+      + workload_identity_pool_id          = "sa-p9-github"
+      + workload_identity_pool_provider_id = "github-oidc"
+
+      + oidc {
+          + issuer_uri = "https://token.actions.githubusercontent.com"
+        }
+    }
+
+  # google_project_iam_custom_role.velero will be created
+  + resource "google_project_iam_custom_role" "velero" {
+      + deleted         = (known after apply)
+      + deletion_policy = "DELETE"
+      + id              = (known after apply)
+      + name            = (known after apply)
+      + permissions     = [
+          + "compute.disks.create",
+          + "compute.disks.createSnapshot",
+          + "compute.disks.get",
+          + "compute.projects.get",
+          + "compute.snapshots.create",
+          + "compute.snapshots.delete",
+          + "compute.snapshots.get",
+          + "compute.snapshots.useReadOnly",
+          + "compute.zones.get",
+          + "iam.serviceAccounts.signBlob",
+          + "storage.objects.create",
+          + "storage.objects.delete",
+          + "storage.objects.get",
+          + "storage.objects.list",
+        ]
+      + project         = "project-2cbee419-ed7b-469e-89d"
+      + role_id         = "saP9VeleroServer"
+      + stage           = "GA"
+      + title           = "Velero server (sa-p9)"
+    }
+
+  # google_project_iam_member.eso will be created
+  + resource "google_project_iam_member" "eso" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = "roles/secretmanager.secretAccessor"
+    }
+
+  # google_project_iam_member.gke_nodes["roles/artifactregistry.reader"] will be created
+  + resource "google_project_iam_member" "gke_nodes" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = "roles/artifactregistry.reader"
+    }
+
+  # google_project_iam_member.gke_nodes["roles/logging.logWriter"] will be created
+  + resource "google_project_iam_member" "gke_nodes" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = "roles/logging.logWriter"
+    }
+
+  # google_project_iam_member.gke_nodes["roles/monitoring.metricWriter"] will be created
+  + resource "google_project_iam_member" "gke_nodes" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = "roles/monitoring.metricWriter"
+    }
+
+  # google_project_iam_member.gke_nodes["roles/monitoring.viewer"] will be created
+  + resource "google_project_iam_member" "gke_nodes" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = "roles/monitoring.viewer"
+    }
+
+  # google_project_iam_member.gke_nodes["roles/stackdriver.resourceMetadata.writer"] will be created
+  + resource "google_project_iam_member" "gke_nodes" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = "roles/stackdriver.resourceMetadata.writer"
+    }
+
+  # google_project_iam_member.velero will be created
+  + resource "google_project_iam_member" "velero" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + project = "project-2cbee419-ed7b-469e-89d"
+      + role    = (known after apply)
+    }
+
+  # google_project_service.apis["artifactregistry.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "artifactregistry.googleapis.com"
+    }
+
+  # google_project_service.apis["cloudresourcemanager.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "cloudresourcemanager.googleapis.com"
+    }
+
+  # google_project_service.apis["compute.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "compute.googleapis.com"
+    }
+
+  # google_project_service.apis["container.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "container.googleapis.com"
+    }
+
+  # google_project_service.apis["iam.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "iam.googleapis.com"
+    }
+
+  # google_project_service.apis["iamcredentials.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "iamcredentials.googleapis.com"
+    }
+
+  # google_project_service.apis["secretmanager.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "secretmanager.googleapis.com"
+    }
+
+  # google_project_service.apis["storage.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "storage.googleapis.com"
+    }
+
+  # google_project_service.apis["sts.googleapis.com"] will be created
+  + resource "google_project_service" "apis" {
+      + deletion_policy    = "DELETE"
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "project-2cbee419-ed7b-469e-89d"
+      + service            = "sts.googleapis.com"
+    }
+
+  # google_secret_manager_secret.app["sa-p9-aes-key"] will be created
+  + resource "google_secret_manager_secret" "app" {
+      + create_time           = (known after apply)
+      + deletion_policy       = "DELETE"
+      + deletion_protection   = false
+      + effective_annotations = (known after apply)
+      + effective_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + expire_time           = (known after apply)
+      + id                    = (known after apply)
+      + name                  = (known after apply)
+      + project               = "project-2cbee419-ed7b-469e-89d"
+      + secret_id             = "sa-p9-aes-key"
+      + terraform_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+
+      + replication {
+          + auto {
+            }
+        }
+    }
+
+  # google_secret_manager_secret.app["sa-p9-jwt-secret"] will be created
+  + resource "google_secret_manager_secret" "app" {
+      + create_time           = (known after apply)
+      + deletion_policy       = "DELETE"
+      + deletion_protection   = false
+      + effective_annotations = (known after apply)
+      + effective_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + expire_time           = (known after apply)
+      + id                    = (known after apply)
+      + name                  = (known after apply)
+      + project               = "project-2cbee419-ed7b-469e-89d"
+      + secret_id             = "sa-p9-jwt-secret"
+      + terraform_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+
+      + replication {
+          + auto {
+            }
+        }
+    }
+
+  # google_secret_manager_secret.app["sa-p9-mysql-password"] will be created
+  + resource "google_secret_manager_secret" "app" {
+      + create_time           = (known after apply)
+      + deletion_policy       = "DELETE"
+      + deletion_protection   = false
+      + effective_annotations = (known after apply)
+      + effective_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + expire_time           = (known after apply)
+      + id                    = (known after apply)
+      + name                  = (known after apply)
+      + project               = "project-2cbee419-ed7b-469e-89d"
+      + secret_id             = "sa-p9-mysql-password"
+      + terraform_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+
+      + replication {
+          + auto {
+            }
+        }
+    }
+
+  # google_secret_manager_secret.app["sa-p9-mysql-root-password"] will be created
+  + resource "google_secret_manager_secret" "app" {
+      + create_time           = (known after apply)
+      + deletion_policy       = "DELETE"
+      + deletion_protection   = false
+      + effective_annotations = (known after apply)
+      + effective_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + expire_time           = (known after apply)
+      + id                    = (known after apply)
+      + name                  = (known after apply)
+      + project               = "project-2cbee419-ed7b-469e-89d"
+      + secret_id             = "sa-p9-mysql-root-password"
+      + terraform_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+
+      + replication {
+          + auto {
+            }
+        }
+    }
+
+  # google_secret_manager_secret.app["sa-p9-rabbitmq-password"] will be created
+  + resource "google_secret_manager_secret" "app" {
+      + create_time           = (known after apply)
+      + deletion_policy       = "DELETE"
+      + deletion_protection   = false
+      + effective_annotations = (known after apply)
+      + effective_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + expire_time           = (known after apply)
+      + id                    = (known after apply)
+      + name                  = (known after apply)
+      + project               = "project-2cbee419-ed7b-469e-89d"
+      + secret_id             = "sa-p9-rabbitmq-password"
+      + terraform_labels      = {
+          + "goog-terraform-provisioned" = "true"
+        }
+
+      + replication {
+          + auto {
+            }
+        }
+    }
+
+  # google_service_account.eso will be created
+  + resource "google_service_account" "eso" {
+      + account_id      = "sa-p9-external-secrets"
+      + deletion_policy = "DELETE"
+      + disabled        = false
+      + display_name    = "External Secrets sa-p9"
+      + email           = "sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + id              = (known after apply)
+      + member          = "serviceAccount:sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + name            = (known after apply)
+      + project         = "project-2cbee419-ed7b-469e-89d"
+      + unique_id       = (known after apply)
+    }
+
+  # google_service_account.github_ci will be created
+  + resource "google_service_account" "github_ci" {
+      + account_id      = "sa-p9-github-ci"
+      + deletion_policy = "DELETE"
+      + disabled        = false
+      + display_name    = "GitHub Actions CI sa-p9 (solo push de imagenes)"
+      + email           = "sa-p9-github-ci@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + id              = (known after apply)
+      + member          = "serviceAccount:sa-p9-github-ci@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + name            = (known after apply)
+      + project         = "project-2cbee419-ed7b-469e-89d"
+      + unique_id       = (known after apply)
+    }
+
+  # google_service_account.gke_nodes will be created
+  + resource "google_service_account" "gke_nodes" {
+      + account_id      = "sa-p9-gke-nodes"
+      + deletion_policy = "DELETE"
+      + disabled        = false
+      + display_name    = "Nodos GKE sa-p9"
+      + email           = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + id              = (known after apply)
+      + member          = "serviceAccount:sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + name            = (known after apply)
+      + project         = "project-2cbee419-ed7b-469e-89d"
+      + unique_id       = (known after apply)
+    }
+
+  # google_service_account.velero will be created
+  + resource "google_service_account" "velero" {
+      + account_id      = "sa-p9-velero"
+      + deletion_policy = "DELETE"
+      + disabled        = false
+      + display_name    = "Velero sa-p9"
+      + email           = "sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + id              = (known after apply)
+      + member          = "serviceAccount:sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + name            = (known after apply)
+      + project         = "project-2cbee419-ed7b-469e-89d"
+      + unique_id       = (known after apply)
+    }
+
+  # google_service_account_iam_member.github_ci_wif will be created
+  + resource "google_service_account_iam_member" "github_ci_wif" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = (known after apply)
+      + role               = "roles/iam.workloadIdentityUser"
+      + service_account_id = (known after apply)
+    }
+
+  # google_storage_bucket.velero will be created
+  + resource "google_storage_bucket" "velero" {
+      + deletion_policy             = "DELETE"
+      + effective_labels            = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + force_destroy               = false
+      + id                          = (known after apply)
+      + location                    = "US-EAST1"
+      + name                        = "sa-p9-velero-201901444"
+      + project                     = (known after apply)
+      + project_number              = (known after apply)
+      + public_access_prevention    = "enforced"
+      + rpo                         = (known after apply)
+      + self_link                   = (known after apply)
+      + storage_class               = "STANDARD"
+      + terraform_labels            = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + time_created                = (known after apply)
+      + uniform_bucket_level_access = true
+      + updated                     = (known after apply)
+      + url                         = (known after apply)
+
+      + soft_delete_policy (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # google_storage_bucket_iam_member.velero will be created
+  + resource "google_storage_bucket_iam_member" "velero" {
+      + bucket = "sa-p9-velero-201901444"
+      + etag   = (known after apply)
+      + id     = (known after apply)
+      + member = "serviceAccount:sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+      + role   = "roles/storage.objectAdmin"
+    }
+
+Plan: 33 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + eso_sa              = "sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+  + github_ci_sa        = "sa-p9-github-ci@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+  + github_wif_provider = (known after apply)
+  + gke_nodes_sa        = "sa-p9-gke-nodes@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"
+  + project_number      = "109522310548"
+  + registry            = "us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9"
+  + velero_bucket       = "sa-p9-velero-201901444"
+  + velero_sa           = "sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com"

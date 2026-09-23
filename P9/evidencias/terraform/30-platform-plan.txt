@@ -1,0 +1,302 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # helm_release.argocd will be created
+  + resource "helm_release" "argocd" {
+      + atomic                     = false
+      + chart                      = "argo-cd"
+      + cleanup_on_fail            = false
+      + create_namespace           = true
+      + dependency_update          = false
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "argocd"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + repository                 = "https://argoproj.github.io/argo-helm"
+      + reset_values               = false
+      + reuse_values               = false
+      + set_wo                     = (write-only attribute)
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + take_ownership             = false
+      + timeout                    = 900
+      + upgrade_install            = false
+      + values                     = [
+          + <<-EOT
+                "configs":
+                  "cm":
+                    "resource.customizations.health.argoproj.io_Application": |
+                      hs = {}
+                      hs.status = "Progressing"
+                      hs.message = ""
+                      if obj.status ~= nil then
+                        if obj.status.health ~= nil then
+                          hs.status = obj.status.health.status
+                          if obj.status.health.message ~= nil then
+                            hs.message = obj.status.health.message
+                          end
+                        end
+                      end
+                      return hs
+                  "params":
+                    "server.insecure": true
+                "dex":
+                  "enabled": false
+                "notifications":
+                  "enabled": false
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "10.9.2"
+      + wait                       = true
+      + wait_for_jobs              = false
+    }
+
+  # helm_release.root_app will be created
+  + resource "helm_release" "root_app" {
+      + atomic                     = false
+      + chart                      = "argocd-apps"
+      + cleanup_on_fail            = false
+      + create_namespace           = false
+      + dependency_update          = false
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "root-app"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + repository                 = "https://argoproj.github.io/argo-helm"
+      + reset_values               = false
+      + reuse_values               = false
+      + set_wo                     = (write-only attribute)
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + take_ownership             = false
+      + timeout                    = 300
+      + upgrade_install            = false
+      + values                     = [
+          + <<-EOT
+                "applications":
+                  "root-sa-p9":
+                    "destination":
+                      "namespace": "argocd"
+                      "server": "https://kubernetes.default.svc"
+                    "finalizers":
+                    - "resources-finalizer.argocd.argoproj.io"
+                    "namespace": "argocd"
+                    "project": "default"
+                    "source":
+                      "path": "apps"
+                      "repoURL": "https://github.com/GeoNufio1404/software-avanzado-gitops.git"
+                      "targetRevision": "main"
+                    "syncPolicy":
+                      "automated":
+                        "prune": true
+                        "selfHeal": true
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "2.0.5"
+      + wait                       = true
+      + wait_for_jobs              = false
+    }
+
+  # kubernetes_limit_range_v1.app will be created
+  + resource "kubernetes_limit_range_v1" "app" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-limits"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + spec {
+          + limit {
+              + default         = {
+                  + "cpu"    = "200m"
+                  + "memory" = "256Mi"
+                }
+              + default_request = {
+                  + "cpu"    = "100m"
+                  + "memory" = "128Mi"
+                }
+              + max             = {
+                  + "cpu"    = "1"
+                  + "memory" = "1Gi"
+                }
+              + type            = "Container"
+            }
+        }
+    }
+
+  # kubernetes_namespace_v1.app will be created
+  + resource "kubernetes_namespace_v1" "app" {
+      + id                               = (known after apply)
+      + wait_for_default_service_account = false
+
+      + metadata {
+          + generation       = (known after apply)
+          + labels           = {
+              + "app.kubernetes.io/part-of" = "sa-platform"
+              + "practica"                  = "p9"
+            }
+          + name             = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # kubernetes_resource_quota_v1.app will be created
+  + resource "kubernetes_resource_quota_v1" "app" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-quota"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + spec {
+          + hard = {
+              + "limits.cpu"             = "6"
+              + "limits.memory"          = "8Gi"
+              + "persistentvolumeclaims" = "5"
+              + "pods"                   = "40"
+              + "requests.cpu"           = "3"
+              + "requests.memory"        = "4Gi"
+            }
+        }
+    }
+
+  # kubernetes_role_binding_v1.auditor_readonly will be created
+  + resource "kubernetes_role_binding_v1" "auditor_readonly" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-auditor-readonly"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + role_ref {
+          + api_group = "rbac.authorization.k8s.io"
+          + kind      = "Role"
+          + name      = "sa-p9-readonly"
+        }
+
+      + subject {
+          + api_group = (known after apply)
+          + kind      = "ServiceAccount"
+          + name      = "sa-p9-auditor"
+          + namespace = "sa-p9"
+        }
+    }
+
+  # kubernetes_role_v1.readonly will be created
+  + resource "kubernetes_role_v1" "readonly" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-readonly"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + rule {
+          + api_groups = [
+              + null,
+              + "apps",
+              + "autoscaling",
+              + "batch",
+              + "networking.k8s.io",
+              + "policy",
+            ]
+          + resources  = [
+              + "configmaps",
+              + "cronjobs",
+              + "deployments",
+              + "endpoints",
+              + "events",
+              + "horizontalpodautoscalers",
+              + "ingresses",
+              + "jobs",
+              + "networkpolicies",
+              + "persistentvolumeclaims",
+              + "poddisruptionbudgets",
+              + "pods",
+              + "pods/log",
+              + "replicasets",
+              + "services",
+              + "statefulsets",
+            ]
+          + verbs      = [
+              + "get",
+              + "list",
+              + "watch",
+            ]
+        }
+      + rule {
+          + api_groups = [
+              + "argoproj.io",
+            ]
+          + resources  = [
+              + "analysisruns",
+              + "analysistemplates",
+              + "experiments",
+              + "rollouts",
+            ]
+          + verbs      = [
+              + "get",
+              + "list",
+              + "watch",
+            ]
+        }
+    }
+
+  # kubernetes_service_account_v1.auditor will be created
+  + resource "kubernetes_service_account_v1" "auditor" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "sa-p9-auditor"
+          + namespace        = "sa-p9"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+Plan: 8 to add, 0 to change, 0 to destroy.
