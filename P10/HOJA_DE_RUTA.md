@@ -243,4 +243,5 @@ software-avanzado-gitops/
 |---|---|---|
 | 2026-10-13 | Análisis del enunciado P10, inventario de proyectos GCP y hoja de ruta. Proyectos renombrados (SA P10 Nufio, Bank USAC); proyecto de AI Studio eliminado | — |
 | 2026-10-13 | Decisiones: código en `P10/servicios/`, Trivy en el pipeline, P9 intacto. Bank USAC es proyecto propio: no tocar | — |
-| 2026-10-13 | Fase 2 (código) y Fase 1/3 (manifiestos) sin clúster: servicios instrumentados y probados en local, pipeline con Trivy, chart y apps del stack renderizados. Nada commiteado ni subido | Revisar y commitear ambos repos; tag `v1.1.0`; levantar clúster y verificar (capacidad: posible 4.º nodo) |
+| 2026-10-13 | Fase 2 (código) y Fase 1/3 (manifiestos) sin clúster: servicios instrumentados y probados en local, pipeline con Trivy, chart y apps del stack renderizados. | — |
+| 2026-10-13 | Commits y push: código `a61d3ba..57d246b`, GitOps `caf1390..2c1c53d`. Limpieza de disco local (Docker/Podman) | Tag `v1.1.0` (build + Trivy + PR de versión), merge, levantar clúster y verificar (capacidad: posible 4.º nodo) |
