@@ -1,0 +1,23 @@
+{
+  "name": "ordenes-service",
+  "version": "1.0.0",
+  "description": "Microservicio de órdenes de compra/impresión 3D",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/auto-instrumentations-node": "0.80.0",
+    "@opentelemetry/exporter-prometheus": "0.222.0",
+    "@opentelemetry/instrumentation": "0.222.0",
+    "@opentelemetry/sdk-node": "0.222.0",
+    "amqplib": "^0.10.4",
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "express": "^5.0.0",
+    "pino": "10.3.1"
+  }
+}
