@@ -1380,10 +1380,10 @@
     "semantic_hash": "d1f534c7bc88e967b441e40f0929b89b"
   },
   ".github/workflows/ci.yaml": {
-    "mtime": 1790124500.8167195,
-    "seen": 1790154684.1949675,
-    "ast_hash": "1bb1bb0432a4eb9a98379c9a3f24655c",
-    "semantic_hash": "1bb1bb0432a4eb9a98379c9a3f24655c"
+    "mtime": 1791948387.4359128,
+    "seen": 1791987592.7583077,
+    "ast_hash": "18f190bab1f5662e7347adcf0ec1537a",
+    "semantic_hash": "18f190bab1f5662e7347adcf0ec1537a"
   },
   "P9/HOJA_DE_RUTA.md": {
     "mtime": 1790198447.5606773,
@@ -1486,5 +1486,185 @@
     "seen": 1790199984.7663727,
     "ast_hash": "e37b09b67960284de3168b2914f39287",
     "semantic_hash": "e37b09b67960284de3168b2914f39287"
+  },
+  "P10/dashboards/operacion-printhub.json": {
+    "mtime": 1791954957.168411,
+    "seen": 1791987592.758142,
+    "ast_hash": "40c0d2952d9a93a1124d357343644bf6",
+    "semantic_hash": "40c0d2952d9a93a1124d357343644bf6"
+  },
+  "P10/pruebas/seguir-rollout.sh": {
+    "mtime": 1791956981.02388,
+    "seen": 1791987592.758144,
+    "ast_hash": "67d095873cf881c4fde8eac6082ce73e",
+    "semantic_hash": "67d095873cf881c4fde8eac6082ce73e"
+  },
+  "P10/servicios/api-gateway/package.json": {
+    "mtime": 1791947785.5527408,
+    "seen": 1791987592.7581456,
+    "ast_hash": "2ee78625f6d64c3621eb9274d4cca749",
+    "semantic_hash": "2ee78625f6d64c3621eb9274d4cca749"
+  },
+  "P10/servicios/api-gateway/src/authMiddleware.js": {
+    "mtime": 1788010598.1874464,
+    "seen": 1791987592.7581468,
+    "ast_hash": "bd336db3721abe4da2cec2bb14b56259",
+    "semantic_hash": "bd336db3721abe4da2cec2bb14b56259"
+  },
+  "P10/servicios/api-gateway/src/index.js": {
+    "mtime": 1791947639.0313733,
+    "seen": 1791987592.7581482,
+    "ast_hash": "0d98b8396ca24c543c56c196cf8e8098",
+    "semantic_hash": "0d98b8396ca24c543c56c196cf8e8098"
+  },
+  "P10/servicios/api-gateway/src/instrumentacion.mjs": {
+    "mtime": 1791947990.5658581,
+    "seen": 1791987592.7581494,
+    "ast_hash": "b3c45962520dcdccd3b2e8eac386cfa1",
+    "semantic_hash": "b3c45962520dcdccd3b2e8eac386cfa1"
+  },
+  "P10/servicios/api-gateway/src/observabilidad.js": {
+    "mtime": 1791947793.9320037,
+    "seen": 1791987592.75815,
+    "ast_hash": "b224c8f1edffb7fab50ed2441a181f43",
+    "semantic_hash": "b224c8f1edffb7fab50ed2441a181f43"
+  },
+  "P10/servicios/figuras-service/package.json": {
+    "mtime": 1791947787.4815118,
+    "seen": 1791987592.7581515,
+    "ast_hash": "f247f40b75281aef909a65898ea3956e",
+    "semantic_hash": "f247f40b75281aef909a65898ea3956e"
+  },
+  "P10/servicios/figuras-service/src/broker.js": {
+    "mtime": 1791955366.1647418,
+    "seen": 1791987592.7581525,
+    "ast_hash": "2509e12597f92e95b4f03c65053c4058",
+    "semantic_hash": "2509e12597f92e95b4f03c65053c4058"
+  },
+  "P10/servicios/figuras-service/src/db.js": {
+    "mtime": 1791947667.7509077,
+    "seen": 1791987592.7581534,
+    "ast_hash": "37547e83363456e5b4efb3280f7a453b",
+    "semantic_hash": "37547e83363456e5b4efb3280f7a453b"
+  },
+  "P10/servicios/figuras-service/src/index.js": {
+    "mtime": 1791947667.7507417,
+    "seen": 1791987592.7581544,
+    "ast_hash": "db9da147c57301667d1fac62f0288969",
+    "semantic_hash": "db9da147c57301667d1fac62f0288969"
+  },
+  "P10/servicios/figuras-service/src/instrumentacion.mjs": {
+    "mtime": 1791947990.5661535,
+    "seen": 1791987592.7581556,
+    "ast_hash": "b3c45962520dcdccd3b2e8eac386cfa1",
+    "semantic_hash": "b3c45962520dcdccd3b2e8eac386cfa1"
+  },
+  "P10/servicios/figuras-service/src/observabilidad.js": {
+    "mtime": 1791947793.9323056,
+    "seen": 1791987592.7581568,
+    "ast_hash": "b224c8f1edffb7fab50ed2441a181f43",
+    "semantic_hash": "b224c8f1edffb7fab50ed2441a181f43"
+  },
+  "P10/servicios/figuras-service/src/resolvers.js": {
+    "mtime": 1791956981.0235,
+    "seen": 1791987592.7581577,
+    "ast_hash": "5759604e53266bb9c34b6f53109ed74c",
+    "semantic_hash": "5759604e53266bb9c34b6f53109ed74c"
+  },
+  "P10/servicios/figuras-service/src/schema.js": {
+    "mtime": 1788010919.0,
+    "seen": 1791987592.758159,
+    "ast_hash": "8195b2fead5980921b79dc14f0a056f8",
+    "semantic_hash": "8195b2fead5980921b79dc14f0a056f8"
+  },
+  "P10/servicios/ordenes-service/package.json": {
+    "mtime": 1791947786.4979248,
+    "seen": 1791987592.7581599,
+    "ast_hash": "bc769166d52e9d5e67f940abe7596254",
+    "semantic_hash": "bc769166d52e9d5e67f940abe7596254"
+  },
+  "P10/servicios/ordenes-service/src/broker.js": {
+    "mtime": 1791955353.8557992,
+    "seen": 1791987592.7581608,
+    "ast_hash": "2509e12597f92e95b4f03c65053c4058",
+    "semantic_hash": "2509e12597f92e95b4f03c65053c4058"
+  },
+  "P10/servicios/ordenes-service/src/db.js": {
+    "mtime": 1788010837.0,
+    "seen": 1791987592.7581615,
+    "ast_hash": "172c5a620f9eddf6950bf5bb0f92c703",
+    "semantic_hash": "172c5a620f9eddf6950bf5bb0f92c703"
+  },
+  "P10/servicios/ordenes-service/src/figurasClient.js": {
+    "mtime": 1788010908.0,
+    "seen": 1791987592.7581627,
+    "ast_hash": "a195a8dec378dc7ff4865924fc0452e8",
+    "semantic_hash": "a195a8dec378dc7ff4865924fc0452e8"
+  },
+  "P10/servicios/ordenes-service/src/index.js": {
+    "mtime": 1791947655.94174,
+    "seen": 1791987592.758164,
+    "ast_hash": "b01c0241dadb826b1bc00b3daf0e9f83",
+    "semantic_hash": "b01c0241dadb826b1bc00b3daf0e9f83"
+  },
+  "P10/servicios/ordenes-service/src/instrumentacion.mjs": {
+    "mtime": 1791947990.566017,
+    "seen": 1791987592.758165,
+    "ast_hash": "b3c45962520dcdccd3b2e8eac386cfa1",
+    "semantic_hash": "b3c45962520dcdccd3b2e8eac386cfa1"
+  },
+  "P10/servicios/ordenes-service/src/observabilidad.js": {
+    "mtime": 1791947793.93216,
+    "seen": 1791987592.758166,
+    "ast_hash": "b224c8f1edffb7fab50ed2441a181f43",
+    "semantic_hash": "b224c8f1edffb7fab50ed2441a181f43"
+  },
+  "P10/HOJA_DE_RUTA.md": {
+    "mtime": 1791961706.7257688,
+    "seen": 1791987592.758309,
+    "ast_hash": "2854622c88fc5c9de8ab4158ee3769fe",
+    "semantic_hash": "2854622c88fc5c9de8ab4158ee3769fe"
+  },
+  "P10/docs/runbooks/LatenciaPresupuestoQuemaLenta.md": {
+    "mtime": 1791954905.7548902,
+    "seen": 1791987592.7583098,
+    "ast_hash": "eb8b0bff8f3a96f327e5dc577d28861e",
+    "semantic_hash": "eb8b0bff8f3a96f327e5dc577d28861e"
+  },
+  "P10/docs/runbooks/LatenciaPresupuestoQuemaRapida.md": {
+    "mtime": 1791954905.582891,
+    "seen": 1791987592.7583108,
+    "ast_hash": "a885562a05d52fb6d1e52bf17a60c8d1",
+    "semantic_hash": "a885562a05d52fb6d1e52bf17a60c8d1"
+  },
+  "P10/docs/runbooks/PedidosPresupuestoQuemaLenta.md": {
+    "mtime": 1791954905.421512,
+    "seen": 1791987592.758312,
+    "ast_hash": "bd40a60efc58976d37b5304b508e4f16",
+    "semantic_hash": "bd40a60efc58976d37b5304b508e4f16"
+  },
+  "P10/docs/runbooks/PedidosPresupuestoQuemaRapida.md": {
+    "mtime": 1791954905.2438927,
+    "seen": 1791987592.758313,
+    "ast_hash": "f882f346d4a7faffaf9b070fc92de993",
+    "semantic_hash": "f882f346d4a7faffaf9b070fc92de993"
+  },
+  "P10/docs/runbooks/README.md": {
+    "mtime": 1791954905.055384,
+    "seen": 1791987592.7583141,
+    "ast_hash": "96bc38f4f1ce7dd232e90629b99d936a",
+    "semantic_hash": "96bc38f4f1ce7dd232e90629b99d936a"
+  },
+  "P10/docs/slo.md": {
+    "mtime": 1791954855.2182627,
+    "seen": 1791987592.7583153,
+    "ast_hash": "09d9ab348f1c1bae6cafce9b98e7f64d",
+    "semantic_hash": "09d9ab348f1c1bae6cafce9b98e7f64d"
+  },
+  "P10/Practica_10_2S2026.pdf": {
+    "mtime": 1791945324.4353454,
+    "seen": 1791987592.7583163,
+    "ast_hash": "2dee659bbbebbf683e771083232d9a1a",
+    "semantic_hash": "2dee659bbbebbf683e771083232d9a1a"
   }
 }
