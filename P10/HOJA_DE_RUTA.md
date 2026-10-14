@@ -182,15 +182,16 @@ software-avanzado-gitops/
 - [ ] Promoción exitosa por métricas (evidencia). `v1.1.0` se desplegó directo porque el clúster era nuevo (sin canary): hace falta una revisión nueva del Rollout
 
 ### Fase 4 — SLO y alertas · 2 h
-- [ ] `PrometheusRule` con reglas de registro (SLI y presupuesto consumido)
-- [ ] Alertas por quema de presupuesto (rápida/lenta × 2 SLO) con `runbook_url`
-- [ ] Runbooks (`docs/runbooks/`), uno por alerta
-- [ ] `docs/slo.md` con objetivo, ventana y justificación
+- [x] `PrometheusRule` `slo-printhub` (GitOps `observability/`, app `observability-config`, wave 1): 16 reglas de registro (SLI por ventana, SLI 28 d, presupuesto consumido, objetivo) — todas `ok` en Prometheus
+- [x] 4 alertas por quema de presupuesto (rápida 14.4× 1h+5m `page`, lenta 6× 6h+30m `ticket`, × 2 SLO) con `runbook_url`; `inactive` sin fallos
+- [x] Runbooks (`docs/runbooks/`), uno por alerta + README de acceso y recorrido; consultas LogQL/TraceQL verificadas contra Loki/Tempo
+- [x] `docs/slo.md`: SLO 1 pedidos 99 % sin 5xx, SLO 2 latencia **99 %** ≤ 0.5 s (no 95 %: se midió 99.92 %, p99 69 ms), ventana 28 d, justificación
 
 ### Fase 5 — Tablero · 1 h
-- [ ] Tablero "Operación PrintHub" por las 4 señales de oro (tráfico, errores, latencia, saturación) + fila de SLO/presupuesto + negocio
-- [ ] Cada panel responde una pregunta concreta (título en forma de pregunta)
-- [ ] Exportar JSON a `P10/dashboards/` y provisionarlo por ConfigMap en GitOps; captura en operación
+- [x] Tablero "Operación PrintHub" (21 paneles): fila SLO/presupuesto/alertas/burn rate + tráfico, errores (5xx por servicio, trazas con error, registros de error), latencia y saturación (CPU, memoria, throttling) + negocio
+- [x] Cada panel responde una pregunta concreta (título en forma de pregunta)
+- [x] Provisionado por ConfigMap (kustomize) en GitOps; JSON exportado de Grafana en `P10/dashboards/operacion-printhub.json`
+- [ ] Captura del tablero en operación (en la Fase 6, con el incidente visible)
 
 ### Fase 6 — Pruebas con fallo inducido · 1.5 h
 - [ ] `v1.1.1` con fallo → AnalysisRun `Failed` → Rollout `Aborted` y revertido sin intervención (guardar `kubectl get analysisrun -o yaml`)
@@ -221,6 +222,7 @@ software-avanzado-gitops/
 10. **Operador de Prometheus antes de sus CRDs:** si arranca antes de que exista el CRD `Prometheus`, nunca lo crea (no vuelve a buscarlo). Corregido con una sync-wave interna en el Deployment del operador (`9c8e08e` en GitOps).
 11. **k6 2.x:** ya no existe `--no-summary` (`--summary-mode=disabled`), y su cookie jar no guarda cookies de un host sin dominio (el Service): el generador envía el JWT como `Bearer`.
 12. **IDs de traza en Tempo:** la API los devuelve sin ceros a la izquierda; para buscarlos en Loki hay que completarlos a 32 caracteres.
+13. **Consumidor de RabbitMQ sin reintento (bug heredado de P5):** si `figuras-service`/`ordenes-service` arrancan antes que RabbitMQ, `consume()` falla una vez y nunca reintenta: los pedidos quedan `pendiente`. Visto en Loki el 13/10 04:37 (`No se pudo iniciar el consumidor`). Ningún SLO lo cubre (el pedido ya respondió 202) → candidato a "alerta faltante" del informe.
 9. **Costos compartidos:** misma facturación que la compañera → apagar siempre al terminar.
 
 ---
@@ -249,3 +251,4 @@ software-avanzado-gitops/
 | 2026-10-13 | Fase 2 (código) y Fase 1/3 (manifiestos) sin clúster: servicios instrumentados y probados en local, pipeline con Trivy, chart y apps del stack renderizados. | — |
 | 2026-10-13 | Commits y push: código `a61d3ba..57d246b`, GitOps `caf1390..2c1c53d`. Limpieza de disco local (Docker/Podman) | Tag `v1.1.0` (build + Trivy + PR de versión), merge, levantar clúster y verificar (capacidad: posible 4.º nodo) |
 | 2026-10-13 | Tag `v1.1.0` (CI verde, Trivy en las 7 imágenes) y PR #2 fusionado. Clúster arriba con el stack: métricas, trazas de 3 servicios y registros correlacionados verificados. Corregidos: operador de Prometheus (race de CRDs) y generador de tráfico (flag de k6, sesión por Bearer). Discord y OBS desinstalados | Fase 4 (SLO y alertas) y Fase 5 (tablero); probar promoción del canary por métricas |
+| 2026-10-14 | Fases 4 y 5 en el clúster: PrometheusRule (20 reglas `ok`), 4 alertas con runbook, tablero de 21 paneles provisionado y exportado. Detectado bug del consumidor RabbitMQ sin reintento | Fase 6: fallo inducido (canary por métricas + recorrido síntoma→causa) y captura del tablero |
