@@ -224,6 +224,7 @@ software-avanzado-gitops/
 11. **k6 2.x:** ya no existe `--no-summary` (`--summary-mode=disabled`), y su cookie jar no guarda cookies de un host sin dominio (el Service): el generador envía el JWT como `Bearer`.
 12. **IDs de traza en Tempo:** la API los devuelve sin ceros a la izquierda; para buscarlos en Loki hay que completarlos a 32 caracteres.
 13. **Consumidor de RabbitMQ sin reintento (bug heredado de P5):** si `figuras-service`/`ordenes-service` arrancan antes que RabbitMQ, `consume()` falla una vez y nunca reintenta: los pedidos quedan `pendiente`. Visto en Loki el 13/10 04:37 (`No se pudo iniciar el consumidor`). Ningún SLO lo cubre (el pedido ya respondió 202) → candidato a "alerta faltante" del informe.
+14. **Apagado lento por los PDB:** al borrar el node pool GKE inhabilita los 3 nodos a la vez; los pods no tienen dónde ir y los PDB (`minAvailable: 1`) bloquean el drenaje hasta el límite de 1 h de GKE (el 14/10 tardó 1 h 3 min). Antes de `apagar.sh`: `kubectl delete pdb -n sa-p9 --all` (con ArgoCD ya detenido o tras borrar la app raíz), o agregarlo al script.
 9. **Costos compartidos:** misma facturación que la compañera → apagar siempre al terminar.
 
 ---
