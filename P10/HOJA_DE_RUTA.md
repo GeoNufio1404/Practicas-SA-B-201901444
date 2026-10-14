@@ -179,7 +179,8 @@ software-avanzado-gitops/
 - [x] `AnalysisTemplate` `sa-platform-api-gateway-metricas` tipo `prometheus` (error + p95 del canary por `rollouts_pod_template_hash`) reemplaza al Job k6
 - [x] Rollout sin `stableService`/`canaryService`: el Service principal reparte tráfico real entre estable y canary (si no, el canary no recibe tráfico)
 - [x] `generador-trafico` (k6, 4 rps) en `sa-p9`
-- [ ] Promoción exitosa por métricas (evidencia). `v1.1.0` se desplegó directo porque el clúster era nuevo (sin canary): hace falta una revisión nueva del Rollout
+- [x] Promoción exitosa por métricas: v1.1.1 20→50→80→100 %, 3 AnalysisRun × 3 mediciones, error 0 % y p95 24–43 ms (`evidencias/promocion-v1.1.1-reintento-20261013-233915.log`)
+- [x] Primer intento de v1.1.1 **abortado y revertido solo** por 5xx reales (2.8 % y 1.3 %) causados por ordenes/figuras reiniciándose a la vez sin `preStop` (`evidencias/promocion-v1.1.1-20261013-232854.log`). Corregido con `preStop` de 10 s en los 3 servicios: el siguiente despliegue tuvo 1 error en 1174 peticiones
 
 ### Fase 4 — SLO y alertas · 2 h
 - [x] `PrometheusRule` `slo-printhub` (GitOps `observability/`, app `observability-config`, wave 1): 16 reglas de registro (SLI por ventana, SLI 28 d, presupuesto consumido, objetivo) — todas `ok` en Prometheus
@@ -194,8 +195,8 @@ software-avanzado-gitops/
 - [ ] Captura del tablero en operación (en la Fase 6, con el incidente visible)
 
 ### Fase 6 — Pruebas con fallo inducido · 1.5 h
-- [ ] `v1.1.1` con fallo → AnalysisRun `Failed` → Rollout `Aborted` y revertido sin intervención (guardar `kubectl get analysisrun -o yaml`)
-- [ ] Fallo en estable → alerta → tablero → traza → log, cronometrado (< 3 min) con marcas de tiempo
+- [ ] Fallo en el canary: `FALLO_ORDENES_TASA` (p. ej. 0.3) en `api-gateway.extraEnv` de `values-gke.yaml` (commit en GitOps) → AnalysisRun `Failed` → Rollout abortado. Grabar con `P10/pruebas/seguir-rollout.sh fallo-canary`
+- [ ] Síntoma → causa con un fallo **fuera del gateway** (el canary bloquearía uno en el gateway): p. ej. `FIGURAS_SERVICE_URL` errónea en ordenes-service vía GitOps → 100 % de pedidos 502 → `PedidosPresupuestoQuemaRapida` (~9–10 min) → tablero → traza → registro, cronometrado (< 3 min)
 - [ ] Anotar tiempos: inicio del fallo, primera señal, alerta, causa encontrada, recuperación
 
 ### Fase 7 — Documentación y entrega · 2 h
@@ -252,3 +253,4 @@ software-avanzado-gitops/
 | 2026-10-13 | Commits y push: código `a61d3ba..57d246b`, GitOps `caf1390..2c1c53d`. Limpieza de disco local (Docker/Podman) | Tag `v1.1.0` (build + Trivy + PR de versión), merge, levantar clúster y verificar (capacidad: posible 4.º nodo) |
 | 2026-10-13 | Tag `v1.1.0` (CI verde, Trivy en las 7 imágenes) y PR #2 fusionado. Clúster arriba con el stack: métricas, trazas de 3 servicios y registros correlacionados verificados. Corregidos: operador de Prometheus (race de CRDs) y generador de tráfico (flag de k6, sesión por Bearer). Discord y OBS desinstalados | Fase 4 (SLO y alertas) y Fase 5 (tablero); probar promoción del canary por métricas |
 | 2026-10-14 | Fases 4 y 5 en el clúster: PrometheusRule (20 reglas `ok`), 4 alertas con runbook, tablero de 21 paneles provisionado y exportado. Detectado bug del consumidor RabbitMQ sin reintento | Fase 6: fallo inducido (canary por métricas + recorrido síntoma→causa) y captura del tablero |
+| 2026-10-14 | Bug del consumidor RabbitMQ corregido (reintento + re-suscripción, probado en local) y publicado en v1.1.1. Canary: primer intento abortado por 5xx de otros servicios reiniciándose → `preStop` 10 s → v1.1.1 promovida por métricas. Tag `v1.1.2` (material inexistente como `warn`) construido; **PR #4 abierto sin fusionar**. Entorno apagado con `P9/pruebas/apagar.sh` | Al retomar: `./P9/bootstrap.sh` (~35 min), fusionar PR #4 (canary de release completo), Fase 6 (fallo en canary + síntoma→causa + captura del tablero), Fase 7. **Repo de código privado: hacerlo público antes de entregar** (runbook_url dan 404) |

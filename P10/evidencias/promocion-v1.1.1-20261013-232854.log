@@ -1,0 +1,57 @@
+[2026-10-13T23:28:55-06:00] Esperando una revision nueva del Rollout (hash actual: 8685d875bc)
+[2026-10-13T23:31:46-06:00] Revision nueva: 8484764d97
+[2026-10-13T23:31:48-06:00] fase=Progressing paso=0 peso-canary=0% abortado=false | analisis: 
+[2026-10-13T23:32:11-06:00] fase=Progressing paso=1 peso-canary=0% abortado=false | analisis: sa-platform-api-gateway-8484764d97-2-1   Running 
+[2026-10-13T23:34:07-06:00] fase=Degraded paso=0 peso-canary=0% abortado=true | analisis: sa-platform-api-gateway-8484764d97-2-1   Failed 
+[2026-10-13T23:34:08-06:00] Rollout abortado y revertido a la version estable: RolloutAborted: Rollout aborted update to revision 2: Step-based analysis phase error/failed: Metric "tasa-de-error" assessed Failed due to failed (2) > failureLimit (1)
+[2026-10-13T23:34:08-06:00] Resultado final
+    Name:            sa-platform-api-gateway
+    Namespace:       sa-p9
+    Status:          ✖ Degraded
+    Message:         RolloutAborted: Rollout aborted update to revision 2: Step-based analysis phase error/failed: Metric "tasa-de-error" assessed Failed due to failed (2) > failureLimit (1)
+    Strategy:        Canary
+      Step:          0/6
+      SetWeight:     0
+      ActualWeight:  0
+    Images:          us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.1.0 (stable)
+    Replicas:
+      Desired:       2
+      Current:       2
+      Updated:       0
+      Ready:         2
+      Available:     2
+    
+    NAME                                                 KIND         STATUS        AGE    INFO
+    ⟳ sa-platform-api-gateway                            Rollout      ✖ Degraded    57m    
+    ├──# revision:2                                                                        
+    │  ├──⧉ sa-platform-api-gateway-8484764d97           ReplicaSet   • ScaledDown  2m27s  canary
+    │  └──α sa-platform-api-gateway-8484764d97-2-1       AnalysisRun  ✖ Failed      2m7s   ✔ 2,✖ 2
+    └──# revision:1                                                                        
+       └──⧉ sa-platform-api-gateway-8685d875bc           ReplicaSet   ✔ Healthy     57m    stable
+          ├──□ sa-platform-api-gateway-8685d875bc-ccq2f  Pod          ✔ Running     57m    ready:1/1
+          └──□ sa-platform-api-gateway-8685d875bc-p647h  Pod          ✔ Running     57m    ready:1/1
+
+[2026-10-13T23:34:10-06:00] Mediciones de los AnalysisRun de esta revision
+  sa-platform-api-gateway-8484764d97-2-1  fase=Failed  Metric "tasa-de-error" assessed Failed due to failed (2) > failureLimit (1)
+    metrica latencia-p95: fase=Successful exitosas=2 fallidas=0
+      2026-10-14T05:33:04Z  valor=[0.09435092795849134]  Successful
+      2026-10-14T05:34:04Z  valor=[0.08618856763592742]  Successful
+    metrica tasa-de-error: fase=Failed exitosas=0 fallidas=2
+      2026-10-14T05:33:04Z  valor=[0.027738978776736704]  Failed
+      2026-10-14T05:34:04Z  valor=[0.013126559394235534]  Failed
+
+[2026-10-13T23:34:11-06:00] Consultas PromQL del AnalysisTemplate
+  tasa-de-error  (exito si: len(result) == 1 && !isNaN(result[0]) && result[0] < 0.01)
+    (
+      sum(rate(printhub_http_request_duration_seconds_count{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}", http_response_status_code=~"5.."}[2m]))
+      or vector(0)
+    )
+    /
+    sum(rate(printhub_http_request_duration_seconds_count{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}"}[2m]))
+    
+  latencia-p95  (exito si: len(result) == 1 && !isNaN(result[0]) && result[0] < 0.5)
+    histogram_quantile(0.95,
+      sum by (le) (rate(printhub_http_request_duration_seconds_bucket{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}"}[2m]))
+    )
+    
+[2026-10-13T23:34:12-06:00] Registro: evidencias/promocion-v1.1.1-20261013-232854.log
