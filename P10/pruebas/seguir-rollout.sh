@@ -31,7 +31,10 @@ anterior=""
 while true; do
   fase=$(kubectl get rollout "$ROLLOUT" -n "$NS" -o jsonpath='{.status.phase}')
   paso=$(kubectl get rollout "$ROLLOUT" -n "$NS" -o jsonpath='{.status.currentStepIndex}')
-  peso=$(kubectl get rollout "$ROLLOUT" -n "$NS" -o jsonpath='{.status.canary.weights.canary.weight}')
+  # Sin trafficRouting el peso es el ultimo setWeight alcanzado en los pasos.
+  peso=$(kubectl get rollout "$ROLLOUT" -n "$NS" -o json | jq -r '
+    (.status.currentStepIndex // 0) as $i
+    | [.spec.strategy.canary.steps[0:$i][] | .setWeight // empty] | last // 0')
   abort=$(kubectl get rollout "$ROLLOUT" -n "$NS" -o jsonpath='{.status.abort}')
   runs=$(kubectl get analysisrun -n "$NS" --sort-by=.metadata.creationTimestamp --no-headers \
     -o custom-columns='N:.metadata.name,F:.status.phase' 2>/dev/null | tail -3 | tr '\n' ' ')

@@ -62,7 +62,9 @@ export async function procesarImpresion(figuraId, cantidad) {
       mensaje: `Se descontaron ${gramosTotales}g del material ${figura.materialId} en materiales-service`,
     };
   } catch (err) {
-    logger.error({ err, figuraId, materialId: figura.materialId }, `No se pudo descontar material: ${err.message}`);
+    // warn y no error: es una condicion de negocio manejada (la orden queda
+    // pendiente y se informa en el resultado), no una falla del sistema.
+    logger.warn({ err, figuraId, materialId: figura.materialId }, `No se pudo descontar material: ${err.message}`);
     return {
       ok: false,
       figura,
