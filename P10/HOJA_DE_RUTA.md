@@ -192,7 +192,7 @@ software-avanzado-gitops/
 - [x] Tablero "Operación PrintHub" (21 paneles): fila SLO/presupuesto/alertas/burn rate + tráfico, errores (5xx por servicio, trazas con error, registros de error), latencia y saturación (CPU, memoria, throttling) + negocio
 - [x] Cada panel responde una pregunta concreta (título en forma de pregunta)
 - [x] Provisionado por ConfigMap (kustomize) en GitOps; JSON exportado de Grafana en `P10/dashboards/operacion-printhub.json`
-- [ ] Captura del tablero en operación (en la Fase 6, con el incidente visible)
+- [x] Captura del tablero en operación: `dashboards/captura-operacion.png`
 
 ### Fase 6 — Pruebas con fallo inducido · 1.5 h
 - [x] Fallo en el canary: `FALLO_ORDENES_TASA` (p. ej. 0.3) en `api-gateway.extraEnv` de `values-gke.yaml` (commit en GitOps) → AnalysisRun `Failed` → Rollout abortado. Grabar con `P10/pruebas/seguir-rollout.sh fallo-canary`
