@@ -1,10 +1,15 @@
-# Pipeline CI de la plataforma PrintHub (P9).
+# Pipeline CI de la plataforma PrintHub (P9, ampliado en P10).
 #
 # Flujo GitOps: este workflow NUNCA toca el cluster (no hay kubeconfig, ni
 # kubectl, ni helm upgrade). Solo:
 #   1. valida el chart (helm lint),
-#   2. construye y sube las imagenes a Artifact Registry con la version del tag,
+#   2. construye cada imagen, la escanea con Trivy (cadena de suministro: una
+#      vulnerabilidad CRITICAL con parche disponible detiene el pipeline) y la
+#      sube a Artifact Registry con la version del tag,
 #   3. abre un Pull Request en el repo GitOps cambiando las etiquetas.
+#
+# P10: api-gateway, ordenes-service y figuras-service se construyen desde
+# P10/servicios (instrumentados con OpenTelemetry); el resto sigue en P5.
 # ArgoCD aplica el cambio cuando el PR se fusiona.
 #
 # Disparo: tag de version semantica, p. ej.  git tag v1.0.0 && git push origin v1.0.0
@@ -40,11 +45,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - { image: api-gateway, context: P5/api-gateway }
+          - { image: api-gateway, context: P10/servicios/api-gateway }
           - { image: auth-service, context: P5/auth-service }
-          - { image: figuras-service, context: P5/figuras-service }
+          - { image: figuras-service, context: P10/servicios/figuras-service }
           - { image: materiales-service, context: P5/materiales-service }
-          - { image: ordenes-service, context: P5/ordenes-service }
+          - { image: ordenes-service, context: P10/servicios/ordenes-service }
           - { image: cronjob-heartbeat, context: P5/cronjobs/heartbeat }
           - { image: cronjob-resumen, context: P5/cronjobs/resumen }
     steps:
@@ -59,12 +64,19 @@ jobs:
       - name: Login a Artifact Registry
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
       - uses: docker/setup-buildx-action@v4
-      - name: Build y push ${{ matrix.image }}:${{ env.VERSION }}
+      - name: Build ${{ matrix.image }}:${{ env.VERSION }}
         uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.context }}
-          push: true
+          load: true
           tags: ${{ env.REGISTRY }}/${{ matrix.image }}:${{ env.VERSION }}
+      - name: Escaneo Trivy (bloquea con CRITICAL corregible)
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.69.3 \
+            image --scanners vuln --severity CRITICAL --ignore-unfixed --exit-code 1 --no-progress \
+            "$REGISTRY/${{ matrix.image }}:$VERSION"
+      - name: Push ${{ matrix.image }}:${{ env.VERSION }}
+        run: docker push "$REGISTRY/${{ matrix.image }}:$VERSION"
 
   gitops-pr:
     needs: build
@@ -99,4 +111,5 @@ jobs:
 
             Generado por ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             (commit ${{ github.sha }}). Al fusionarlo, ArgoCD despliega la version con
-            Argo Rollouts (canary 20/50/80 % con analisis k6 en cada paso).
+            Argo Rollouts (canary 20/50/80 % con analisis de Prometheus en cada paso:
+            tasa de error y p95 de la version candidata).
