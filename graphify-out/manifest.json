@@ -1620,10 +1620,10 @@
     "semantic_hash": "b224c8f1edffb7fab50ed2441a181f43"
   },
   "P10/HOJA_DE_RUTA.md": {
-    "mtime": 1791990912.9082005,
-    "seen": 1791992812.6559815,
-    "ast_hash": "0b61de3d819899287fb582951dcc45f1",
-    "semantic_hash": "0b61de3d819899287fb582951dcc45f1"
+    "mtime": 1792009135.717884,
+    "seen": 1792010576.1745167,
+    "ast_hash": "d21da0dbefb8f991fe2f4d3fc22e43e4",
+    "semantic_hash": "d21da0dbefb8f991fe2f4d3fc22e43e4"
   },
   "P10/docs/runbooks/LatenciaPresupuestoQuemaLenta.md": {
     "mtime": 1791954905.7548902,
@@ -1668,10 +1668,10 @@
     "semantic_hash": "2dee659bbbebbf683e771083232d9a1a"
   },
   "P10/README.md": {
-    "mtime": 1791990892.974597,
-    "seen": 1791992812.6559858,
-    "ast_hash": "1c34b1930295f383fb5af4615a6e580f",
-    "semantic_hash": "1c34b1930295f383fb5af4615a6e580f"
+    "mtime": 1792009135.7133687,
+    "seen": 1792010576.1745205,
+    "ast_hash": "987b9d3f97f0be1718be4b4d55df2224",
+    "semantic_hash": "987b9d3f97f0be1718be4b4d55df2224"
   },
   "P10/docs/diagrama-telemetria.md": {
     "mtime": 1791990900.4675343,
@@ -1684,5 +1684,17 @@
     "seen": 1791992812.6559916,
     "ast_hash": "b175a2cd2b011beb617af45181294759",
     "semantic_hash": "b175a2cd2b011beb617af45181294759"
+  },
+  "P10/docs/informe-operacion.md": {
+    "mtime": 1792007462.593259,
+    "seen": 1792010576.1745236,
+    "ast_hash": "701fd5f71a2afe2cd223fa992cb42f14",
+    "semantic_hash": "701fd5f71a2afe2cd223fa992cb42f14"
+  },
+  "P10/dashboards/captura-operacion.png": {
+    "mtime": 1792009049.4878507,
+    "seen": 1792010576.1745265,
+    "ast_hash": "9980820a2d2226fd71b0d80cc30f9b70",
+    "semantic_hash": "9980820a2d2226fd71b0d80cc30f9b70"
   }
 }
