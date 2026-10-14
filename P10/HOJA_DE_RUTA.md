@@ -195,19 +195,20 @@ software-avanzado-gitops/
 - [ ] Captura del tablero en operación (en la Fase 6, con el incidente visible)
 
 ### Fase 6 — Pruebas con fallo inducido · 1.5 h
-- [ ] Fallo en el canary: `FALLO_ORDENES_TASA` (p. ej. 0.3) en `api-gateway.extraEnv` de `values-gke.yaml` (commit en GitOps) → AnalysisRun `Failed` → Rollout abortado. Grabar con `P10/pruebas/seguir-rollout.sh fallo-canary`
-- [ ] Síntoma → causa con un fallo **fuera del gateway** (el canary bloquearía uno en el gateway): p. ej. `FIGURAS_SERVICE_URL` errónea en ordenes-service vía GitOps → 100 % de pedidos 502 → `PedidosPresupuestoQuemaRapida` (~9–10 min) → tablero → traza → registro, cronometrado (< 3 min)
-- [ ] Anotar tiempos: inicio del fallo, primera señal, alerta, causa encontrada, recuperación
+- [x] Fallo en el canary: `FALLO_ORDENES_TASA` (p. ej. 0.3) en `api-gateway.extraEnv` de `values-gke.yaml` (commit en GitOps) → AnalysisRun `Failed` → Rollout abortado. Grabar con `P10/pruebas/seguir-rollout.sh fallo-canary`
+- [x] Síntoma → causa con un fallo **fuera del gateway** (el canary bloquearía uno en el gateway): p. ej. `FIGURAS_SERVICE_URL` errónea en ordenes-service vía GitOps → 100 % de pedidos 502 → `PedidosPresupuestoQuemaRapida` (~9–10 min) → tablero → traza → registro, cronometrado (< 3 min)
+- [x] Anotar tiempos: inicio del fallo, primera señal, alerta, causa encontrada, recuperación
+- Resultado: canary `sa-platform-api-gateway-784dcddfdd-3-1` `Failed` (10.1 % / 13.6 %), revertido solo en 2 min 36 s (`evidencias/fallo-canary-*`). Síntoma→causa: primera señal 11 s, alerta `firing` 10 min 19 s, causa en Loki ~2 min después, estable 1 min 24 s tras revertir (`evidencias/sintoma-causa-*`)
 
 ### Fase 7 — Documentación y entrega · 2 h
-- [ ] Informe de operación (6 campos, tiempos medidos, mejora concreta a la instrumentación)
+- [x] Informe de operación (6 campos, tiempos medidos, mejora concreta a la instrumentación): `docs/informe-operacion.md`
 - [x] Diagrama del flujo de telemetría (Mermaid): `docs/diagrama-telemetria.md`
 - [x] Preguntas teóricas: el enunciado no trae la lista (se preguntan en la calificación). Preparado `docs/limites.md` (14 límites con evidencia y mejora)
-- [ ] README `/P10` con la tabla 4.1 completa (todo enlace público) — escrito; faltan AnalysisRun del fallo inducido, recorrido síntoma→causa, captura, video e informe
+- [ ] README `/P10` con la tabla 4.1 completa (todo enlace público) — faltan captura del tablero y video
 - [ ] **Hacer público el repo de código** (hoy privado: enlaces y `runbook_url` dan 404)
 - [ ] Requisito 8.1: Prometheus recolectando **al momento de la calificación** (17/10) → encender el clúster ese día
 - [ ] Video 5–8 min con minutaje
-- [ ] Verificación de no regresión de P9: Velero, Kyverno, ExternalSecrets, Rollout
+- [x] Verificación de no regresión de P9: Velero, Kyverno, ExternalSecrets, Rollout (`evidencias/bootstrap-20261014-105557.log`)
 - [ ] Apagar el entorno (`P9/pruebas/apagar.sh`)
 
 ---
@@ -227,6 +228,7 @@ software-avanzado-gitops/
 12. **IDs de traza en Tempo:** la API los devuelve sin ceros a la izquierda; para buscarlos en Loki hay que completarlos a 32 caracteres.
 13. **Consumidor de RabbitMQ sin reintento (bug heredado de P5):** si `figuras-service`/`ordenes-service` arrancan antes que RabbitMQ, `consume()` falla una vez y nunca reintenta: los pedidos quedan `pendiente`. Visto en Loki el 13/10 04:37 (`No se pudo iniciar el consumidor`). Ningún SLO lo cubre (el pedido ya respondió 202) → candidato a "alerta faltante" del informe.
 14. **Apagado lento por los PDB:** al borrar el node pool GKE inhabilita los 3 nodos a la vez; los pods no tienen dónde ir y los PDB (`minAvailable: 1`) bloquean el drenaje hasta el límite de 1 h de GKE (el 14/10 tardó 1 h 3 min). Antes de `apagar.sh`: `kubectl delete pdb -n sa-p9 --all` (con ArgoCD ya detenido o tras borrar la app raíz), o agregarlo al script.
+15. **Deadlock de waves en un clúster nuevo:** con el operador en la wave 1 (trampa 10), los recursos `Prometheus` y `Alertmanager` quedaban en la wave 0; ArgoCD espera a que estén sanos para pasar de wave y solo el operador los pone sanos → el bootstrap del 14/10 se agotó a los 45 min. Corregido moviéndolos a la wave 2 (GitOps `d0333a1`). Para destrabar un sync atascado: `status.operationState.phase=Terminating` en la Application.
 9. **Costos compartidos:** misma facturación que la compañera → apagar siempre al terminar.
 
 ---
@@ -258,3 +260,4 @@ software-avanzado-gitops/
 | 2026-10-14 | Fases 4 y 5 en el clúster: PrometheusRule (20 reglas `ok`), 4 alertas con runbook, tablero de 21 paneles provisionado y exportado. Detectado bug del consumidor RabbitMQ sin reintento | Fase 6: fallo inducido (canary por métricas + recorrido síntoma→causa) y captura del tablero |
 | 2026-10-14 | Bug del consumidor RabbitMQ corregido (reintento + re-suscripción, probado en local) y publicado en v1.1.1. Canary: primer intento abortado por 5xx de otros servicios reiniciándose → `preStop` 10 s → v1.1.1 promovida por métricas. Tag `v1.1.2` (material inexistente como `warn`) construido; **PR #4 abierto sin fusionar**. Entorno apagado con `P9/pruebas/apagar.sh` | Al retomar: `./P9/bootstrap.sh` (~35 min), fusionar PR #4 (canary de release completo), Fase 6 (fallo en canary + síntoma→causa + captura del tablero), Fase 7. **Repo de código privado: hacerlo público antes de entregar** (runbook_url dan 404) |
 | 2026-10-14 | Grafo de graphify actualizado con P10. Diagrama de telemetría (`docs/diagrama-telemetria.md`), límites de la instrumentación (`docs/limites.md`) y `README.md` con la tabla 4.1 (pendientes marcados) | Sesión con clúster: bootstrap, PR #4, Fase 6, captura, video; luego informe y completar la tabla |
+| 2026-10-14 | Bootstrap: deadlock de waves del stack de Prometheus (trampa 15) corregido en GitOps `d0333a1`; segundo bootstrap OK (no regresión de P9). PR #4 fusionado: v1.1.2 promovida por métricas. Fase 6 completa: canary revertido por métricas y recorrido síntoma→causa grabado. Informe de operación y README actualizados | Captura del tablero, subir video (enlace + minutaje), repo de código público, apagar clúster; encenderlo el 17/10 |
