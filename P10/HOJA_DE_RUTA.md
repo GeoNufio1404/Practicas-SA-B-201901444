@@ -156,13 +156,13 @@ software-avanzado-gitops/
 - [x] Decidir pendientes (sección 7)
 - [x] Copiar los 3 servicios a `P10/servicios/` y apuntar el pipeline ahí
 - [x] Paso Trivy en el pipeline (cadena de suministro): build → Trivy (CRITICAL corregible bloquea) → push. `proxy-addr` 2.0.7 (CRITICAL) actualizado a 2.0.8 en los 3 servicios y en `P5/auth-service` (solo lockfile)
-- [ ] `./P9/bootstrap.sh` para levantar el clúster (~25 min) y verificar apps `Synced/Healthy`
+- [x] `./P9/bootstrap.sh` (37 min 39 s): 12 Applications `Synced/Healthy`; Kyverno, ExternalSecrets, restauración de MySQL e Ingress OK
 
 ### Fase 1 — Stack de observabilidad vía GitOps · 2.5 h
 - [x] Apps `kube-prometheus-stack` 91.8.0, `loki` 7.3.0, `tempo` 1.24.4, `otel-collector` 0.173.1 (namespace `observability`, wave 0) — escritas y renderizadas con `helm template`, **sin desplegar**
 - [x] Grafana con datasources Prometheus, Loki, Tempo y correlación: Tempo → Loki por `trace_id`; Loki → Tempo con *derived field*
 - [x] Prometheus selecciona `PodMonitor`/`PrometheusRule` de cualquier namespace; reglas y tableros por defecto desactivados
-- [ ] Verificar capacidad del clúster (requests); si no cabe, `node_count = 4` en `20-cluster`
+- [x] Capacidad: requests de CPU 53–72 % por nodo, sin pods `Pending` → **no hace falta 4.º nodo**
 
 ### Fase 2 — Instrumentación de los 3 servicios · 3 h
 - [x] `src/instrumentacion.mjs` (cargado con `node --import`): hook ESM, SDK OTel, OTLP → collector, Prometheus `:9464`, ignora `/health`, termina limpio con SIGTERM
@@ -172,14 +172,14 @@ software-avanzado-gitops/
 - [x] Catálogo inicial de figuras (ids 1-3 en todas las réplicas, para el generador de tráfico)
 - [x] Chart: env `OTEL_*`, puerto `metrics`, `PodMonitor`, NetworkPolicies (egress collector, ingress Prometheus)
 - [x] Prueba local: una traza cruza los 3 servicios y los registros de los 3 llevan el mismo `trace_id` (stdout y OTLP)
-- [ ] Release `v1.1.0` por el pipeline (tag → PR → merge) — debe promover con el análisis nuevo
-- [ ] Verificar: una traza con 3 servicios en Tempo; desde la traza se llega a sus logs y viceversa
+- [x] Release `v1.1.0` por el pipeline: 7 imágenes con Trivy (0 CRITICAL), PR #2 fusionado
+- [x] En el clúster: 6 targets `up` en Prometheus con `rollouts_pod_template_hash`; trazas de 27–29 spans que cruzan los 3 servicios en Tempo; en Loki los registros de los 3 servicios se consultan por `trace_id`
 
 ### Fase 3 — Canary por métricas · 1.5 h
 - [x] `AnalysisTemplate` `sa-platform-api-gateway-metricas` tipo `prometheus` (error + p95 del canary por `rollouts_pod_template_hash`) reemplaza al Job k6
 - [x] Rollout sin `stableService`/`canaryService`: el Service principal reparte tráfico real entre estable y canary (si no, el canary no recibe tráfico)
 - [x] `generador-trafico` (k6, 4 rps) en `sa-p9`
-- [ ] Promoción exitosa de `v1.1.0` (evidencia)
+- [ ] Promoción exitosa por métricas (evidencia). `v1.1.0` se desplegó directo porque el clúster era nuevo (sin canary): hace falta una revisión nueva del Rollout
 
 ### Fase 4 — SLO y alertas · 2 h
 - [ ] `PrometheusRule` con reglas de registro (SLI y presupuesto consumido)
@@ -218,6 +218,9 @@ software-avanzado-gitops/
 6. **CRDs grandes de kube-prometheus-stack en ArgoCD:** usar `ServerSideApply=true`.
 7. **Stack sin persistencia:** al reconstruir con `bootstrap.sh` se pierden métricas/logs; hacer las pruebas en una sola sesión.
 8. **Burn rate y ventana de 28 días:** con datos de pocas horas, las alertas de quema funcionan igual (usan ventanas cortas); el "presupuesto consumido" será del periodo observado: decirlo en el informe.
+10. **Operador de Prometheus antes de sus CRDs:** si arranca antes de que exista el CRD `Prometheus`, nunca lo crea (no vuelve a buscarlo). Corregido con una sync-wave interna en el Deployment del operador (`9c8e08e` en GitOps).
+11. **k6 2.x:** ya no existe `--no-summary` (`--summary-mode=disabled`), y su cookie jar no guarda cookies de un host sin dominio (el Service): el generador envía el JWT como `Bearer`.
+12. **IDs de traza en Tempo:** la API los devuelve sin ceros a la izquierda; para buscarlos en Loki hay que completarlos a 32 caracteres.
 9. **Costos compartidos:** misma facturación que la compañera → apagar siempre al terminar.
 
 ---
@@ -245,3 +248,4 @@ software-avanzado-gitops/
 | 2026-10-13 | Decisiones: código en `P10/servicios/`, Trivy en el pipeline, P9 intacto. Bank USAC es proyecto propio: no tocar | — |
 | 2026-10-13 | Fase 2 (código) y Fase 1/3 (manifiestos) sin clúster: servicios instrumentados y probados en local, pipeline con Trivy, chart y apps del stack renderizados. | — |
 | 2026-10-13 | Commits y push: código `a61d3ba..57d246b`, GitOps `caf1390..2c1c53d`. Limpieza de disco local (Docker/Podman) | Tag `v1.1.0` (build + Trivy + PR de versión), merge, levantar clúster y verificar (capacidad: posible 4.º nodo) |
+| 2026-10-13 | Tag `v1.1.0` (CI verde, Trivy en las 7 imágenes) y PR #2 fusionado. Clúster arriba con el stack: métricas, trazas de 3 servicios y registros correlacionados verificados. Corregidos: operador de Prometheus (race de CRDs) y generador de tráfico (flag de k6, sesión por Bearer). Discord y OBS desinstalados | Fase 4 (SLO y alertas) y Fase 5 (tablero); probar promoción del canary por métricas |
