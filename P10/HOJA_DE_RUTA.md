@@ -69,7 +69,7 @@ cliente ──▶ api-gateway ──proxy──▶ ordenes-service ──fetch G
 | Prometheus + Alertmanager + Grafana | Chart `kube-prometheus-stack` | Trae CRDs `PodMonitor` / `PrometheusRule`, Alertmanager y Grafana en un solo chart |
 | Registros | **Loki** (single binary, filesystem) | Requisito; Grafana lo enlaza con las trazas |
 | Trazas | **Tempo** (single binary) | Mismo ecosistema Grafana: trace → logs y logs → trace sin plugins |
-| Collector | OTel Collector **DaemonSet**: recibe OTLP (trazas → Tempo) y lee logs de los pods con `filelog` (→ Loki vía OTLP) | Un solo componente para trazas y registros |
+| Collector | OTel Collector **Deployment** (1 réplica): recibe OTLP de los servicios; trazas → Tempo, registros (pino por OTLP) → Loki. Las métricas no pasan por él | Un solo componente para trazas y registros; sin `filelog` porque pino ya envía por OTLP |
 | Métricas de la app | SDK OTel con **exportador Prometheus en el propio pod** (`:9464/metrics`) + `PodMonitor` | Prometheus conserva la etiqueta `rollouts-pod-template-hash` → se puede consultar **solo el canary** |
 | Logs | `pino` en JSON a stdout + `@opentelemetry/instrumentation-pino` (inyecta `trace_id`, `span_id`) | JSON con traza, sin cambiar el flujo de logs |
 | Instrumentación | `@opentelemetry/sdk-node` + auto-instrumentaciones (http, express, undici/fetch) cargadas con `--import` | Propagación W3C `traceparent` automática entre los 3 servicios |
@@ -134,7 +134,7 @@ Practicas-SA-B-201901444/
     │   ├── runbooks/<alerta>.md    uno por alerta
     │   ├── informe-operacion.md    6 campos, máx. 2 páginas
     │   ├── diagrama-telemetria.md  servicio → collector → Prometheus/Loki/Tempo → Grafana/Alertmanager
-    │   └── preguntas.md            preguntas teóricas
+    │   └── limites.md              límites de la instrumentación (base de las preguntas teóricas)
     └── evidencias/                 AnalysisRun fallido, recorrido síntoma→causa con tiempos
 
 software-avanzado-gitops/
@@ -201,9 +201,11 @@ software-avanzado-gitops/
 
 ### Fase 7 — Documentación y entrega · 2 h
 - [ ] Informe de operación (6 campos, tiempos medidos, mejora concreta a la instrumentación)
-- [ ] Diagrama del flujo de telemetría (Mermaid)
-- [ ] Preguntas teóricas
-- [ ] README `/P10` con la tabla 4.1 completa (todo enlace público)
+- [x] Diagrama del flujo de telemetría (Mermaid): `docs/diagrama-telemetria.md`
+- [x] Preguntas teóricas: el enunciado no trae la lista (se preguntan en la calificación). Preparado `docs/limites.md` (14 límites con evidencia y mejora)
+- [ ] README `/P10` con la tabla 4.1 completa (todo enlace público) — escrito; faltan AnalysisRun del fallo inducido, recorrido síntoma→causa, captura, video e informe
+- [ ] **Hacer público el repo de código** (hoy privado: enlaces y `runbook_url` dan 404)
+- [ ] Requisito 8.1: Prometheus recolectando **al momento de la calificación** (17/10) → encender el clúster ese día
 - [ ] Video 5–8 min con minutaje
 - [ ] Verificación de no regresión de P9: Velero, Kyverno, ExternalSecrets, Rollout
 - [ ] Apagar el entorno (`P9/pruebas/apagar.sh`)
@@ -255,3 +257,4 @@ software-avanzado-gitops/
 | 2026-10-13 | Tag `v1.1.0` (CI verde, Trivy en las 7 imágenes) y PR #2 fusionado. Clúster arriba con el stack: métricas, trazas de 3 servicios y registros correlacionados verificados. Corregidos: operador de Prometheus (race de CRDs) y generador de tráfico (flag de k6, sesión por Bearer). Discord y OBS desinstalados | Fase 4 (SLO y alertas) y Fase 5 (tablero); probar promoción del canary por métricas |
 | 2026-10-14 | Fases 4 y 5 en el clúster: PrometheusRule (20 reglas `ok`), 4 alertas con runbook, tablero de 21 paneles provisionado y exportado. Detectado bug del consumidor RabbitMQ sin reintento | Fase 6: fallo inducido (canary por métricas + recorrido síntoma→causa) y captura del tablero |
 | 2026-10-14 | Bug del consumidor RabbitMQ corregido (reintento + re-suscripción, probado en local) y publicado en v1.1.1. Canary: primer intento abortado por 5xx de otros servicios reiniciándose → `preStop` 10 s → v1.1.1 promovida por métricas. Tag `v1.1.2` (material inexistente como `warn`) construido; **PR #4 abierto sin fusionar**. Entorno apagado con `P9/pruebas/apagar.sh` | Al retomar: `./P9/bootstrap.sh` (~35 min), fusionar PR #4 (canary de release completo), Fase 6 (fallo en canary + síntoma→causa + captura del tablero), Fase 7. **Repo de código privado: hacerlo público antes de entregar** (runbook_url dan 404) |
+| 2026-10-14 | Grafo de graphify actualizado con P10. Diagrama de telemetría (`docs/diagrama-telemetria.md`), límites de la instrumentación (`docs/limites.md`) y `README.md` con la tabla 4.1 (pendientes marcados) | Sesión con clúster: bootstrap, PR #4, Fase 6, captura, video; luego informe y completar la tabla |
