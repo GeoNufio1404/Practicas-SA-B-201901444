@@ -1,0 +1,137 @@
+[2026-10-14T10:55:57-06:00] [+0s] ==> INICIO del bootstrap (log: evidencias/bootstrap-20261014-105557.log)
+[2026-10-14T10:55:58-06:00] [+1s] ==> Terraform 20-cluster: cluster GKE sa-p9
+Initializing the backend...
+
+Initializing provider plugins...
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/google from the dependency lock file
+- Using previously-installed hashicorp/google v8.4.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 1s
+google_container_cluster.this: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9]
+google_service_account_iam_member.wi["eso"]: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-external-secrets@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[external-secrets/external-secrets]]
+google_service_account_iam_member.wi["velero"]: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/serviceAccounts/sa-p9-velero@project-2cbee419-ed7b-469e-89d.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/serviceAccount:project-2cbee419-ed7b-469e-89d.svc.id.goog[velero/velero-server]]
+google_container_node_pool.main: Refreshing state... [id=projects/project-2cbee419-ed7b-469e-89d/locations/us-central1-a/clusters/sa-p9/nodePools/main]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+cluster_ca_certificate = <sensitive>
+cluster_endpoint = <sensitive>
+cluster_location = "us-central1-a"
+cluster_name = "sa-p9"
+get_credentials = "gcloud container clusters get-credentials sa-p9 --zone us-central1-a --project project-2cbee419-ed7b-469e-89d"
+[2026-10-14T10:56:08-06:00] [+11s] ==> Cluster listo
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for sa-p9.
+Initializing the backend...
+
+Initializing provider plugins...
+- terraform.io/builtin/terraform is built in to Terraform
+- Reusing previous version of hashicorp/helm from the dependency lock file
+- Reusing previous version of hashicorp/google from the dependency lock file
+- Reusing previous version of hashicorp/kubernetes from the dependency lock file
+- Using previously-installed hashicorp/google v8.4.0
+- Using previously-installed hashicorp/kubernetes v3.2.1
+- Using previously-installed hashicorp/helm v3.3.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+[2026-10-14T10:56:13-06:00] [+16s] ==> Terraform 30-platform: namespace sa-p9, cuota, limites, RBAC, ArgoCD y root-sa-p9
+data.terraform_remote_state.cluster: Reading...
+data.google_client_config.current: Reading...
+data.google_client_config.current: Read complete after 0s [id=projects//regions//zones/]
+data.terraform_remote_state.cluster: Read complete after 1s
+helm_release.argocd: Refreshing state... [id=argocd]
+kubernetes_namespace_v1.app: Refreshing state... [id=sa-p9]
+kubernetes_service_account_v1.auditor: Refreshing state... [id=sa-p9/sa-p9-auditor]
+kubernetes_resource_quota_v1.app: Refreshing state... [id=sa-p9/sa-p9-quota]
+kubernetes_limit_range_v1.app: Refreshing state... [id=sa-p9/sa-p9-limits]
+kubernetes_role_v1.readonly: Refreshing state... [id=sa-p9/sa-p9-readonly]
+kubernetes_role_binding_v1.auditor_readonly: Refreshing state... [id=sa-p9/sa-p9-auditor-readonly]
+helm_release.root_app: Refreshing state... [id=root-app]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+[2026-10-14T10:56:28-06:00] [+31s] ==> ArgoCD instalado; la app raiz root-sa-p9 toma el control
+[2026-10-14T10:56:30-06:00] [+33s] ==> Estado de las Applications:
+    argo-rollouts           Synced   Healthy
+    external-secrets        Synced   Healthy
+    kube-prometheus-stack   Synced   Healthy
+    kyverno                 Synced   Healthy
+    loki                    Synced   Healthy
+    observability-config    Synced   Healthy
+    otel-collector          Synced   Healthy
+    platform-config         Synced   Healthy
+    root-sa-p9              Synced   Progressing
+    sa-platform             Synced   Progressing
+    tempo                   Synced   Healthy
+    velero                  Synced   Healthy
+    velero-restore          Synced   Healthy
+[2026-10-14T10:56:30-06:00] [+33s] ==> Restauracion de datos terminada. Log del Job restore-mysql:
+    2026-10-14T16:45:41+00:00 Esperando que el BackupStorageLocation este Available...
+    2026-10-14T16:45:41+00:00 Buscando el ultimo respaldo Completed del schedule velero-sa-p9-hourly...
+    2026-10-14T16:45:42+00:00 Restaurando MySQL desde antes-de-apagar-202610132353 (Restore restore-mysql-antes-de-apagar-202610132353)
+    restore.velero.io/restore-mysql-antes-de-apagar-202610132353 created
+    2026-10-14T16:45:45+00:00 Restore en fase InProgress...
+    2026-10-14T16:45:56+00:00 Restauracion completada: {"itemsRestored":7,"totalItems":7}
+[2026-10-14T10:59:22-06:00] [+205s] ==> Estado de las Applications:
+    argo-rollouts           Synced   Healthy
+    external-secrets        Synced   Healthy
+    kube-prometheus-stack   Synced   Healthy
+    kyverno                 Synced   Healthy
+    loki                    Synced   Healthy
+    observability-config    Synced   Healthy
+    otel-collector          Synced   Healthy
+    platform-config         Synced   Healthy
+    root-sa-p9              Synced   Healthy
+    sa-platform             Synced   Healthy
+    tempo                   Synced   Healthy
+    velero                  Synced   Healthy
+    velero-restore          Synced   Healthy
+[2026-10-14T10:59:22-06:00] [+205s] ==> Todas las Applications Synced/Healthy
+[2026-10-14T10:59:22-06:00] [+205s] ==> Verificacion final
+  Rollout api-gateway: Healthy
+  Politicas de Kyverno:
+Warning: kyverno.io/v1 ClusterPolicy is deprecated and will be removed in a future release; migrate to ValidatingPolicy, MutatingPolicy, GeneratingPolicy or ImageValidatingPolicy (policies.kyverno.io), see https://kyverno.io/docs/guides/migration-to-cel/
+    disallow-latest-tag       True
+    require-resource-limits   True
+    require-run-as-non-root   True
+  ExternalSecrets en sa-p9:
+    sa-platform-app-secrets          SecretSynced
+    sa-platform-broker-credentials   SecretSynced
+    sa-platform-db-credentials       SecretSynced
+    sa-platform-mysql-auth           SecretSynced
+    sa-platform-rabbitmq-auth        SecretSynced
+  Restauraciones de Velero:
+    restore-mysql-antes-de-apagar-202610132353   Completed   7
+  Usuarios en auth_db.usuarios: 1
+  Ingress: http://136.81.119.38/api/auth/health -> HTTP 200
+[2026-10-14T11:02:28-06:00] [+391s] ==> FIN del bootstrap. Duracion total: 6 min 31 s

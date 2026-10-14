@@ -1,0 +1,82 @@
+[2026-10-14T11:20:27-06:00] Esperando una revision nueva del Rollout (hash actual: 5c77798b44)
+[2026-10-14T11:20:55-06:00] Revision nueva: 784dcddfdd
+[2026-10-14T11:20:57-06:00] fase=Progressing paso=0 peso-canary=0% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Successful sa-platform-api-gateway-5c77798b44-2-3   Successful sa-platform-api-gateway-5c77798b44-2-5   Successful 
+[2026-10-14T11:21:12-06:00] fase=Progressing paso=0 peso-canary=0% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-3   Successful sa-platform-api-gateway-5c77798b44-2-5   Successful sa-platform-api-gateway-784dcddfdd-3-1   Running 
+[2026-10-14T11:21:19-06:00] fase=Progressing paso=1 peso-canary=20% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-3   Successful sa-platform-api-gateway-5c77798b44-2-5   Successful sa-platform-api-gateway-784dcddfdd-3-1   Running 
+[2026-10-14T11:23:17-06:00] fase=Degraded paso=0 peso-canary=0% abortado=true | analisis: sa-platform-api-gateway-5c77798b44-2-3   Successful sa-platform-api-gateway-5c77798b44-2-5   Successful sa-platform-api-gateway-784dcddfdd-3-1   Failed 
+[2026-10-14T11:23:18-06:00] Rollout abortado y revertido a la version estable: RolloutAborted: Rollout aborted update to revision 3: Step-based analysis phase error/failed: Metric "tasa-de-error" assessed Failed due to failed (2) > failureLimit (1)
+[2026-10-14T11:23:18-06:00] Resultado final
+    Name:            sa-platform-api-gateway
+    Namespace:       sa-p9
+    Status:          ✖ Degraded
+    Message:         RolloutAborted: Rollout aborted update to revision 3: Step-based analysis phase error/failed: Metric "tasa-de-error" assessed Failed due to failed (2) > failureLimit (1)
+    Strategy:        Canary
+      Step:          0/6
+      SetWeight:     0
+      ActualWeight:  0
+    Images:          us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.1.2 (stable)
+    Replicas:
+      Desired:       2
+      Current:       2
+      Updated:       0
+      Ready:         2
+      Available:     2
+    
+    NAME                                                 KIND         STATUS         AGE    INFO
+    ⟳ sa-platform-api-gateway                            Rollout      ✖ Degraded     37m    
+    ├──# revision:3                                                                         
+    │  ├──⧉ sa-platform-api-gateway-784dcddfdd           ReplicaSet   • ScaledDown   2m26s  canary
+    │  │  └──□ sa-platform-api-gateway-784dcddfdd-hm5zp  Pod          ◌ Terminating  2m26s  ready:1/1
+    │  └──α sa-platform-api-gateway-784dcddfdd-3-1       AnalysisRun  ✖ Failed       2m8s   ✔ 2,✖ 2
+    ├──# revision:2                                                                         
+    │  ├──⧉ sa-platform-api-gateway-5c77798b44           ReplicaSet   ✔ Healthy      13m    stable
+    │  │  ├──□ sa-platform-api-gateway-5c77798b44-72qnd  Pod          ✔ Running      13m    ready:1/1
+    │  │  └──□ sa-platform-api-gateway-5c77798b44-ws49w  Pod          ✔ Running      6m39s  ready:1/1
+    │  ├──α sa-platform-api-gateway-5c77798b44-2-1       AnalysisRun  ✔ Successful   12m    ✔ 6
+    │  ├──α sa-platform-api-gateway-5c77798b44-2-3       AnalysisRun  ✔ Successful   9m39s  ✔ 6
+    │  └──α sa-platform-api-gateway-5c77798b44-2-5       AnalysisRun  ✔ Successful   6m15s  ✔ 6
+    └──# revision:1                                                                         
+       └──⧉ sa-platform-api-gateway-697976c974           ReplicaSet   • ScaledDown   37m    
+
+[2026-10-14T11:23:19-06:00] Mediciones de los AnalysisRun de esta revision
+  sa-platform-api-gateway-5c77798b44-2-3  fase=Successful  
+    metrica latencia-p95: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:14:40Z  valor=[0.04024999999999998]  Successful
+      2026-10-14T17:15:40Z  valor=[0.03708333333333332]  Successful
+      2026-10-14T17:16:40Z  valor=[0.0328409090909091]  Successful
+    metrica tasa-de-error: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:14:40Z  valor=[0]  Successful
+      2026-10-14T17:15:40Z  valor=[0]  Successful
+      2026-10-14T17:16:40Z  valor=[0]  Successful
+  sa-platform-api-gateway-5c77798b44-2-5  fase=Successful  
+    metrica latencia-p95: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:18:04Z  valor=[0.03655492188577242]  Successful
+      2026-10-14T17:19:04Z  valor=[0.03298444060482895]  Successful
+      2026-10-14T17:20:04Z  valor=[0.045595238095238036]  Successful
+    metrica tasa-de-error: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:18:04Z  valor=[0]  Successful
+      2026-10-14T17:19:04Z  valor=[0]  Successful
+      2026-10-14T17:20:04Z  valor=[0]  Successful
+  sa-platform-api-gateway-784dcddfdd-3-1  fase=Failed  Metric "tasa-de-error" assessed Failed due to failed (2) > failureLimit (1)
+    metrica tasa-de-error: fase=Failed exitosas=0 fallidas=2
+      2026-10-14T17:22:11Z  valor=[0.10089530323920715]  Failed
+      2026-10-14T17:23:11Z  valor=[0.13634859227382864]  Failed
+    metrica latencia-p95: fase=Successful exitosas=2 fallidas=0
+      2026-10-14T17:22:11Z  valor=[0.04923862334076285]  Successful
+      2026-10-14T17:23:11Z  valor=[0.03941368703424972]  Successful
+
+[2026-10-14T11:23:21-06:00] Consultas PromQL del AnalysisTemplate
+  tasa-de-error  (exito si: len(result) == 1 && !isNaN(result[0]) && result[0] < 0.01)
+    (
+      sum(rate(printhub_http_request_duration_seconds_count{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}", http_response_status_code=~"5.."}[2m]))
+      or vector(0)
+    )
+    /
+    sum(rate(printhub_http_request_duration_seconds_count{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}"}[2m]))
+    
+  latencia-p95  (exito si: len(result) == 1 && !isNaN(result[0]) && result[0] < 0.5)
+    histogram_quantile(0.95,
+      sum by (le) (rate(printhub_http_request_duration_seconds_bucket{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}"}[2m]))
+    )
+    
+[2026-10-14T11:23:22-06:00] Registro: evidencias/fallo-canary-20261014-112026.log

@@ -1,0 +1,26 @@
+[2026-10-14T13:00:01-06:00] Fallo inyectado: push ebd6068 al repo GitOps a las 12:59:45 (FIGURAS_SERVICE_URL=/graphql-v2 en ordenes-service)
+[2026-10-14T13:00:12-06:00] ArgoCD aplico el cambio (Deployment ordenes-service con la URL erronea)
+[2026-10-14T13:00:39-06:00] Pods nuevos de ordenes-service listos: INICIO DEL FALLO
+[2026-10-14T13:00:50-06:00] Primera senal en Prometheus: pedidos rechazados figuras_no_disponible = 15.668/min
+[2026-10-14T13:09:54-06:00] Alerta PedidosPresupuestoQuemaRapida: pending
+[2026-10-14T13:10:58-06:00] Alerta PedidosPresupuestoQuemaRapida: firing
+[2026-10-14T13:10:58-06:00] Fin del seguimiento automatico
+[2026-10-14T13:13:00-06:00] Causa encontrada por el operador en Grafana (cronometro de la grabacion, precision de minutos): registro en Loki de ordenes-service 'No se pudo consultar figuras-service: figuras-service respondio 404'
+[2026-10-14T13:36:57-06:00] El operador confirma la causa y se ordena la reversion
+[2026-10-14T13:36:58-06:00] Reversion: push 71ec110 al repo GitOps
+[2026-10-14T13:37:10-06:00] ArgoCD aplico la reversion
+[2026-10-14T13:37:50-06:00] Pods de ordenes-service con la URL correcta listos
+[2026-10-14T13:38:22-06:00] Sin pedidos rechazados por figuras en el ultimo minuto: RECUPERADO (estado estable)
+[2026-10-14T13:42:26-06:00] Alerta PedidosPresupuestoQuemaRapida resuelta
+[2026-10-14T13:42:27-06:00] slo:pedidos_errores:ratio_rate5m = 0.053540587219343704
+
+Resumen de tiempos
+  Inicio del fallo .................. 13:00:39
+  Primera senal (Prometheus) ........ 13:00:50   (+11 s)
+  Alerta pending .................... 13:09:54   (+9 min 15 s)
+  Alerta firing ..................... 13:10:58   (+10 min 19 s)
+  Causa encontrada (alerta -> tablero -> traza en Tempo -> registro en Loki)
+                                      13:13      (~2 min desde el firing)
+  Reversion (push 71ec110) .......... 13:36:58   (la reversion se retraso a proposito para terminar la grabacion)
+  Estado estable .................... 13:38:22   (1 min 24 s desde la reversion)
+  Alerta resuelta ................... 13:42:26

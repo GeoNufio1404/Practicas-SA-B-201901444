@@ -1,0 +1,82 @@
+[2026-10-14T10:55:57-06:00] Esperando una revision nueva del Rollout (hash actual: 697976c974)
+[2026-10-14T11:10:21-06:00] Revision nueva: 5c77798b44
+[2026-10-14T11:10:23-06:00] fase=Progressing paso=0 peso-canary=0% abortado=false | analisis: 
+[2026-10-14T11:10:45-06:00] fase=Progressing paso=1 peso-canary=20% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Running 
+[2026-10-14T11:13:41-06:00] fase=Progressing paso=1 peso-canary=20% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Successful sa-platform-api-gateway-5c77798b44-2-3   Running 
+[2026-10-14T11:13:48-06:00] fase=Progressing paso=3 peso-canary=50% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Successful sa-platform-api-gateway-5c77798b44-2-3   Running 
+[2026-10-14T11:16:44-06:00] fase=Progressing paso=4 peso-canary=50% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Successful sa-platform-api-gateway-5c77798b44-2-3   Successful 
+[2026-10-14T11:17:06-06:00] fase=Progressing paso=5 peso-canary=80% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Successful sa-platform-api-gateway-5c77798b44-2-3   Successful sa-platform-api-gateway-5c77798b44-2-5   Running 
+[2026-10-14T11:20:10-06:00] fase=Healthy paso=6 peso-canary=80% abortado=false | analisis: sa-platform-api-gateway-5c77798b44-2-1   Successful sa-platform-api-gateway-5c77798b44-2-3   Successful sa-platform-api-gateway-5c77798b44-2-5   Successful 
+[2026-10-14T11:20:10-06:00] Resultado final
+    Name:            sa-platform-api-gateway
+    Namespace:       sa-p9
+    Status:          ✔ Healthy
+    Strategy:        Canary
+      Step:          6/6
+      SetWeight:     100
+      ActualWeight:  100
+    Images:          us-central1-docker.pkg.dev/project-2cbee419-ed7b-469e-89d/sa-p9/api-gateway:1.1.2 (stable)
+    Replicas:
+      Desired:       2
+      Current:       2
+      Updated:       2
+      Ready:         2
+      Available:     2
+    
+    NAME                                                 KIND         STATUS         AGE    INFO
+    ⟳ sa-platform-api-gateway                            Rollout      ✔ Healthy      34m    
+    ├──# revision:2                                                                         
+    │  ├──⧉ sa-platform-api-gateway-5c77798b44           ReplicaSet   ✔ Healthy      9m54s  stable
+    │  │  ├──□ sa-platform-api-gateway-5c77798b44-72qnd  Pod          ✔ Running      9m54s  ready:1/1
+    │  │  └──□ sa-platform-api-gateway-5c77798b44-ws49w  Pod          ✔ Running      3m33s  ready:1/1
+    │  ├──α sa-platform-api-gateway-5c77798b44-2-1       AnalysisRun  ✔ Successful   9m35s  ✔ 6
+    │  ├──α sa-platform-api-gateway-5c77798b44-2-3       AnalysisRun  ✔ Successful   6m33s  ✔ 6
+    │  └──α sa-platform-api-gateway-5c77798b44-2-5       AnalysisRun  ✔ Successful   3m9s   ✔ 6
+    └──# revision:1                                                                         
+       └──⧉ sa-platform-api-gateway-697976c974           ReplicaSet   • ScaledDown   34m    
+          └──□ sa-platform-api-gateway-697976c974-vm5hc  Pod          ◌ Terminating  34m    ready:1/1
+
+[2026-10-14T11:20:13-06:00] Mediciones de los AnalysisRun de esta revision
+  sa-platform-api-gateway-5c77798b44-2-1  fase=Successful  
+    metrica latencia-p95: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:11:40Z  valor=[0.04912863223609535]  Successful
+      2026-10-14T17:12:40Z  valor=[0.0452029180872975]  Successful
+      2026-10-14T17:13:40Z  valor=[0.04011363636363634]  Successful
+    metrica tasa-de-error: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:11:40Z  valor=[0]  Successful
+      2026-10-14T17:12:40Z  valor=[0]  Successful
+      2026-10-14T17:13:40Z  valor=[0]  Successful
+  sa-platform-api-gateway-5c77798b44-2-3  fase=Successful  
+    metrica latencia-p95: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:14:40Z  valor=[0.04024999999999998]  Successful
+      2026-10-14T17:15:40Z  valor=[0.03708333333333332]  Successful
+      2026-10-14T17:16:40Z  valor=[0.0328409090909091]  Successful
+    metrica tasa-de-error: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:14:40Z  valor=[0]  Successful
+      2026-10-14T17:15:40Z  valor=[0]  Successful
+      2026-10-14T17:16:40Z  valor=[0]  Successful
+  sa-platform-api-gateway-5c77798b44-2-5  fase=Successful  
+    metrica latencia-p95: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:18:04Z  valor=[0.03655492188577242]  Successful
+      2026-10-14T17:19:04Z  valor=[0.03298444060482895]  Successful
+      2026-10-14T17:20:04Z  valor=[0.045595238095238036]  Successful
+    metrica tasa-de-error: fase=Successful exitosas=3 fallidas=0
+      2026-10-14T17:18:04Z  valor=[0]  Successful
+      2026-10-14T17:19:04Z  valor=[0]  Successful
+      2026-10-14T17:20:04Z  valor=[0]  Successful
+
+[2026-10-14T11:20:15-06:00] Consultas PromQL del AnalysisTemplate
+  tasa-de-error  (exito si: len(result) == 1 && !isNaN(result[0]) && result[0] < 0.01)
+    (
+      sum(rate(printhub_http_request_duration_seconds_count{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}", http_response_status_code=~"5.."}[2m]))
+      or vector(0)
+    )
+    /
+    sum(rate(printhub_http_request_duration_seconds_count{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}"}[2m]))
+    
+  latencia-p95  (exito si: len(result) == 1 && !isNaN(result[0]) && result[0] < 0.5)
+    histogram_quantile(0.95,
+      sum by (le) (rate(printhub_http_request_duration_seconds_bucket{namespace="sa-p9", app_kubernetes_io_name="api-gateway", rollouts_pod_template_hash="{{args.canary-hash}}"}[2m]))
+    )
+    
+[2026-10-14T11:20:15-06:00] Registro: evidencias/promocion-v1.1.2-20261014-105557.log
