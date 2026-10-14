@@ -1,0 +1,5 @@
+# Dependencias: se instalan en la imagen con npm ci
+node_modules/
+# Bases SQLite de pruebas locales
+*.db
+*.db-*
